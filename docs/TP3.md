@@ -75,6 +75,7 @@ Se describe como flujo disparado por la alerta (push) y no por la consulta activ
 
 - **Por qué compite mejor que el aprendizaje:** el usuario consulta eventos de forma esporádica e incidental. No es un software que se use todos los días durante horas seguidas como un IDE de programación.
 - **Evidencia del TP2:** el consumo es incidental y no tiene un momento dedicado — "mientras usan el teléfono para otra cosa, entre clases o fuera de la facultad" (TP2, contexto de uso). Como la interacción no se repite a diario ni sigue una rutina fija, la interfaz debe ser tan autoexplicativa y directa que el estudiante, al volver a abrirla tras una nueva alerta —sin que haya un ritmo de uso predecible—, no tenga que reaprender ni recordar cómo interactuar con ella.
+
 ---
 ## 5. Actualización brief.
 ---
@@ -113,3 +114,57 @@ Nos quedamos con la **Estructura B** como definición del flujo principal para e
 - **Qué hace:** al tocar la notificación, el alumno llega directo a la ficha del evento notificado, con toda la información cargada sobre ese evento (fecha, hora, lugar, descripción y link de inscripción, punto 2.5). Es una pantalla autosuficiente: alcanza por sí sola para informarse y actuar —inscribirse por el link externo o activar el recordatorio— sin depender de ninguna otra pantalla de la app.
 - **Por qué, según el TP2:** responde directo a la queja de información incompleta que sostiene el atributo de Satisfacción — U13 ("no profundizan tanto como para generar un interés") y U22 ("información escasa o poco clara") — y a que la eficiencia percibida de la comunicación institucional hoy es de apenas 2,50/5. Es también la apuesta más directa para cerrar la brecha entre interés (3,60/5 en el propio departamento) y asistencia real (1,95/5): si lo que frena la asistencia es no tener con qué decidir, mostrar todo en el mismo paso que la alerta ataca esa causa.
 - **Qué se resigna:** volver a Inicio (el repositorio, 2.2) pasa a ser un paso extra y explícito, no el estado por defecto. El alumno puede resolver todo desde la ficha del evento notificado y cerrar la app sin llegar a ver el resto de los eventos disponibles. Esto es coherente con el punto 3, que ya define al repositorio como respaldo para quien quiera consultar por su cuenta y no como parte obligatoria del recorrido: el botón de Inicio queda igual expuesto en la ficha, como invitación a interesarse por más eventos, aunque llegar hasta ahí dependa de esa acción extra y no sea automático como en la Estructura A.
+
+
+
+## 10.1 Anclaje
+
+**1. Incorporar la alerta push como disparador del flujo**
+
+- **Decisión en el wireframe:** el flujo principal arranca con una notificación (pantallas "Notif" y "Notif PC"); no depende de que el alumno abra la app a consultar.
+- **Dato del TP2 que la sustenta:** 
+Pregunta 10: ¿Con qué frecuencia buscás información sobre eventos de la UNLaM por tu cuenta?
+de 22 respuestas 8 afirman buscar eventos 'Esporádicamente' y 5 'Nunca' combinado con interés sobre los eventos de su departamento, por lo cual integrar las alertas funcionaría como recordatorio para informarse.
+Se refuerza con el dato de encuesta: 15 de 20 alumnos marcaron "No vi la publicación" como motivo de haberse perdido un evento (TP2, punto 3.3).
+
+**2. Que la alerta lleve directo a la ficha completa del evento, no a un simple aviso**
+
+- **Decisión en el wireframe:** tocar la notificación abre la ficha del evento con toda la información (fecha, lugar, flyer, descripción, inscripción), sin pasar por el listado general.
+- **Dato del TP2 que la sustenta:** U22 — "la información provista en las publicaciones suelen ser escazas o poco claras, y es dificil encontrar detalles adicionales"* (TP2, punto 3.2). En la misma línea, U13 — *"no profundizan tanto como para generar un interés".
+
+**3. Que Inicio muestre por defecto los eventos del propio departamento**
+
+- **Decisión en el wireframe:** en la barra lateral y el feed de Inicio, el propio departamento aparece destacado y con acciones habilitadas; los demás departamentos quedan visibles pero no llevan a ningún lado.
+- **Dato del TP2 que la sustenta:** la encuesta registra un interés de 3,60/5 en eventos del propio departamento contra 2,20/5 en los de otros departamentos, con el dato decisivo de que "ningún alumno declara más interés por los eventos de otros departamentos que por los del propio (0 de 20; 15 lo invierten, 5 empatan)"(TP2, punto 4, confrontación del supuesto #1).
+
+---
+
+## 10.2 Descarte
+
+Propuestas de Claude que el equipo terminó rechazando durante el armado del wireframe, con el hallazgo del TP2 que las contradecía y qué se hizo en su lugar.
+
+**1. Vista acotada del evento en el listado de Inicio — dependía de que el alumno entrara a explorar**
+
+- **Qué propuso Claude:** en el listado de Inicio, mostrar cada evento con muy pocos datos (apenas título y fecha/lugar), dejando la descripción y la imagen ocultas detrás de un toque adicional para entrar a la ficha — el alumno tenía que explorar cada card para enterarse de qué se trataba.
+- **Qué hallazgo del TP2 lo contradecía:** la necesidad relevada #1 — "un único lugar donde esté todo", 22 de 22, la única respuesta unánime — y la #4 — "información completa, no solo el aviso", sostenida por U22: "la información provista en las publicaciones suelen ser escazas o poco claras, y es dificil encontrar detalles adicionales" y U13: "no profundizan tanto como para generar un interés". Una vista acotada que obliga a explorar reproduce exactamente lo que hoy falla: publicaciones que no alcanzan para decidir, repartidas en vez de centralizadas en un solo vistazo.
+- **Con qué se reemplazó:** una card de evento enriquecida directamente en el listado, con flyer/imagen, descripción resumida, fecha, hora y título visibles sin necesidad de entrar a la ficha.
+
+**2. Control de notificaciones: interruptor general vs. frecuencia configurable**
+
+**Qué propuso Claude:** para gestionar a los 4 de 20 alumnos que rechazan ser notificados, un control de suscripción general tipo interruptor binario (activar/desactivar la alerta del departamento por completo).
+- **Qué hallazgo del TP2 lo contradecía:** el propio brief de producto ya especificaba en la funcionalidad de alerta que "requiere frecuencia configurable y baja" — justamente por ese mismo 6 de 22 (supuesto nuevo #10 del brief). Un simple on/off no cubría la granularidad que la evidencia ya pedía; era una propuesta más pobre que lo que el propio análisis ya había establecido.
+- **Con qué se reemplazó:** una frecuencia de notificación configurable por el alumno (alertas diarias o un resumen semanal), propuesta por el equipo.
+
+---
+
+## 10.3 El elemento crítico
+
+**¿Cuál es el elemento que sostiene la hipótesis?**
+
+El **repositorio centralizado de eventos** (la pantalla de Inicio, punto 2.2). Es la base de datos y la pantalla donde vive la ficha de cada evento: sin él, ni la alerta ni el recordatorio tendrían de dónde traer la información ni adónde llevar al alumno. Materializa la mitad de la **Solución** que promete la hipótesis — *"una plataforma que centraliza los eventos"* (brief §7) — y sin él no habría nada que empujar por la alerta ni nada que consultar como respaldo (punto 3). Si no estuviera construido de verdad, el MVP no tendría cómo mostrarle al alumno la información completa que necesita para decidir, y la hipótesis quedaría sin forma de confirmarse ni de refutarse.
+
+**¿Hay algo incluido que podrían sacar sin perder esa capacidad?**
+
+Sí, la **configuración de la alerta** (elegir frecuencia diaria o resumen semanal, y los switches de la pantalla de Configuración de alertas), no la alerta en sí. Las dos métricas de la **Evidencia medible** (brief §7) dependen de que la alerta *exista* y *llegue a tiempo* — que baje el *"no vi la publicación"*  no de que el alumno pueda elegir cómo la recibe. Con una alerta fija (por ejemplo, siempre inmediata) alcanzaría para medir exactamente lo mismo. 
+Quedó adentro porque los alumnos que declaran no querer ser notificados (6 de 22)— pero eso resuelve un riesgo de abandono del canal, no la capacidad de testear la hipótesis.
+
