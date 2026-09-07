@@ -124,8 +124,8 @@ Nos quedamos con la **Estructura B** como definición del flujo principal para e
 - **Decisión en el wireframe:** el flujo principal arranca con una notificación (pantallas "Notif" y "Notif PC"); no depende de que el alumno abra la app a consultar.
 - **Dato del TP2 que la sustenta:** 
 Pregunta 10: ¿Con qué frecuencia buscás información sobre eventos de la UNLaM por tu cuenta?
-de 22 respuestas 8 afirman buscar eventos 'Esporádicamente' y 5 'Nunca' combinado con interés sobre los eventos de su departamento, por lo cual integrar las alertas funcionaría como recordatorio para informarse.
-Se refuerza con el dato de encuesta: 15 de 20 alumnos marcaron "No vi la publicación" como motivo de haberse perdido un evento (TP2, punto 3.3).
+de 20 respuestas de alumnos 8 afirman buscar eventos 'Esporádicamente' y 4 'Nunca' combinado con interés sobre los eventos de su departamento, por lo cual integrar las alertas funcionaría como recordatorio para informarse.
+Se refuerza con el dato de encuesta: 15 de 20 alumnos marcaron "No vi la publicación" como motivo de haberse perdido un evento.
 
 **2. Que la alerta lleve directo a la ficha completa del evento, no a un simple aviso**
 
@@ -146,13 +146,13 @@ Propuestas de Claude que el equipo terminó rechazando durante el armado del wir
 **1. Vista acotada del evento en el listado de Inicio — dependía de que el alumno entrara a explorar**
 
 - **Qué propuso Claude:** en el listado de Inicio, mostrar cada evento con muy pocos datos (apenas título y fecha/lugar), dejando la descripción y la imagen ocultas detrás de un toque adicional para entrar a la ficha — el alumno tenía que explorar cada card para enterarse de qué se trataba.
-- **Qué hallazgo del TP2 lo contradecía:** la necesidad relevada #1 — "un único lugar donde esté todo", 22 de 22, la única respuesta unánime — y la #4 — "información completa, no solo el aviso", sostenida por U22: "la información provista en las publicaciones suelen ser escazas o poco claras, y es dificil encontrar detalles adicionales" y U13: "no profundizan tanto como para generar un interés". Una vista acotada que obliga a explorar reproduce exactamente lo que hoy falla: publicaciones que no alcanzan para decidir, repartidas en vez de centralizadas en un solo vistazo.
+- **Qué hallazgo del TP2 lo contradecía:** la necesidad relevada #1 — "un único lugar donde esté todo", 20 de 20 alumnos, la única respuesta unánime — y la #4 — "información completa, no solo el aviso", sostenida por U22: "la información provista en las publicaciones suelen ser escazas o poco claras, y es dificil encontrar detalles adicionales" y U13: "no profundizan tanto como para generar un interés". Una vista acotada que obliga a explorar reproduce exactamente lo que hoy falla: publicaciones que no alcanzan para decidir, repartidas en vez de centralizadas en un solo vistazo.
 - **Con qué se reemplazó:** una card de evento enriquecida directamente en el listado, con flyer/imagen, descripción resumida, fecha, hora y título visibles sin necesidad de entrar a la ficha.
 
 **2. Control de notificaciones: interruptor general vs. frecuencia configurable**
 
 **Qué propuso Claude:** para gestionar a los 4 de 20 alumnos que rechazan ser notificados, un control de suscripción general tipo interruptor binario (activar/desactivar la alerta del departamento por completo).
-- **Qué hallazgo del TP2 lo contradecía:** el propio brief de producto ya especificaba en la funcionalidad de alerta que "requiere frecuencia configurable y baja" — justamente por ese mismo 6 de 22 (supuesto nuevo #10 del brief). Un simple on/off no cubría la granularidad que la evidencia ya pedía; era una propuesta más pobre que lo que el propio análisis ya había establecido.
+- **Qué hallazgo del TP2 lo contradecía:** el propio brief de producto ya especificaba en la funcionalidad de alerta que "requiere frecuencia configurable y baja" — justamente por ese mismo 4 de 20 (supuesto nuevo #10 del brief). Un simple on/off no cubría la granularidad que la evidencia ya pedía; era una propuesta más pobre que lo que el propio análisis ya había establecido.
 - **Con qué se reemplazó:** una frecuencia de notificación configurable por el alumno (alertas diarias o un resumen semanal), propuesta por el equipo.
 
 ---
