@@ -4,3 +4,11 @@
 |---|---|---|---|
 
 | 28/08/2026 | ChatGPT – GPT-5.6 Luna | Dar formato al brief tomando como referencia la estructura, organización y contenido del trabajo desarrollado previamente en un archivo Word, manteniendo la información original y mejorando su presentación, claridad y coherencia. | TP 1 |
+| 30/08/2026 | ChatGPT – GPT-5.6 Luna | Revisar la redacción y claridad de las preguntas de la encuesta, manteniendo los objetivos y temas definidos previamente por el equipo.                                                                                               | TP 2 |
+| 31/08/2026 | Claude Code – Opus 5   | Ayudar a organizar y redactar la información obtenida a partir de la encuesta para su incorporación al informe, manteniendo los datos proporcionados por el equipo sin realizar interpretaciones ni extraer conclusiones.             | TP 2 |
+| 01/09/2026 | Claude Code – Opus 5   | Actualizar el brief a su versión 2 incorporando la información y conclusiones previamente elaboradas por el equipo, mejorando su redacción, organización y presentación.                                                              | TP 2 |
+| 01/09/2026 | Claude Code – Opus 5   | Mejorar la redacción y presentación del punto 5, verificar la consistencia formal de las cifras ya obtenidas por el equipo contra la planilla de resultados y dar formato de impresión al TP2 para su exportación a PDF.              | TP 2 |
+| 06/09/2026 | Claude Code – Sonnet 5   | Mejorar la redacción del criterio de usabilidad y la elección de estructura ya definidos por el equipo, las tres alternativas de flujo principal del MVP, su comparación y la justificación de la estructura elegida con evidencia del TP2. | TP 3 |
+| 06/09/2026 | Claude Code – Sonnet 5   | Construir el wireframe de baja fidelidad del MVP (HTML navegable en docs/diseno/wireframe/), iterando en múltiples rondas sobre el diseño responsive, el contenido de cada pantalla y la navegación entre ellas, a partir de las correcciones y precisiones que el equipo fue indicando pantalla por pantalla. | TP 3 |
+| 07/09/2026 | Claude Code – Sonnet 5   | Mejorar la redacción de los puntos 10.1 (Anclaje), 10.2 (Descarte) y 10.3 (Elemento crítico) del TP3, reescribiendo cada uno según las correcciones de enfoque y de lectura de la evidencia que fue marcando el equipo. | TP 3 |
+

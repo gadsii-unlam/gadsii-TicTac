@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe MVP — Nodo UNLaM</title>
+<style>
+  :root{
+    --bg:#f0f0f0; --panel:#ffffff; --ink:#1a1a1a; --gray-1:#333; --gray-2:#666;
+    --gray-3:#999; --gray-4:#ccc; --gray-5:#e2e2e2; --gray-6:#eee; --line:#ddd;
+  }
+  *{ box-sizing:border-box; }
+  html, body{ min-height:100%; min-height:100dvh; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    display:flex; flex-direction:column;
+  }
+
+  /* ---- barra de demo: solo para saltar entre pantallas al evaluar,
+     no es parte de la interfaz de la app. Una sola línea siempre. ---- */
+  .site-header{
+    position:sticky; top:0; flex:0 0 auto; z-index:30; background:#fafafa; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:8px; height:36px;
+    padding:0 10px; overflow-x:auto; white-space:nowrap;
+  }
+  .site-nav{ display:flex; gap:5px; flex-wrap:nowrap; flex:0 0 auto; }
+  .site-nav button{
+    font-size:11px; padding:4px 9px; border:1px solid var(--line); border-radius:5px;
+    background:#fff; color:var(--gray-2); cursor:pointer; white-space:nowrap; flex:0 0 auto;
+  }
+  .site-nav button.active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  /* ---- de acá para abajo, la interfaz real del celular ----
+     Ahora escrollea la página entera (html/body), no cada pantalla
+     por separado: evita que el contenido más largo quede recortado
+     por debajo del alto calculado del viewport en mobile. ---- */
+  main{ flex:1; }
+  .screen{ display:none; }
+  .screen.active{ display:block; }
+
+  .screen-pad{ padding:32px 24px 60px; flex:1; min-width:0; }
+  @media (max-width:720px){
+    .screen-pad{ padding:20px 16px 48px; }
+  }
+
+  /* header propio de la app (no confundir con la barra de demo) */
+  .app-header{
+    position:sticky; top:36px; z-index:5; height:52px; background:#fff; border-bottom:1px solid var(--line);
+    padding:0 20px; font-weight:700; font-size:15px; color:var(--gray-1);
+    display:flex; align-items:center; gap:10px;
+  }
+  .hamburger{
+    display:none; border:none; background:none; font-size:18px; line-height:1;
+    cursor:pointer; color:var(--gray-1); padding:4px 2px; flex:0 0 auto;
+  }
+
+  /* ---- barra lateral de departamentos (solo en Inicio) ---- */
+  .inicio-body{ display:flex; }
+  .inicio-sidebar{
+    width:300px; flex:0 0 auto; position:sticky; top:88px;
+    height:calc(100vh - 88px); height:calc(100dvh - 88px); overflow-y:auto;
+    background:#fafafa; border-right:1px solid var(--line);
+    display:flex; flex-direction:column; padding:16px 0;
+  }
+  .side-label{
+    font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--gray-3);
+    padding:0 16px; margin:0 0 6px;
+  }
+  .side-item{
+    display:block; width:100%; text-align:left; border:none; background:none;
+    padding:10px 16px; font-size:13px; color:var(--gray-1); cursor:pointer;
+  }
+  .side-item:hover{ background:var(--gray-6); }
+  .side-item--own{
+    display:flex; flex-direction:column; gap:3px;
+    background:var(--gray-6); border-left:3px solid var(--ink); padding-left:13px;
+  }
+  .side-item-dept{ font-size:11.5px; font-weight:700; line-height:1.35; }
+  .side-item-career{ font-size:11.5px; font-weight:400; color:var(--gray-2); }
+  .side-gap{ height:16px; flex:0 0 auto; }
+  .side-spacer{ flex:1; }
+  .side-item--settings{ border-top:1px solid var(--gray-5); font-weight:600; }
+  .inicio-backdrop{ display:none; }
+
+  /* =========================================================
+     5. CONFIGURACIÓN DE ALERTAS
+     ========================================================= */
+  .settings-row{
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    padding:18px 0; border-bottom:1px solid var(--gray-5);
+  }
+  .settings-row--grouped{ border-bottom:none; padding-bottom:0; }
+  .settings-text{ flex:1; min-width:0; }
+  .settings-label{ font-size:14px; font-weight:600; color:var(--gray-1); margin:0 0 4px; }
+  .switch{
+    flex:0 0 auto; width:44px; height:24px; padding:0; border-radius:12px;
+    border:1px solid var(--gray-4); background:var(--gray-5); position:relative; cursor:pointer;
+  }
+  .switch-knob{
+    position:absolute; top:1px; left:1px; width:20px; height:20px; border-radius:50%;
+    background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.25); transition:transform .15s ease;
+  }
+  .switch.is-on{ background:var(--ink); border-color:var(--ink); }
+  .switch.is-on .switch-knob{ transform:translateX(20px); }
+  .settings-sub{ padding:12px 0 18px; border-bottom:1px solid var(--gray-5); }
+  .freq-group{ display:flex; gap:8px; margin-top:8px; }
+  .freq-btn{
+    flex:1; padding:9px 0; border:1px solid var(--gray-4); border-radius:6px;
+    background:#fff; color:var(--gray-2); font-size:13px; cursor:pointer;
+  }
+  .freq-btn.is-active{ background:var(--ink); color:#fff; border-color:var(--ink); }
+
+  @media (max-width:720px){
+    .hamburger{ display:inline-flex; align-items:center; justify-content:center; }
+    .inicio-sidebar{
+      position:fixed; top:88px; left:0;
+      height:calc(100vh - 88px); height:calc(100dvh - 88px);
+      transform:translateX(-100%); transition:transform .2s ease;
+      z-index:4; box-shadow:2px 0 10px rgba(0,0,0,.2);
+    }
+    .inicio-sidebar.is-open{ transform:translateX(0); }
+    .inicio-backdrop{
+      display:block; position:fixed; inset:0; z-index:3;
+      background:rgba(0,0,0,.35); opacity:0; pointer-events:none; transition:opacity .2s ease;
+    }
+    .inicio-backdrop.is-open{ opacity:1; pointer-events:auto; }
+  }
+
+  /* ---- bloques wireframe genéricos ---- */
+  .label{ font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--gray-3); margin:0 0 4px; }
+  .title-lg{ font-size:20px; font-weight:600; color:var(--gray-1); margin:0 0 10px; }
+  .divider{ border:none; border-top:1px solid var(--gray-5); margin:16px 0; }
+  .bar{ height:9px; background:var(--gray-5); border-radius:3px; margin:6px 0; }
+  .bar.w-95{ width:95%; } .bar.w-85{ width:85%; } .bar.w-70{ width:70%; } .bar.w-60{ width:60%; }
+  .caption{ font-size:12px; color:var(--gray-3); margin:6px 0 0; line-height:1.5; }
+  .field{
+    border:1px solid var(--gray-4); border-radius:6px; padding:10px 12px; margin-bottom:14px;
+    font-size:13px; color:var(--gray-1); background:#fff; width:100%;
+  }
+  /* dropdown propio: reemplaza al <select> nativo para que la lista
+     desplegada nunca sobresalga del ancho del campo, sin importar
+     cuán largo sea el texto de las opciones (a diferencia del <select>
+     nativo, cuyo popup ignora el ancho del elemento en Chrome/Edge). */
+  .dd{ position:relative; margin-bottom:14px; }
+  .dd-toggle{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    width:100%; text-align:left; margin-bottom:0; cursor:pointer;
+  }
+  .dd-value{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .dd-caret{ font-size:10px; color:var(--gray-3); flex:0 0 auto; }
+  .dd-menu{
+    position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:20;
+    margin:0; padding:4px; list-style:none; max-height:240px; overflow-y:auto;
+    background:#fff; border:1px solid var(--gray-4); border-radius:8px;
+    box-shadow:0 6px 18px rgba(0,0,0,.14);
+  }
+  .dd-menu li{
+    padding:9px 10px; font-size:13px; color:var(--gray-1); line-height:1.35;
+    white-space:normal; overflow-wrap:break-word; border-radius:5px; cursor:pointer;
+  }
+  .dd-menu li:hover, .dd-menu li.is-active{ background:var(--gray-6); }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    border:1px solid var(--ink); border-radius:6px; padding:11px 16px;
+    font-size:13px; cursor:pointer; background:#fff; color:var(--ink);
+  }
+  .btn.primary{ background:var(--ink); color:#fff; }
+  .btn.block{ width:100%; }
+  .btn[disabled]{ opacity:.35; cursor:not-allowed; }
+  .btn.is-active{ background:var(--gray-6); border-style:dashed; color:var(--gray-1); }
+  .top-link{
+    font-size:12px; color:var(--gray-2); border:1px solid var(--gray-4); border-radius:14px;
+    padding:5px 12px; cursor:pointer; background:#fff; margin-bottom:16px; display:inline-block;
+  }
+  .info-row{ display:flex; gap:24px; flex-wrap:wrap; margin-bottom:6px; }
+  .info-col .value{ font-size:13px; color:var(--gray-1); }
+
+  /* =========================================================
+     1. ONBOARDING — mismo formulario centrado en web y mobile
+     ========================================================= */
+  .onboarding-card{
+    width:100%; max-width:380px; margin:0 auto; background:#fff; border:1px solid var(--line);
+    border-radius:10px; padding:32px 28px;
+  }
+  .onboarding-logo{
+    width:56px; height:56px; border-radius:14px; border:1px dashed var(--gray-4); margin:0 auto 18px;
+    display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--gray-3);
+  }
+  @media (max-width:720px){
+    .onboarding-card{ border:none; border-radius:0; padding:24px 4px; }
+  }
+  /* centra el cuadro verticalmente en el alto visible (sin app-header en esta pantalla) */
+  #screen-onboarding .screen-pad{
+    min-height:calc(100vh - 36px); min-height:calc(100dvh - 36px);
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* =========================================================
+     2. NOTIFICACIÓN — pantalla de bloqueo a pantalla completa,
+        para que se entienda que aparece fuera de la app
+     ========================================================= */
+  .lock-preview{
+    background:#2b2b2b; min-height:calc(100vh - 36px); min-height:calc(100dvh - 36px);
+    display:flex; flex-direction:column; padding:22px 20px 26px; gap:16px;
+  }
+  .lock-status{
+    display:flex; justify-content:space-between; font-size:10px; color:#aaa; letter-spacing:.03em;
+    flex:0 0 auto;
+  }
+  .lock-middle{
+    flex:1; display:flex; flex-direction:column; justify-content:flex-start; gap:22px;
+    max-width:400px; width:100%; margin:24px auto 0;
+  }
+  .lock-clock{ text-align:center; }
+  .lock-time{ font-size:40px; font-weight:200; color:#fff; margin:0; line-height:1; }
+  .lock-date{ font-size:12px; color:#ccc; margin:6px 0 0; text-transform:capitalize; }
+  .lock-hint{ text-align:center; font-size:10px; color:#999; margin:0; flex:0 0 auto; }
+  .notif-banner{
+    text-align:left; background:#fff; border:1px solid var(--gray-4); border-radius:12px;
+    padding:14px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.35);
+  }
+  .notif-banner:hover{ border-color:var(--gray-2); }
+  .notif-head{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+  .notif-icon{ width:18px; height:18px; border-radius:4px; background:var(--gray-4); flex:0 0 auto; }
+  .notif-app{ font-size:11px; color:var(--gray-3); flex:1; }
+  .notif-time{ font-size:11px; color:var(--gray-3); }
+  .notif-title{ font-size:13px; font-weight:600; color:var(--gray-1); margin:0 0 2px; }
+  .notif-body{ font-size:12px; color:var(--gray-2); margin:0; }
+  .tap-hint{ text-align:center; font-size:12px; color:#999; margin:0; flex:0 0 auto; }
+
+  /* =========================================================
+     2b. NOTIFICACIÓN (PC) — escritorio con el toast apareciendo
+         sobre la barra de tareas, abajo a la derecha
+     ========================================================= */
+  .pc-desktop{
+    position:relative; min-height:calc(100vh - 36px); min-height:calc(100dvh - 36px);
+    background:var(--gray-5); overflow:hidden;
+  }
+  .pc-icons{ position:absolute; top:22px; left:22px; display:flex; flex-direction:column; gap:18px; }
+  .pc-icon{ display:flex; flex-direction:column; align-items:center; gap:5px; width:60px; }
+  .pc-icon-glyph{ width:32px; height:32px; border:1px dashed var(--gray-3); border-radius:4px; background:rgba(255,255,255,.5); }
+  .pc-icon-label{ font-size:10px; color:var(--gray-1); text-align:center; }
+
+  .pc-toast{ position:absolute; right:14px; bottom:56px; width:320px; max-width:calc(100% - 28px); }
+
+  .pc-taskbar{
+    position:absolute; left:0; right:0; bottom:0; height:44px; background:#1f1f1f;
+    display:flex; align-items:center; gap:10px; padding:0 10px;
+  }
+  .pc-start{ width:26px; height:26px; border-radius:4px; background:#3a3a3a; flex:0 0 auto; }
+  .pc-taskbar-icons{ display:flex; gap:8px; flex:1; }
+  .pc-taskbar-icons span{ width:24px; height:24px; border-radius:4px; background:#3a3a3a; display:inline-block; }
+  .pc-tray{ display:flex; align-items:center; gap:10px; flex:0 0 auto; }
+  .pc-tray span{ font-size:11px; color:#ddd; }
+
+  /* =========================================================
+     3. FICHA DEL EVENTO — 2 columnas en web, apiladas en mobile
+     ========================================================= */
+  .ficha-layout{ display:flex; gap:36px; max-width:900px; margin:0 auto; align-items:flex-start; }
+  .ficha-main{ flex:1; min-width:0; }
+  .ficha-sidebar{
+    width:260px; flex:0 0 auto; position:sticky; top:88px;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .ficha-actions{
+    display:flex; flex-direction:column; gap:10px;
+    background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px;
+  }
+  .ficha-actions-note{ text-align:center; }
+  .ficha-explore{
+    display:flex; flex-direction:column; gap:12px;
+    background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px;
+  }
+  .ficha-explore-label{ font-size:13px; color:var(--gray-1); line-height:1.4; margin:0; text-align:center; }
+  .ficha-flyer{
+    height:220px; width:100%; margin:2px 0 18px; border:1px dashed var(--gray-4); border-radius:8px;
+    background:var(--gray-6); display:flex; align-items:center; justify-content:center;
+    font-size:12px; color:var(--gray-3);
+  }
+  .ficha-desc{ font-size:13px; color:var(--gray-1); line-height:1.6; }
+  .ficha-desc p{ margin:0 0 12px; }
+  .ficha-desc p:last-child{ margin-bottom:0; }
+  @media (max-width:720px){
+    .ficha-layout{ flex-direction:column; gap:22px; }
+    .ficha-sidebar{ width:100%; position:static; gap:14px; }
+    .ficha-actions{ flex-direction:row; flex-wrap:wrap; padding:14px; }
+    .ficha-actions .btn{ flex:1; }
+    .ficha-actions-note{ flex-basis:100%; }
+    .ficha-flyer{ width:auto; margin-left:-16px; margin-right:-16px; border-left:none; border-right:none; border-radius:0; }
+  }
+
+  /* =========================================================
+     4. INICIO — muro estilo feed (Facebook), angosto y centrado
+        en web; a todo el ancho, sin bordes laterales, en mobile
+     ========================================================= */
+  .feed{ max-width:600px; margin:0 auto; }
+  .feed-title{ font-size:16px; margin-bottom:18px; }
+  .post-card{
+    background:#fff; border:1px solid var(--gray-4); border-radius:10px; margin-bottom:18px;
+    overflow:hidden;
+  }
+  .post-head{ display:flex; align-items:center; gap:10px; padding:14px 16px 0; }
+  .post-avatar{ width:36px; height:36px; border-radius:50%; background:var(--gray-5); flex:0 0 auto; }
+  .post-page{ font-size:13px; font-weight:600; color:var(--gray-1); margin:0; }
+  .post-time{ font-size:11px; color:var(--gray-3); margin:0; }
+  .post-body{ padding:10px 16px 0; }
+  .post-title{ font-size:15px; font-weight:600; margin:0 0 4px; color:var(--gray-1); }
+  .post-sub{ font-size:12px; color:var(--gray-3); margin:0 0 8px; }
+  .post-desc{
+    font-size:13px; color:var(--gray-2); margin:0 0 10px; line-height:1.45;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .post-image{
+    height:130px; margin-top:8px; border-top:1px dashed var(--gray-4); border-bottom:1px dashed var(--gray-4);
+    background:var(--gray-6); display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:var(--gray-3);
+  }
+  .post-actions{ display:flex; border-top:1px solid var(--gray-5); margin-top:4px; }
+  .post-actions button{
+    flex:1; border:none; background:none; padding:11px 0; font-size:13px; color:var(--gray-2); cursor:pointer;
+  }
+  .post-actions button:hover{ background:var(--gray-6); }
+  .post-actions button.is-active{ font-weight:600; color:var(--ink); }
+
+  @media (max-width:720px){
+    .feed{ max-width:100%; }
+    .post-card{ margin-left:-16px; margin-right:-16px; border-left:none; border-right:none; border-radius:0; }
+  }
+
+  /* =========================================================
+     6. AGREGAR EVENTO — carga manual del equipo (2.4/2.5),
+        solo accesible desde la barra de demo, no desde la app
+     ========================================================= */
+  .form-shell{ max-width:480px; margin:0 auto; }
+  .form-row{ display:flex; gap:12px; }
+  .form-row > div{ flex:1; min-width:0; }
+  textarea.field{ resize:vertical; min-height:110px; font-family:inherit; }
+  .upload-box{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+    height:140px; margin-bottom:14px; border:1px dashed var(--gray-4); border-radius:8px;
+    background:var(--gray-6); color:var(--gray-3); font-size:12px; cursor:pointer; text-align:center; padding:12px;
+  }
+  .upload-box:hover{ border-color:var(--gray-2); }
+  .optional-tag{ color:var(--gray-4); font-weight:400; }
+  @media (max-width:720px){
+    .form-row{ flex-direction:column; gap:0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="site-nav">
+    <button data-goto="onboarding">On</button>
+    <button data-goto="notif">Notif</button>
+    <button data-goto="notif-pc">Notif PC</button>
+    <button data-goto="ficha">Ficha</button>
+    <button data-goto="inicio">Inicio</button>
+    <button data-goto="config">Config</button>
+    <button data-goto="agregar">+ Evento</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- 1. ONBOARDING (una sola vez) -->
+  <section class="screen" id="screen-onboarding">
+    <div class="screen-pad">
+      <div class="onboarding-card">
+        <div class="onboarding-logo">LOGO</div>
+        <p class="title-lg" style="text-align:center;">Nodo UNLaM</p>
+        <p class="caption" style="text-align:center; margin-bottom:22px;">Elegí tu departamento y carrera</p>
+
+        <label class="label">Departamento</label>
+        <div class="dd" id="dd-depto">
+          <button type="button" class="field dd-toggle">
+            <span class="dd-value">Seleccionar…</span>
+            <span class="dd-caret">▾</span>
+          </button>
+          <input type="hidden" id="sel-depto">
+          <ul class="dd-menu" hidden>
+            <li data-value="">Seleccionar…</li>
+            <li data-value="Departamento de Ingeniería e Investigaciones Tecnológicas">Departamento de Ingeniería e Investigaciones Tecnológicas</li>
+            <li data-value="Departamento de Humanidades y Ciencias Sociales">Departamento de Humanidades y Ciencias Sociales</li>
+            <li data-value="Departamento de Derecho y Ciencia Política">Departamento de Derecho y Ciencia Política</li>
+            <li data-value="Departamento de Ciencias Económicas">Departamento de Ciencias Económicas</li>
+            <li data-value="Departamento de Ciencias de la Salud">Departamento de Ciencias de la Salud</li>
+            <li data-value="Departamento de Arquitectura y Urbanismo">Departamento de Arquitectura y Urbanismo</li>
+            <li data-value="Departamento de Odontología">Departamento de Odontología</li>
+          </ul>
+        </div>
+
+        <label class="label">Carrera</label>
+        <div class="dd" id="dd-carrera">
+          <button type="button" class="field dd-toggle">
+            <span class="dd-value">Seleccionar…</span>
+            <span class="dd-caret">▾</span>
+          </button>
+          <input type="hidden" id="sel-carrera">
+          <ul class="dd-menu" hidden>
+            <li data-value="">Seleccionar…</li>
+            <li data-value="Ingeniería en Informática">Ingeniería en Informática</li>
+            <li data-value="Ingeniería Electrónica">Ingeniería Electrónica</li>
+            <li data-value="Ingeniería Mecánica">Ingeniería Mecánica</li>
+            <li data-value="Ingeniería Civil">Ingeniería Civil</li>
+            <li data-value="Ingeniería en Energías Renovables">Ingeniería en Energías Renovables</li>
+            <li data-value="Ingeniería Industrial">Ingeniería Industrial</li>
+          </ul>
+        </div>
+
+        <button class="btn primary block" id="btn-continuar" disabled style="margin-top:6px;">Continuar</button>
+        <p class="caption" style="text-align:center;">Se guarda en este dispositivo. No pide cuenta ni contraseña.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. NOTIFICACIÓN -->
+  <section class="screen" id="screen-notif">
+    <div class="lock-preview">
+      <div class="lock-status">
+        <span>•••• Movistar</span>
+        <span>Wi-Fi · 100%</span>
+      </div>
+      <div class="lock-middle">
+        <div class="lock-clock">
+          <p class="lock-time">10:42</p>
+          <p class="lock-date">Sábado 6 de septiembre</p>
+        </div>
+        <div class="notif-banner" data-goto="ficha">
+          <div class="notif-head">
+            <div class="notif-icon"></div>
+            <span class="notif-app">NODO UNLAM</span>
+            <span class="notif-time">ahora</span>
+          </div>
+          <p class="notif-title">Nuevo evento de tu Departamento</p>
+          <p class="notif-body">¿Está la IA más allá del bien y del mal? · Jue 11/9 · 18:00</p>
+        </div>
+        <p class="tap-hint">↑ Tocar la notificación para abrir la ficha del evento</p>
+      </div>
+      <p class="lock-hint">Deslizá para desbloquear</p>
+    </div>
+  </section>
+
+  <!-- 2b. NOTIFICACIÓN (PC) -->
+  <section class="screen" id="screen-notif-pc">
+    <div class="pc-desktop">
+      <div class="pc-icons">
+        <div class="pc-icon">
+          <div class="pc-icon-glyph"></div>
+          <span class="pc-icon-label">Este equipo</span>
+        </div>
+        <div class="pc-icon">
+          <div class="pc-icon-glyph"></div>
+          <span class="pc-icon-label">Papelera</span>
+        </div>
+      </div>
+
+      <div class="pc-toast notif-banner" data-goto="ficha">
+        <div class="notif-head">
+          <div class="notif-icon"></div>
+          <span class="notif-app">NODO UNLAM</span>
+          <span class="notif-time">ahora</span>
+        </div>
+        <p class="notif-title">Nuevo evento de tu Departamento</p>
+        <p class="notif-body">¿Está la IA más allá del bien y del mal? · Jue 11/9 · 18:00</p>
+      </div>
+
+      <div class="pc-taskbar">
+        <div class="pc-start" title="Inicio"></div>
+        <div class="pc-taskbar-icons">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="pc-tray">
+          <span class="pc-clock">10:42</span>
+          <span class="pc-date">6/9/2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FICHA DEL EVENTO (Estructura B) -->
+  <section class="screen" id="screen-ficha">
+    <div class="app-header">Nodo UNLaM</div>
+    <div class="screen-pad">
+      <div class="ficha-layout">
+        <div class="ficha-main">
+          <button class="top-link" data-goto="inicio">← Inicio</button>
+          <p class="title-lg">¿Está la IA más allá del bien y del mal?</p>
+
+          <div class="info-row">
+            <div class="info-col">
+              <p class="label">Fecha y hora</p>
+              <p class="value">Jue 11/9 · 18:00</p>
+            </div>
+            <div class="info-col">
+              <p class="label">Lugar</p>
+              <p class="value">Aula Magna</p>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <div class="ficha-flyer">flyer del evento</div>
+
+          <p class="label">Descripción</p>
+          <div class="ficha-desc">
+            <p>Del dilema del tranvía a las armas autónomas.</p>
+            <p>¿Está la IA más allá del bien y del mal? Junto a Nahuel González y Cristian Dimitriu profundizaremos en la ética algorítmica, que busca alinear el comportamiento de la IA con el bienestar humano, en un contexto donde estos sistemas ya toman decisiones que nos afectan.</p>
+            <p>En esta charla veremos sus fundamentos, casos reales de desalineación y los errores más comunes al implementarla, con foco en ciberguerra y ciberdefensa.</p>
+            <p>El evento se va a llevar a cabo en el Aula Magna ubicado en la UNLaM. Te esperamos!!</p>
+            <p><strong>Nuestros exponentes:</strong></p>
+            <p>Nahuel González es Dr. en Cs. de la Computación (UNLP), Investigador LSIA-UBA, Co-Fundador y CTO de ADGS Computer Systems (Qatar).</p>
+            <p>Cristian Dimitriu es Dr. en Filosofía (Univ. de Toronto), Investigador CONICET, Prof. visitante en Carnegie Mellon University (Qatar) 2022-2025.</p>
+          </div>
+        </div>
+
+        <div class="ficha-sidebar">
+          <aside class="ficha-actions">
+            <button class="btn primary block" id="btn-recordar">Recordarme</button>
+            <a class="btn block" id="btn-inscribir" href="https://www.eventbrite.com.ar/e/esta-la-ia-mas-alla-del-bien-y-del-mal-tickets-1997762330910#location" target="_blank" rel="noopener noreferrer">Inscribirme ↗</a>
+            <p class="caption ficha-actions-note">Al inscribirte, se abre una página externa.</p>
+          </aside>
+
+          <div class="ficha-explore">
+            <p class="ficha-explore-label">Explorá más eventos que complementen tu formación</p>
+            <button class="btn block" data-goto="inicio">Descubrir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. INICIO — muro tipo feed -->
+  <section class="screen" id="screen-inicio">
+    <div class="app-header">
+      <button class="hamburger" id="btn-menu" aria-label="Mostrar u ocultar menú">☰</button>
+      Nodo UNLaM
+    </div>
+    <div class="inicio-body">
+      <div class="inicio-backdrop" id="inicio-backdrop"></div>
+      <aside class="inicio-sidebar" id="inicio-sidebar">
+        <p class="side-label">Tu departamento y carrera</p>
+        <button class="side-item side-item--own">
+          <span class="side-item-dept">Departamento de Ingeniería e Investigaciones Tecnológicas</span>
+          <span class="side-item-career">Ingeniería en Informática</span>
+        </button>
+
+        <div class="side-gap"></div>
+        <p class="side-label">Otros departamentos</p>
+        <button class="side-item">Departamento de Humanidades y Ciencias Sociales</button>
+        <button class="side-item">Departamento de Derecho y Ciencia Política</button>
+        <button class="side-item">Departamento de Ciencias Económicas</button>
+        <button class="side-item">Departamento de Ciencias de la Salud</button>
+        <button class="side-item">Departamento de Arquitectura y Urbanismo</button>
+        <button class="side-item">Departamento de Odontología</button>
+
+        <div class="side-spacer"></div>
+        <button class="side-item side-item--settings" data-goto="config">Configuración de alertas</button>
+      </aside>
+
+      <div class="screen-pad">
+    <div class="feed">
+      <p class="title-lg feed-title">Eventos de Ingeniería e Investigaciones Tecnológicas</p>
+
+      <article class="post-card">
+        <div class="post-head">
+          <div class="post-avatar"></div>
+          <div>
+            <p class="post-page">DIIT Eventos</p>
+            <p class="post-time">Publicado hace 2 días</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p class="post-title">¿Está la IA más allá del bien y del mal?</p>
+          <p class="post-sub">Jue 11/9 · 18:00 · Aula Magna</p>
+          <p class="post-desc">Del dilema del tranvía a las armas autónomas. Junto a Nahuel González y Cristian Dimitriu profundizamos en la ética algorítmica y en cómo alinear el comportamiento de la IA con el bienestar humano…</p>
+        </div>
+        <div class="post-image">imagen del evento</div>
+        <div class="post-actions">
+          <button>Ver ficha completa</button>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="post-head">
+          <div class="post-avatar"></div>
+          <div>
+            <p class="post-page">DIIT Eventos</p>
+            <p class="post-time">Publicado hace 3 días</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p class="post-title">Jornada de Puertas Abiertas DIIT</p>
+          <p class="post-sub">Vie 12/9 · 10:00 · Hall central</p>
+          <p class="post-desc">Recorré los laboratorios y hablá con docentes y alumnos avanzados de la carrera.</p>
+        </div>
+        <div class="post-image">imagen del evento</div>
+        <div class="post-actions">
+          <button>Ver ficha completa</button>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="post-head">
+          <div class="post-avatar"></div>
+          <div>
+            <p class="post-page">DIIT Eventos</p>
+            <p class="post-time">Publicado hace 5 días</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p class="post-title">Taller de Redes y Ciberseguridad</p>
+          <p class="post-sub">Mar 16/9 · 19:00 · Lab. 4</p>
+          <p class="post-desc">Práctica guiada de configuración de redes seguras y detección de vulnerabilidades comunes, con cupos limitados para quienes ya cursaron la materia de Redes de la carrera…</p>
+        </div>
+        <div class="post-image">imagen del evento</div>
+        <div class="post-actions">
+          <button>Ver ficha completa</button>
+        </div>
+      </article>
+
+      <article class="post-card">
+        <div class="post-head">
+          <div class="post-avatar"></div>
+          <div>
+            <p class="post-page">DIIT Eventos</p>
+            <p class="post-time">Publicado hace 6 días</p>
+          </div>
+        </div>
+        <div class="post-body">
+          <p class="post-title">Charla: Salidas laborales en IA</p>
+          <p class="post-sub">Jue 18/9 · 18:30 · Aula Magna</p>
+          <p class="post-desc">Egresados de la carrera cuentan su experiencia trabajando en proyectos de inteligencia artificial.</p>
+        </div>
+        <div class="post-image">imagen del evento</div>
+        <div class="post-actions">
+          <button>Ver ficha completa</button>
+        </div>
+      </article>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CONFIGURACIÓN DE ALERTAS -->
+  <section class="screen" id="screen-config">
+    <div class="app-header">Nodo UNLaM</div>
+    <div class="screen-pad">
+      <button class="top-link" data-goto="inicio">← Inicio</button>
+      <p class="title-lg">Configuración de alertas</p>
+
+      <div class="settings-row">
+        <div class="settings-text">
+          <p class="settings-label">Notificarme sobre nuevos eventos de mi departamento</p>
+          <p class="caption">Recibís un aviso apenas se publique un evento nuevo del Departamento de Ingeniería e Investigaciones Tecnológicas.</p>
+        </div>
+        <button class="switch is-on" id="switch-alertas" role="switch" aria-checked="true" aria-label="Notificarme sobre nuevos eventos de mi departamento">
+          <span class="switch-knob"></span>
+        </button>
+      </div>
+
+      <div class="settings-row settings-row--grouped">
+        <div class="settings-text">
+          <p class="settings-label">Recordatorio de exploración de eventos</p>
+          <p class="caption">Te avisamos para que entres a revisar si hay eventos nuevos, aunque ninguno se haya publicado todavía.</p>
+        </div>
+        <button class="switch is-on" id="switch-exploracion" role="switch" aria-checked="true" aria-label="Recordatorio de exploración de eventos">
+          <span class="switch-knob"></span>
+        </button>
+      </div>
+
+      <div class="settings-sub" id="freq-exploracion">
+        <p class="label">Frecuencia</p>
+        <div class="freq-group">
+          <button class="freq-btn is-active" data-freq="diario">Diario</button>
+          <button class="freq-btn" data-freq="semanal">Semanal</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. AGREGAR EVENTO (carga manual del equipo — solo accesible desde "Demo") -->
+  <section class="screen" id="screen-agregar">
+    <div class="app-header">Nodo UNLaM</div>
+    <div class="screen-pad">
+      <div class="form-shell">
+        <p class="title-lg" style="margin-bottom:20px;">Agregar evento</p>
+
+        <label class="label">Departamento</label>
+        <div class="dd">
+          <button type="button" class="field dd-toggle">
+            <span class="dd-value">Seleccionar…</span>
+            <span class="dd-caret">▾</span>
+          </button>
+          <input type="hidden">
+          <ul class="dd-menu" hidden>
+            <li data-value="">Seleccionar…</li>
+            <li data-value="Departamento de Ingeniería e Investigaciones Tecnológicas">Departamento de Ingeniería e Investigaciones Tecnológicas</li>
+            <li data-value="Departamento de Humanidades y Ciencias Sociales">Departamento de Humanidades y Ciencias Sociales</li>
+            <li data-value="Departamento de Derecho y Ciencia Política">Departamento de Derecho y Ciencia Política</li>
+            <li data-value="Departamento de Ciencias Económicas">Departamento de Ciencias Económicas</li>
+            <li data-value="Departamento de Ciencias de la Salud">Departamento de Ciencias de la Salud</li>
+            <li data-value="Departamento de Arquitectura y Urbanismo">Departamento de Arquitectura y Urbanismo</li>
+            <li data-value="Departamento de Odontología">Departamento de Odontología</li>
+          </ul>
+        </div>
+
+        <label class="label">Carrera</label>
+        <div class="dd">
+          <button type="button" class="field dd-toggle">
+            <span class="dd-value">Seleccionar…</span>
+            <span class="dd-caret">▾</span>
+          </button>
+          <input type="hidden">
+          <ul class="dd-menu" hidden>
+            <li data-value="">Seleccionar…</li>
+            <li data-value="Todas las carreras">Todas las carreras</li>
+            <li data-value="Todas las carreras del Departamento">Todas las carreras del Departamento</li>
+            <li data-value="Ingeniería en Informática">Ingeniería en Informática</li>
+            <li data-value="Ingeniería Electrónica">Ingeniería Electrónica</li>
+            <li data-value="Ingeniería Mecánica">Ingeniería Mecánica</li>
+            <li data-value="Ingeniería Civil">Ingeniería Civil</li>
+            <li data-value="Ingeniería en Energías Renovables">Ingeniería en Energías Renovables</li>
+            <li data-value="Ingeniería Industrial">Ingeniería Industrial</li>
+          </ul>
+        </div>
+
+        <label class="label">Nombre</label>
+        <input class="field" type="text" placeholder="Título del evento">
+
+        <div class="form-row">
+          <div>
+            <label class="label">Día</label>
+            <input class="field" type="date">
+          </div>
+          <div>
+            <label class="label">Horario</label>
+            <input class="field" type="time">
+          </div>
+        </div>
+
+        <label class="label">Ubicación</label>
+        <input class="field" type="text" placeholder="Ej: Aula Magna">
+
+        <label class="label">Imagen</label>
+        <label class="upload-box" id="upload-box" for="file-imagen">
+          <span id="upload-text">Subir imagen (flyer del evento)</span>
+          <input type="file" id="file-imagen" accept="image/*" style="display:none">
+        </label>
+
+        <label class="label">Descripción</label>
+        <textarea class="field" rows="6" placeholder="Descripción completa: de qué se trata, requisitos para participar y todo lo necesario para decidir asistir."></textarea>
+
+        <label class="label">Enlace al sitio de inscripción <span class="optional-tag">(opcional)</span></label>
+        <input class="field" type="url" placeholder="https://...">
+
+        <button class="btn primary block" id="btn-publicar" style="margin-top:6px;">Publicar evento</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const screens = ['onboarding','notif','notif-pc','ficha','inicio','config','agregar'];
+
+  function goto(name){
+    if (!screens.includes(name)) return;
+    document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === 'screen-' + name));
+    document.querySelectorAll('.site-nav button').forEach(b => b.classList.toggle('active', b.dataset.goto === name));
+    closeSidebar();
+    window.scrollTo(0, 0);
+  }
+
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', () => goto(el.dataset.goto));
+  });
+
+  // dropdown propio (reemplaza a los <select> nativos: el popup de un
+  // <select> ignora el ancho del elemento en Chrome/Edge y sobresale del
+  // contenedor con opciones largas)
+  document.querySelectorAll('.dd').forEach(dd => {
+    const toggle = dd.querySelector('.dd-toggle');
+    const valueEl = dd.querySelector('.dd-value');
+    const hiddenInput = dd.querySelector('input[type="hidden"]');
+    const menu = dd.querySelector('.dd-menu');
+    const placeholder = valueEl.textContent;
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = menu.hidden;
+      document.querySelectorAll('.dd-menu').forEach(m => { m.hidden = true; });
+      menu.hidden = !willOpen;
+    });
+
+    menu.querySelectorAll('li').forEach(li => {
+      li.addEventListener('click', () => {
+        const val = li.dataset.value;
+        valueEl.textContent = val ? li.textContent : placeholder;
+        hiddenInput.value = val;
+        menu.querySelectorAll('li').forEach(x => x.classList.remove('is-active'));
+        li.classList.add('is-active');
+        menu.hidden = true;
+        hiddenInput.dispatchEvent(new Event('change'));
+      });
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.dd-menu').forEach(m => { m.hidden = true; });
+  });
+
+  // onboarding: habilitar "Continuar" solo con ambos campos elegidos
+  const selDepto = document.getElementById('sel-depto');
+  const selCarrera = document.getElementById('sel-carrera');
+  const btnContinuar = document.getElementById('btn-continuar');
+  function checkOnboarding(){ btnContinuar.disabled = !(selDepto.value && selCarrera.value); }
+  selDepto.addEventListener('change', checkOnboarding);
+  selCarrera.addEventListener('change', checkOnboarding);
+  btnContinuar.addEventListener('click', () => { if(!btnContinuar.disabled) goto('inicio'); });
+
+  // ficha: toggle recordatorio
+  const btnRecordar = document.getElementById('btn-recordar');
+  btnRecordar.addEventListener('click', () => {
+    const active = btnRecordar.classList.toggle('is-active');
+    btnRecordar.classList.toggle('primary', !active);
+    btnRecordar.textContent = active ? '✓ Recordatorio activado' : 'Recordarme';
+  });
+
+// feed: solo el botón "Ver ficha completa" navega, no el resto de la card
+  document.querySelectorAll('.post-actions button').forEach(btn => {
+    btn.addEventListener('click', () => goto('ficha'));
+  });
+
+  // Inicio: menú hamburguesa (solo visible en mobile) para mostrar/ocultar la barra lateral
+  const btnMenu = document.getElementById('btn-menu');
+  const sidebar = document.getElementById('inicio-sidebar');
+  const backdrop = document.getElementById('inicio-backdrop');
+  function closeSidebar(){
+    sidebar.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+  }
+  btnMenu.addEventListener('click', () => {
+    sidebar.classList.toggle('is-open');
+    backdrop.classList.toggle('is-open');
+  });
+  backdrop.addEventListener('click', closeSidebar);
+
+  // configuración de alertas: switch on/off
+  const switchAlertas = document.getElementById('switch-alertas');
+  switchAlertas.addEventListener('click', () => {
+    const isOn = switchAlertas.classList.toggle('is-on');
+    switchAlertas.setAttribute('aria-checked', isOn ? 'true' : 'false');
+  });
+
+  // recordatorio de exploración: switch on/off + su selector de frecuencia
+  const switchExploracion = document.getElementById('switch-exploracion');
+  const freqExploracion = document.getElementById('freq-exploracion');
+  function syncFreqVisibility(){
+    freqExploracion.hidden = !switchExploracion.classList.contains('is-on');
+  }
+  switchExploracion.addEventListener('click', () => {
+    const isOn = switchExploracion.classList.toggle('is-on');
+    switchExploracion.setAttribute('aria-checked', isOn ? 'true' : 'false');
+    syncFreqVisibility();
+  });
+  syncFreqVisibility();
+
+  document.querySelectorAll('.freq-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.parentElement.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
+
+  // agregar evento: mostrar el nombre del archivo elegido
+  const fileImagen = document.getElementById('file-imagen');
+  const uploadText = document.getElementById('upload-text');
+  fileImagen.addEventListener('change', () => {
+    uploadText.textContent = fileImagen.files[0] ? fileImagen.files[0].name : 'Subir imagen (flyer del evento)';
+  });
+
+  goto('onboarding');
+</script>
+
+</body>
+</html>
