@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esquema — Alternativa A</title>
+<style>
+  :root{
+    --bg:#f0f0f0; --panel:#ffffff; --ink:#1a1a1a; --gray-1:#333; --gray-2:#666;
+    --gray-3:#999; --gray-4:#ccc; --gray-5:#e2e2e2; --line:#ddd;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    padding:32px 20px 48px;
+  }
+  .wrap{ max-width:420px; margin:0 auto; }
+  .eyebrow{
+    font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--gray-3);
+    margin:0 0 4px; text-align:center;
+  }
+  h1{ font-size:18px; font-weight:600; color:var(--gray-1); margin:0 0 6px; text-align:center; }
+  .subtitle{ font-size:12px; color:var(--gray-3); margin:0 0 32px; text-align:center; line-height:1.5; }
+
+  .node{
+    border:1px solid var(--gray-4); border-radius:8px; background:var(--panel);
+    padding:14px 16px; text-align:center;
+  }
+  .node .label{
+    font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--gray-3);
+    margin:0 0 4px;
+  }
+  .node .name{ font-size:15px; font-weight:600; color:var(--gray-1); margin:0; }
+  .node .caption{ font-size:12px; color:var(--gray-2); margin:6px 0 0; line-height:1.5; }
+  .node--dashed{ border-style:dashed; }
+
+  .arrow-down{ display:flex; flex-direction:column; align-items:center; height:30px; }
+  .arrow-down .line{ width:2px; flex:1; background:var(--gray-4); }
+  .arrow-down .head{
+    width:0; height:0; border-left:5px solid transparent; border-right:5px solid transparent;
+    border-top:7px solid var(--gray-4);
+  }
+
+  .note{
+    margin-top:28px; font-size:12px; color:var(--gray-3); text-align:center; line-height:1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="eyebrow">Esquema simplificado</p>
+    <h1>Alternativa A — Eficiencia</h1>
+    <p class="subtitle">Notificación → Inicio, sin abrir ninguna otra pantalla</p>
+
+    <div class="node">
+      <p class="label">Paso 1</p>
+      <p class="name">Notificación</p>
+      <p class="caption">Banner push al celular</p>
+    </div>
+
+    <div class="arrow-down"><div class="line"></div><div class="head"></div></div>
+
+    <div class="node">
+      <p class="label">Paso 2</p>
+      <p class="name">Inicio</p>
+      <p class="caption">Evento destacado al comienzo del listado + acción "Recordarme" ahí mismo</p>
+    </div>
+
+    <p class="note">No hay ficha ni pop-up intermedios: la tarea guía (activar el recordatorio) se resuelve dentro de Inicio.</p>
+  </div>
+</body>
+</html>
