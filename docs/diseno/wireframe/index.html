@@ -73,7 +73,7 @@
   }
   .side-item:hover{ background:var(--gray-6); }
   .side-item--own{
-    display:flex; flex-direction:column; gap:3px;
+    position:relative; display:flex; flex-direction:column; gap:3px;
     background:var(--gray-6); border-left:3px solid var(--ink); padding-left:13px;
   }
   .side-item-dept{ font-size:11.5px; font-weight:700; line-height:1.35; }
@@ -87,7 +87,7 @@
      5. CONFIGURACIÓN DE ALERTAS
      ========================================================= */
   .settings-row{
-    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    position:relative; display:flex; align-items:center; justify-content:space-between; gap:20px;
     padding:18px 0; border-bottom:1px solid var(--gray-5);
   }
   .settings-row--grouped{ border-bottom:none; padding-bottom:0; }
@@ -103,7 +103,7 @@
   }
   .switch.is-on{ background:var(--ink); border-color:var(--ink); }
   .switch.is-on .switch-knob{ transform:translateX(20px); }
-  .settings-sub{ padding:12px 0 18px; border-bottom:1px solid var(--gray-5); }
+  .settings-sub{ position:relative; padding:12px 0 18px; border-bottom:1px solid var(--gray-5); }
   .freq-group{ display:flex; gap:8px; margin-top:8px; }
   .freq-btn{
     flex:1; padding:9px 0; border:1px solid var(--gray-4); border-radius:6px;
@@ -180,7 +180,7 @@
      1. ONBOARDING — mismo formulario centrado en web y mobile
      ========================================================= */
   .onboarding-card{
-    width:100%; max-width:380px; margin:0 auto; background:#fff; border:1px solid var(--line);
+    position:relative; width:100%; max-width:380px; margin:0 auto; background:#fff; border:1px solid var(--line);
     border-radius:10px; padding:32px 28px;
   }
   .onboarding-logo{
@@ -217,7 +217,7 @@
   .lock-date{ font-size:12px; color:#ccc; margin:6px 0 0; text-transform:capitalize; }
   .lock-hint{ text-align:center; font-size:10px; color:#999; margin:0; flex:0 0 auto; }
   .notif-banner{
-    text-align:left; background:#fff; border:1px solid var(--gray-4); border-radius:12px;
+    position:relative; text-align:left; background:#fff; border:1px solid var(--gray-4); border-radius:12px;
     padding:14px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,.35);
   }
   .notif-banner:hover{ border-color:var(--gray-2); }
@@ -258,13 +258,13 @@
      3. FICHA DEL EVENTO — 2 columnas en web, apiladas en mobile
      ========================================================= */
   .ficha-layout{ display:flex; gap:36px; max-width:900px; margin:0 auto; align-items:flex-start; }
-  .ficha-main{ flex:1; min-width:0; }
+  .ficha-main{ position:relative; flex:1; min-width:0; }
   .ficha-sidebar{
     width:260px; flex:0 0 auto; position:sticky; top:88px;
     display:flex; flex-direction:column; gap:16px;
   }
   .ficha-actions{
-    display:flex; flex-direction:column; gap:10px;
+    position:relative; display:flex; flex-direction:column; gap:10px;
     background:#fff; border:1px solid var(--line); border-radius:10px; padding:18px;
   }
   .ficha-actions-note{ text-align:center; }
@@ -332,7 +332,7 @@
      6. AGREGAR EVENTO — carga manual del equipo (2.4/2.5),
         solo accesible desde la barra de demo, no desde la app
      ========================================================= */
-  .form-shell{ max-width:480px; margin:0 auto; }
+  .form-shell{ position:relative; max-width:480px; margin:0 auto; }
   .form-row{ display:flex; gap:12px; }
   .form-row > div{ flex:1; min-width:0; }
   textarea.field{ resize:vertical; min-height:110px; font-family:inherit; }
@@ -346,6 +346,35 @@
   @media (max-width:720px){
     .form-row{ flex-direction:column; gap:0; }
   }
+
+  /* =========================================================
+     ANOTACIONES DE DISEÑO — capa opcional para quien evalúa el
+     wireframe (TP4): explica por qué se tomó cada decisión, con
+     el respaldo del TP2. Oculta por defecto; no es parte de la
+     interfaz de la app ni cambia su layout cuando está apagada.
+     ========================================================= */
+  body:not(.show-annot) .annot{ display:none; }
+  .annot{
+    position:absolute; top:8px; right:8px; z-index:25;
+    width:20px; height:20px; border-radius:50%;
+    background:var(--ink); color:#fff; font-size:11px; font-weight:700;
+    border:2px solid #fff; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,.3);
+  }
+  /* left/right:0 (en vez de un ancho fijo) hace que el popover ocupe
+     siempre el ancho de su propio contenedor anotado — nunca se sale
+     de esa pantalla ni tapa contenido de al lado, sea un sidebar
+     angosto o una columna ancha. */
+  .annot-pop{
+    display:none; position:absolute; top:34px; left:0; right:0; z-index:26;
+    text-align:left; text-transform:none; letter-spacing:normal; font-weight:400;
+    background:#fff; color:var(--gray-1); border:1px solid var(--line); border-radius:8px;
+    padding:12px 14px; font-size:12px; line-height:1.5; box-shadow:0 8px 22px rgba(0,0,0,.18);
+  }
+  .annot-pop.is-open{ display:block; }
+  .annot-pop .annot-title{ display:block; margin:0 0 5px; font-weight:700; color:var(--ink); }
+  .annot-pop .annot-evid{ display:block; margin-top:6px; color:var(--gray-2); }
+  .annot-toggle.is-active{ background:var(--ink); color:#fff; border-color:var(--ink); }
 </style>
 </head>
 <body>
@@ -359,6 +388,7 @@
     <button data-goto="inicio">Inicio</button>
     <button data-goto="config">Config</button>
     <button data-goto="agregar">+ Evento</button>
+    <button id="btn-annot" class="annot-toggle" type="button" title="Mostrar u ocultar las anotaciones de diseño">💬 Anotaciones</button>
   </nav>
 </header>
 
@@ -368,12 +398,24 @@
   <section class="screen" id="screen-onboarding">
     <div class="screen-pad">
       <div class="onboarding-card">
+        <span class="annot" data-annot-toggle>0</span>
+        <div class="annot-pop">
+          <span class="annot-title">Por qué la paleta es neutra y el diseño es simple</span>
+          Es un wireframe de baja fidelidad: grises, tipografía por defecto y placeholders (como este logo o las imágenes de evento) son intencionales — todavía no hay una identidad visual definida para Nodo UNLaM.
+          <span class="annot-evid">TP3: "decide primero qué vale la pena construir, y recién después cómo se ve" — acá se valida el flujo y la información que necesita el alumno, no el estilo final.</span>
+        </div>
         <div class="onboarding-logo">LOGO</div>
         <p class="title-lg" style="text-align:center;">Nodo UNLaM</p>
         <p class="caption" style="text-align:center; margin-bottom:22px;">Elegí tu departamento y carrera</p>
 
         <label class="label">Departamento</label>
         <div class="dd" id="dd-depto">
+          <span class="annot" data-annot-toggle>5</span>
+          <div class="annot-pop">
+            <span class="annot-title">Por qué se filtra por departamento y carrera</span>
+            Evita mezclar eventos ajenos y que el canal push se sature o se silencie.
+            <span class="annot-evid">TP2: 3,60/5 de interés en el propio departamento contra 2,20/5 en los demás; 0/20 prioriza eventos ajenos.</span>
+          </div>
           <button type="button" class="field dd-toggle">
             <span class="dd-value">Seleccionar…</span>
             <span class="dd-caret">▾</span>
@@ -410,7 +452,15 @@
         </div>
 
         <button class="btn primary block" id="btn-continuar" disabled style="margin-top:6px;">Continuar</button>
-        <p class="caption" style="text-align:center;">Se guarda en este dispositivo. No pide cuenta ni contraseña.</p>
+        <div class="caption" style="text-align:center; position:relative; padding-right:26px;">
+          <span class="annot" data-annot-toggle>6</span>
+          <div class="annot-pop">
+            <span class="annot-title">Por qué no pide cuenta</span>
+            Alcanza con configurar el dispositivo; no hace falta identificar al alumno para filtrar sus alertas.
+            <span class="annot-evid">TP3, Excluido del MVP: autenticación institucional queda fuera; se reevalúa si una próxima versión necesita persistencia entre dispositivos.</span>
+          </div>
+          Se guarda en este dispositivo. No pide cuenta ni contraseña.
+        </div>
       </div>
     </div>
   </section>
@@ -428,6 +478,12 @@
           <p class="lock-date">Sábado 6 de septiembre</p>
         </div>
         <div class="notif-banner" data-goto="ficha">
+          <span class="annot" data-annot-toggle>1</span>
+          <div class="annot-pop">
+            <span class="annot-title">Por qué arranca acá</span>
+            El flujo principal se dispara con una alerta push (mobile y PC), no con que el alumno entre a buscar.
+            <span class="annot-evid">TP2: 15/20 marcaron "no vi la publicación" como motivo de pérdida; 12/20 casi nunca buscan eventos por su cuenta.</span>
+          </div>
           <div class="notif-head">
             <div class="notif-icon"></div>
             <span class="notif-app">NODO UNLAM</span>
@@ -457,6 +513,12 @@
       </div>
 
       <div class="pc-toast notif-banner" data-goto="ficha">
+        <span class="annot" data-annot-toggle>1</span>
+        <div class="annot-pop">
+          <span class="annot-title">Por qué arranca acá</span>
+          El flujo principal se dispara con una alerta push (mobile y PC), no con que el alumno entre a buscar.
+          <span class="annot-evid">TP2: 15/20 marcaron "no vi la publicación" como motivo de pérdida; 12/20 casi nunca buscan eventos por su cuenta.</span>
+        </div>
         <div class="notif-head">
           <div class="notif-icon"></div>
           <span class="notif-app">NODO UNLAM</span>
@@ -485,6 +547,12 @@
     <div class="screen-pad">
       <div class="ficha-layout">
         <div class="ficha-main">
+          <span class="annot" data-annot-toggle>2</span>
+          <div class="annot-pop">
+            <span class="annot-title">Por qué se llega directo acá</span>
+            Tocar la notificación abre la ficha completa, no un aviso mínimo ni el listado general.
+            <span class="annot-evid">TP2, punto 3.2: U13 y U22 se quejan de publicaciones que no alcanzan para decidir.</span>
+          </div>
           <button class="top-link" data-goto="inicio">← Inicio</button>
           <p class="title-lg">¿Está la IA más allá del bien y del mal?</p>
 
@@ -517,6 +585,12 @@
 
         <div class="ficha-sidebar">
           <aside class="ficha-actions">
+            <span class="annot" data-annot-toggle>8</span>
+            <div class="annot-pop">
+              <span class="annot-title">Por qué se sale de la app acá</span>
+              La inscripción queda fuera del scope del MVP: se resuelve con un link externo en vez de un motor propio.
+              <span class="annot-evid">TP3, Excluido del MVP: un motor de inscripción propio sumaría costo sin ser el factor que valida si el alumno se enteró y decidió asistir.</span>
+            </div>
             <button class="btn primary block" id="btn-recordar">Recordarme</button>
             <a class="btn block" id="btn-inscribir" href="https://www.eventbrite.com.ar/e/esta-la-ia-mas-alla-del-bien-y-del-mal-tickets-1997762330910#location" target="_blank" rel="noopener noreferrer">Inscribirme ↗</a>
             <p class="caption ficha-actions-note">Al inscribirte, se abre una página externa.</p>
@@ -542,12 +616,26 @@
       <aside class="inicio-sidebar" id="inicio-sidebar">
         <p class="side-label">Tu departamento y carrera</p>
         <button class="side-item side-item--own">
+          <span class="annot" data-annot-toggle>3</span>
+          <div class="annot-pop">
+            <span class="annot-title">Por qué el propio departamento va primero</span>
+            El interés del alumno es intradepartamental, no general.
+            <span class="annot-evid">TP2: 3,60/5 de interés en el propio departamento contra 2,20/5 en los demás; 0/20 prioriza eventos ajenos.</span>
+          </div>
           <span class="side-item-dept">Departamento de Ingeniería e Investigaciones Tecnológicas</span>
           <span class="side-item-career">Ingeniería en Informática</span>
         </button>
 
         <div class="side-gap"></div>
-        <p class="side-label">Otros departamentos</p>
+        <div class="side-label" style="position:relative;">
+          <span class="annot" data-annot-toggle>9</span>
+          <div class="annot-pop">
+            <span class="annot-title">Por qué se ven pero no llevan a nada</span>
+            Se listan para dar contexto, pero no abren pantallas propias — evita diluir el foco en el propio departamento.
+            <span class="annot-evid">TP2: 13/20 puntuaron 2 o menos su interés en eventos de otros departamentos; ningún alumno los prioriza por sobre el propio.</span>
+          </div>
+          Otros departamentos
+        </div>
         <button class="side-item">Departamento de Humanidades y Ciencias Sociales</button>
         <button class="side-item">Departamento de Derecho y Ciencia Política</button>
         <button class="side-item">Departamento de Ciencias Económicas</button>
@@ -651,6 +739,12 @@
       <p class="title-lg">Configuración de alertas</p>
 
       <div class="settings-row">
+        <span class="annot" data-annot-toggle>10</span>
+        <div class="annot-pop">
+          <span class="annot-title">Por qué es desactivable</span>
+          Un interruptor binario no cubre por sí solo la granularidad que ya pedía el brief, pero sí retiene a quien no quiere el canal sin resignar el envío activo para el resto.
+          <span class="annot-evid">TP2: 4/20 alumnos rechazan ser notificados (supuesto nuevo #10 del brief); frecuencia configurable (diaria o resumen semanal) resuelve esto sin resignar el envío activo.</span>
+        </div>
         <div class="settings-text">
           <p class="settings-label">Notificarme sobre nuevos eventos de mi departamento</p>
           <p class="caption">Recibís un aviso apenas se publique un evento nuevo del Departamento de Ingeniería e Investigaciones Tecnológicas.</p>
@@ -671,6 +765,12 @@
       </div>
 
       <div class="settings-sub" id="freq-exploracion">
+        <span class="annot" data-annot-toggle>4</span>
+        <div class="annot-pop">
+          <span class="annot-title">Qué controla este selector</span>
+          La frecuencia acá (Diario/Semanal) es del recordatorio de exploración de arriba —un aviso para entrar a revisar aunque no haya nada nuevo—, no de la alerta principal de eventos nuevos.
+          <span class="annot-evid">Complementa el atributo de Facilidad de recuerdo (punto 4 del TP3): el consumo es incidental y sin rutina fija, así que un recordatorio periódico ayuda a volver a mirar la app aunque no haya alertas nuevas.</span>
+        </div>
         <p class="label">Frecuencia</p>
         <div class="freq-group">
           <button class="freq-btn is-active" data-freq="diario">Diario</button>
@@ -685,6 +785,12 @@
     <div class="app-header">Nodo UNLaM</div>
     <div class="screen-pad">
       <div class="form-shell">
+        <span class="annot" data-annot-toggle>7</span>
+        <div class="annot-pop">
+          <span class="annot-title">Por qué esta pantalla no es parte de la app</span>
+          Acá se simula a mano la detección y carga del evento: el equipo monitorea los canales oficiales y lo carga acá dentro del compromiso de 2 días. Solo se llega desde la barra de demo, nunca desde la experiencia real del alumno.
+          <span class="annot-evid">TP3, punto 2.4: automatizar la detección llevaría semanas de desarrollo; lo que testea la hipótesis es si el alumno reacciona a una alerta oportuna, no cómo se detecta el evento en origen.</span>
+        </div>
         <p class="title-lg" style="margin-bottom:20px;">Agregar evento</p>
 
         <label class="label">Departamento</label>
@@ -878,6 +984,26 @@
   const uploadText = document.getElementById('upload-text');
   fileImagen.addEventListener('change', () => {
     uploadText.textContent = fileImagen.files[0] ? fileImagen.files[0].name : 'Subir imagen (flyer del evento)';
+  });
+
+  // anotaciones de diseño: toggle general + popover por indicador
+  const btnAnnot = document.getElementById('btn-annot');
+  btnAnnot.addEventListener('click', () => {
+    const isOn = document.body.classList.toggle('show-annot');
+    btnAnnot.classList.toggle('is-active', isOn);
+    if (!isOn) document.querySelectorAll('.annot-pop').forEach(p => p.classList.remove('is-open'));
+  });
+  document.querySelectorAll('[data-annot-toggle]').forEach(badge => {
+    badge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const pop = badge.nextElementSibling;
+      const willOpen = !pop.classList.contains('is-open');
+      document.querySelectorAll('.annot-pop').forEach(p => p.classList.remove('is-open'));
+      if (willOpen) pop.classList.add('is-open');
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.annot-pop').forEach(p => p.classList.remove('is-open'));
   });
 
   goto('onboarding');
