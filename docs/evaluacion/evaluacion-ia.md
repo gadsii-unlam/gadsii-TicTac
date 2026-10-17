@@ -14,6 +14,12 @@
 
 ---
 
+## Perfíl Evaluado
+
+El producto evaluado está destinado a estudiantes de la UNLaM (de 2.º año en adelante) que viajan a cursar de noche en auto propio y disponen de asientos libres, pero sienten desconfianza o miedo de llevar a personas desconocidas. El contexto de uso se da a través de celulares con datos móviles, en momentos puntuales antes de salir de sus casas (por ejemplo, a la tarde mientras meriendan o el mismo día del viaje). Para este usuario, el equipo priorizó la facilidad de aprendizaje (para evitar fricciones o confusión en alguien que ya tiene dudas de llevar gente), la eficiencia (para resolver la publicación en pocos pasos antes de salir) y la satisfacción (para lograr que el conductor se sienta cómodo y seguro durante la experiencia). La hipótesis que intenta testear el MVP es si mostrar datos clave del pasajero (como la carrera y la antigüedad en la facultad) alcanza para transmitir la tranquilidad necesaria y lograr que el conductor se anime a compartir su viaje con un desconocido.
+
+---
+
 ## Checklist
 
 | ID | Heurística | Total | Parcial | Nulo | N/A | Cant. hallazgos | Puntuación (0-5) | Observaciones |
