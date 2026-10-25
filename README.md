@@ -14,6 +14,8 @@ npm start
 
 Abrir **http://localhost:3000**. Si el puerto está ocupado: `PORT=3001 npm start` (macOS/Linux; en PowerShell `$env:PORT=3001; npm start`). La primera ejecución crea `server/data/db.json` con **cuatro eventos ficticios de prueba** y `server/data/vapid.json` para las notificaciones. Estos archivos están ignorados por Git y **nunca** deben subirse, porque contienen suscripciones y claves privadas. Para continuar con los mismos dispositivos no borrar el archivo VAPID.
 
+**En Windows (PowerShell)**, desde la carpeta `gadsii-TicTac`, ejecutar `npm start` y luego abrir `http://localhost:3000`. La versión corregida usa rutas de archivos compatibles con Windows y crea `server/data` incluso si el descompresor omitió la carpeta. Si hubiera un problema de permisos o antivirus que impidiera crearla, ejecutar `New-Item -ItemType Directory -Force -Path .\server\data` y volver a iniciar.
+
 Ejecutar las pruebas automáticas: `npm test`.
 
 ### Probar con un teléfono real

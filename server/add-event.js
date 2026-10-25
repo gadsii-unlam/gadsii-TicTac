@@ -1,8 +1,9 @@
 // node server/add-event.js [ruta-a-json]; con el servidor abierto. No expone la clave en la app.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const base = path.resolve(new URL('./data/', import.meta.url).pathname);
+const base = path.join(path.dirname(fileURLToPath(import.meta.url)), 'data');
 const key = process.env.ADMIN_TOKEN || fs.readFileSync(path.join(process.env.NODO_DATA_DIR || base,'admin.key'),'utf8').trim();
 const sample = {
   title: `Actividad de prueba ${new Date().toLocaleTimeString('es-AR')}`,

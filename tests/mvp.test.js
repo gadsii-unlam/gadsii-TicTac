@@ -123,3 +123,18 @@ test('web push cifra información real con aes128gcm y firma VAPID', async()=>{
   });
   assert.equal(result.ok,true);
 });
+
+
+test('la base crea la carpeta data ausente y la recrea si desaparece',()=>{
+  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-data-missing-'));
+  try {
+    const file=path.join(tmp,'carpeta-inexistente','server','data','db.json');
+    assert.equal(fs.existsSync(path.dirname(file)),false);
+    const store=createStore({file, fresh:true});
+    assert.equal(fs.existsSync(file),true);
+    fs.rmSync(path.dirname(file),{recursive:true,force:true});
+    store.save();
+    assert.equal(fs.existsSync(file),true);
+    assert.equal(JSON.parse(fs.readFileSync(file,'utf8')).version,1);
+  } finally { fs.rmSync(tmp,{recursive:true,force:true}); }
+});

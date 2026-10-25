@@ -1,9 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import crypto from 'node:crypto';
 import { DEPARTMENTS, FREQUENCIES, validProfile, matches } from './catalog.js';
 
-const dir = path.resolve(process.env.NODO_DATA_DIR || new URL('./data/', import.meta.url).pathname);
+// fileURLToPath maneja correctamente las unidades de Windows (C:\\...), a diferencia de URL.pathname.
+const dir = path.resolve(process.env.NODO_DATA_DIR || path.join(path.dirname(fileURLToPath(import.meta.url)), 'data'));
 const dbPath = path.join(dir, 'db.json');
 export const id = () => crypto.randomUUID();
 const isoPlus = (days) => new Date(Date.now() + days * 86400000).toISOString();
@@ -24,6 +26,8 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   let db = (!fresh && fs.existsSync(file)) ? JSON.parse(fs.readFileSync(file, 'utf8')) : seed();
   function save() {
+    // Recuperar el directorio si fue omitido por la extracción del ZIP o se eliminó.
+    fs.mkdirSync(path.dirname(file), { recursive: true });
     const tmp = `${file}.${process.pid}.tmp`;
     fs.writeFileSync(tmp, JSON.stringify(db, null, 2), { mode: 0o600 });
     fs.renameSync(tmp, file);
