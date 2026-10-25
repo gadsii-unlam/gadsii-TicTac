@@ -9,14 +9,15 @@ Una plataforma de avisos y eventos académicos orientada, en esta validación, a
 Requiere **Node.js 20 o superior**. No utiliza base de datos externa, cuenta institucional, API externa ni dependencias de NPM. El servidor y el cliente están en el mismo proceso.
 
 ```bash
+cd mvp
 npm start
 ```
 
-Abrir **http://localhost:3000**. Si el puerto está ocupado: `PORT=3001 npm start` (macOS/Linux; en PowerShell `$env:PORT=3001; npm start`). La primera ejecución crea `server/data/db.json` con **cuatro eventos ficticios de prueba** y `server/data/vapid.json` para las notificaciones. Estos archivos están ignorados por Git y **nunca** deben subirse, porque contienen suscripciones y claves privadas. Para continuar con los mismos dispositivos no borrar el archivo VAPID.
+Abrir **http://localhost:3000**. Si aparece `EADDRINUSE`, el puerto ya está siendo usado; no es un problema de la carpeta de datos. Cerrá el servidor que ya está corriendo o elegí otro puerto: desde `mvp`, usar `PORT=3001 npm start` (macOS/Linux) o `$env:PORT=3001; npm start` (PowerShell). El servidor ahora informa este caso con una instrucción clara. La primera ejecución crea `mvp/src/server/data/db.json` con **cuatro eventos ficticios de prueba** y `mvp/src/server/data/vapid.json` para las notificaciones. Estos archivos están ignorados por Git y **nunca** deben subirse, porque contienen suscripciones y claves privadas. Para continuar con los mismos dispositivos no borrar el archivo VAPID.
 
-**En Windows (PowerShell)**, desde la carpeta `gadsii-TicTac`, ejecutar `npm start` y luego abrir `http://localhost:3000`. La versión corregida usa rutas de archivos compatibles con Windows y crea `server/data` incluso si el descompresor omitió la carpeta. Si hubiera un problema de permisos o antivirus que impidiera crearla, ejecutar `New-Item -ItemType Directory -Force -Path .\server\data` y volver a iniciar.
+**En Windows (PowerShell)**, desde la raíz del proyecto ejecutar `cd .\mvp` y luego `npm start`; también se puede ejecutar desde `mvp\src` porque npm encuentra el paquete en su carpeta padre. Luego abrir `http://localhost:3000`. El servidor crea `mvp\src\server\data` incluso si el descompresor omitió la carpeta. Si el error es `EADDRINUSE`, usar otro puerto como se indica arriba; crear la carpeta de datos no lo resuelve. Solo si hubiera un problema de permisos o antivirus que impidiera crearla, ejecutar `New-Item -ItemType Directory -Force -Path .\src\server\data` desde `mvp`.
 
-Ejecutar las pruebas automáticas: `npm test`.
+Ejecutar las pruebas automáticas desde `mvp`: `npm test`.
 
 ### Probar con un teléfono real
 
@@ -48,7 +49,9 @@ Esto carga un **evento nuevo ficticio**, distinto de los cuatro iniciales, y dis
 npm run add:event -- ruta/al/evento.json
 ```
 
-La carga manual debe realizarse antes de 48 h de la publicación oficial y **ser revisada por otra persona antes de la ejecución del comando**, ya que publicar crea la cola de avisos. El comando obtiene la clave privada de administración desde `server/data/admin.key`, sin exponerla en el navegador. Alternativamente se puede utilizar el endpoint interno autenticado `POST /api/admin/events`, con `Authorization: Bearer <clave>`. No publicar jamás la clave ni el directorio `server/data/`.
+La carga manual debe realizarse antes de 48 h de la publicación oficial y **ser revisada por otra persona antes de la ejecución del comando**, ya que publicar crea la cola de avisos. El comando obtiene la clave privada de administración desde `src/server/data/admin.key`, sin exponerla en el navegador. Alternativamente se puede utilizar el endpoint interno autenticado `POST /api/admin/events`, con `Authorization: Bearer <clave>`. No publicar jamás la clave ni el directorio `server/data/`.
+
+En esta distribución, los archivos locales del servidor están en `mvp/src/server/data/`; no compartir ni subir esa carpeta.
 
 **No usar ejemplos ficticios como evidencia** de eficacia real, anticipación de siete días o asistencia a eventos oficiales. Los ejemplos no representan actividades organizadas por la UNLaM.
 

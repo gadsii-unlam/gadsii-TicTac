@@ -112,7 +112,17 @@ const server = http.createServer(async (req,res)=>{
     console.error(err.status ? `API ${err.status}: ${err.message}` : err);
   }
 });
-server.listen(PORT, () => console.log(`Nodo UNLaM disponible en http://localhost:${PORT} (usar HTTPS en dispositivos externos)`));
-setInterval(() => scheduler.tick().catch(console.error), 30_000).unref();
-// Un reinicio no descarta avisos pendientes; el scheduler los reintenta.
-scheduler.tick().catch(console.error);
+server.on('error', err => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`El puerto ${PORT} ya está en uso. Cerrá el proceso que lo está usando o elegí otro puerto en PowerShell con: $env:PORT=3001; npm start`);
+    process.exitCode = 1;
+    return;
+  }
+  throw err;
+});
+server.listen(PORT, () => {
+  console.log(`Nodo UNLaM disponible en http://localhost:${PORT} (usar HTTPS en dispositivos externos)`);
+  setInterval(() => scheduler.tick().catch(console.error), 30_000).unref();
+  // Un reinicio no descarta avisos pendientes; el scheduler los reintenta.
+  scheduler.tick().catch(console.error);
+});

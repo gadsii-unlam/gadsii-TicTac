@@ -29,3 +29,9 @@ Thumbs.db
 server/data/*.json
 server/data/*.key
 !server/data/.gitkeep
+src/server/data/*.json
+src/server/data/*.key
+!src/server/data/.gitkeep
+mvp/src/server/data/*.json
+mvp/src/server/data/*.key
+!mvp/src/server/data/.gitkeep

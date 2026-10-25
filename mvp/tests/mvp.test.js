@@ -4,10 +4,10 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { createStore } from '../server/store.js';
-import { matches, dueBucket, hoursBefore } from '../server/catalog.js';
-import { encryptPayload, loadVapid, sendPush } from '../server/push.js';
-import { makeScheduler } from '../server/scheduler.js';
+import { createStore } from '../src/server/store.js';
+import { matches, dueBucket, hoursBefore } from '../src/server/catalog.js';
+import { encryptPayload, loadVapid, sendPush } from '../src/server/push.js';
+import { makeScheduler } from '../src/server/scheduler.js';
 
 function tempStore() {
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-test-'));

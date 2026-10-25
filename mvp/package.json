@@ -6,10 +6,10 @@
   "type": "module",
   "engines": { "node": ">=20" },
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node server/index.js",
+    "start": "node src/server/index.js",
+    "dev": "node src/server/index.js",
     "test": "node --test tests/*.test.js",
-    "demo:event": "node server/add-event.js",
-    "add:event": "node server/add-event.js"
+    "demo:event": "node src/server/add-event.js",
+    "add:event": "node src/server/add-event.js"
   }
 }
