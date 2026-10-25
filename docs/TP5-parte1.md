@@ -35,3 +35,17 @@ Si el resultado queda por debajo del objetivo, identificaríamos dónde se produ
 Una métrica que puede parecer positiva sin demostrar que el producto cumple su objetivo es la **cantidad total de instalaciones de Nodo UNLaM**. También podrían contarse las visitas a la pantalla de inicio.
 
 Tener muchas instalaciones no asegura que los estudiantes se enteren de los eventos que les interesan. Ese número no muestra si las alertas llegaron a tiempo, si alguien abrió la ficha ni si encontró información suficiente para decidir qué hacer. Por eso, las instalaciones no alcanzan para evaluar nuestra hipótesis de valor: necesitamos observar el uso y comprobar si el recorrido de la alerta a la ficha funciona.
+
+### Criterio de éxito y refutación de la hipótesis
+
+Para evaluar si Nodo UNLaM cumple su objetivo, definimos previamente qué resultados consideraríamos favorables y cuáles nos llevarían a revisar nuestra hipótesis.
+
+En una primera instancia, realizaremos pruebas con tres estudiantes del segmento identificado en el TP2. Consideraremos que el recorrido principal funciona si al menos dos de los tres usuarios reciben una notificación real, acceden a la ficha del evento sin ayuda y encuentran la información necesaria para decidir si les interesa participar.
+
+Para considerar que existe evidencia inicial favorable a la hipótesis de valor, también esperamos que al menos dos de los tres usuarios encuentren relevante el evento y puedan explicar cómo la información recibida les permite tomar una decisión sin consultar otros canales.
+
+En cambio, si dos o más usuarios no consiguen acceder a la información desde la notificación o necesitan recurrir a fuentes externas para comprender el evento, consideraremos que la solución todavía no demuestra el valor esperado. Analizaremos si el problema se encuentra en las notificaciones, la interacción o la información presentada.
+
+Estas primeras pruebas no permiten validar estadísticamente los objetivos del brief. Para eso será necesario observar el uso durante un período más prolongado, verificar los porcentajes establecidos en nuestras métricas y volver a relevar si disminuyó la cantidad de estudiantes que se pierden eventos relevantes.
+
+Si las notificaciones fallan por problemas técnicos, no interpretaremos automáticamente el resultado como una refutación de la necesidad del usuario, sino como una prueba inconclusa del mecanismo propuesto.
