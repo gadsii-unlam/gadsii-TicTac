@@ -17,6 +17,8 @@ if (!fs.existsSync(secretFile)) fs.writeFileSync(secretFile, crypto.randomBytes(
 const adminKey = process.env.ADMIN_TOKEN || fs.readFileSync(secretFile, 'utf8').trim();
 const scheduler = makeScheduler(store, vapid);
 const PORT = Number(process.env.PORT || 3000);
+const allowedOrigins = new Set((process.env.CORS_ORIGINS || 'http://localhost:8081,http://127.0.0.1:8081')
+  .split(',').map(origin => origin.trim()).filter(Boolean));
 const clientIdOk = s => typeof s === 'string' && /^[a-zA-Z0-9_-]{12,128}$/.test(s);
 const bad = (msg, code = 400) => { const err = new Error(msg); err.status = code; throw err; };
 function json(res, status, body) {
@@ -90,23 +92,23 @@ function publicProfile(p) {
     frequency:p.frequency,alerts:p.alerts,explore:p.explore,exploreFrequency:p.exploreFrequency,
     subscribed:Boolean(p.subscription) };
 }
-function staticFile(req,res,url) {
-  if (req.method !== 'GET' && req.method !== 'HEAD') return json(res,405,{error:'Método no permitido'});
-  const allowed = new Map([['/','index.html'],['/index.html','index.html'],['/app.js','app.js'],['/styles.css','styles.css'],['/sw.js','sw.js'],['/manifest.webmanifest','manifest.webmanifest'],['/logo.svg','logo.svg'],['/icon.svg','icon.svg']]);
-  const filename = allowed.get(url.pathname);
-  if (!filename) return json(res,404,{error:'Archivo no encontrado'});
-  const type = filename.endsWith('.js') ? 'text/javascript; charset=utf-8' : filename.endsWith('.css') ? 'text/css; charset=utf-8' :
-    filename.endsWith('.svg') ? 'image/svg+xml' : filename.endsWith('.webmanifest') ? 'application/manifest+json' : 'text/html; charset=utf-8';
-  const content = fs.readFileSync(path.join(root,'public',filename));
-  res.writeHead(200, { 'Content-Type': type, 'Cache-Control': filename === 'sw.js' ? 'no-cache' : 'max-age=0',
-    'X-Content-Type-Options': 'nosniff', 'Service-Worker-Allowed': '/', 'Referrer-Policy': 'strict-origin-when-cross-origin' });
-  res.end(req.method==='HEAD' ? undefined : content);
-}
 const server = http.createServer(async (req,res)=>{
   try {
+    const origin = req.headers.origin;
+    if (origin && allowedOrigins.has(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Vary', 'Origin');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    }
+    if (req.method === 'OPTIONS') {
+      res.writeHead(origin && !allowedOrigins.has(origin) ? 403 : 204);
+      res.end();
+      return;
+    }
     const url = new URL(req.url, 'http://localhost');
     if (url.pathname.startsWith('/api/')) await api(req,res,url);
-    else staticFile(req,res,url);
+    else json(res,404,{error:'Ruta no encontrada'});
   } catch(err) {
     if (!res.headersSent) json(res,err.status || 500,{error:err.status ? err.message : 'Error del servidor'});
     console.error(err.status ? `API ${err.status}: ${err.message}` : err);

@@ -46,7 +46,34 @@ export function encryptPayload(subscription, payload) {
   const recSize = Buffer.alloc(4); recSize.writeUInt32BE(4096);
   return Buffer.concat([salt, recSize, Buffer.from([senderPublic.length]), senderPublic, encrypted]);
 }
+async function sendExpoPush(subscription, payload, fetchImpl) {
+  const response = await fetchImpl('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      to: subscription.token,
+      title: payload.title,
+      body: payload.body,
+      sound: 'default',
+      data: { eventId: payload.eventId, url: payload.url },
+    }),
+    signal: AbortSignal.timeout(12000),
+  });
+  const result = await response.json();
+  if (!response.ok) return { ok: false, status: response.status,
+    detail: result.errors?.[0]?.message || 'Expo Push rechazó el envío' };
+  const ticket = result.data?.[0];
+  if (ticket?.status === 'ok') return { ok: true, status: response.status };
+  if (!ticket || ticket.status !== 'error') throw new Error('Respuesta inválida del servicio Expo Push');
+  const error = ticket.details?.error;
+  return {
+    ok: false,
+    status: error === 'DeviceNotRegistered' ? 410 : response.status,
+    detail: ticket.message || 'Expo Push rechazó el envío',
+  };
+}
 export async function sendPush(subscription, payload, keys, fetchImpl = fetch) {
+  if (subscription.provider === 'expo') return sendExpoPush(subscription, payload, fetchImpl);
   const endpoint = new URL(subscription.endpoint);
   if (endpoint.protocol !== 'https:') throw new Error('El endpoint de push debe ser HTTPS');
   const origin = endpoint.origin;

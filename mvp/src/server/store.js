@@ -50,11 +50,21 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
   }
   function attachSubscription(deviceId, subscription) {
     if (!profileFor(deviceId)) throw Object.assign(new Error('Primero configurar el perfil'), { status: 400 });
+    if (subscription?.provider === 'expo') {
+      if (typeof subscription.token !== 'string' ||
+        !/^(Exponent|Expo)PushToken\[[^\]\s]{1,256}\]$/.test(subscription.token)) {
+        throw Object.assign(new Error('Token de Expo Push inválido'), { status: 400 });
+      }
+      db.profiles[deviceId].subscription = { provider: 'expo', token: subscription.token };
+      db.profiles[deviceId].subscribedAt = new Date().toISOString(); save();
+      return true;
+    }
     if (!subscription || typeof subscription.endpoint !== 'string' || !/^https:\/\//.test(subscription.endpoint) ||
       typeof subscription.keys?.p256dh !== 'string' || typeof subscription.keys?.auth !== 'string') {
       throw Object.assign(new Error('Suscripción push inválida'), { status: 400 });
     }
-    db.profiles[deviceId].subscription = { endpoint: subscription.endpoint, keys: { p256dh: subscription.keys.p256dh, auth: subscription.keys.auth } };
+    db.profiles[deviceId].subscription = { provider: 'webpush', endpoint: subscription.endpoint,
+      keys: { p256dh: subscription.keys.p256dh, auth: subscription.keys.auth } };
     db.profiles[deviceId].subscribedAt = new Date().toISOString(); save();
     return true;
   }

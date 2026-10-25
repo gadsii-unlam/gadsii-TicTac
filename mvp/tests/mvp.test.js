@@ -124,6 +124,48 @@ test('web push cifra información real con aes128gcm y firma VAPID', async()=>{
   assert.equal(result.ok,true);
 });
 
+test('Expo Push registra tokens, envía avisos y desactiva tokens vencidos',async()=>{
+  const {store}=tempStore();
+  store.updateProfile(device,profile);
+  assert.throws(()=>store.attachSubscription(device,{provider:'expo',token:'invalid'}),/Token de Expo Push inválido/);
+  const expoSubscription={provider:'expo',token:'ExponentPushToken[test-device-token]'};
+  store.attachSubscription(device,expoSubscription);
+  assert.equal(store.profileFor(device).subscription.provider,'expo');
+
+  const payload={title:'Nuevo evento',body:'Charla de ingeniería',eventId:'event-123',url:'/?evento=event-123'};
+  const result=await sendPush(expoSubscription,payload,{},async(url,request)=>{
+    assert.equal(url,'https://exp.host/--/api/v2/push/send');
+    assert.equal(request.method,'POST');
+    const body=JSON.parse(request.body);
+    assert.equal(body.to,expoSubscription.token);
+    assert.equal(body.data.eventId,payload.eventId);
+    return {ok:true,status:200,json:async()=>({data:[{status:'ok',id:'ticket-123'}]})};
+  });
+  assert.deepEqual(result,{ok:true,status:200});
+
+  const expired=await sendPush(expoSubscription,payload,{},async()=>({
+    ok:true,status:200,json:async()=>({data:[{
+      status:'error',message:'The recipient device is not registered',details:{error:'DeviceNotRegistered'}
+    }]})
+  }));
+  assert.equal(expired.ok,false);
+  assert.equal(expired.status,410);
+
+  const event=store.addEvent({title:'Seminario de ingeniería',department:'diit',career:'Ingeniería en Informática',
+    startsAt:new Date(Date.now()+9*86400000).toISOString(),sourcePublishedAt:new Date().toISOString(),
+    sourceUrl:'https://www.unlam.edu.ar/',place:'Aula de la UNLaM',description:'Actividad académica extensa',reviewed:true});
+  const sent=[];
+  const scheduler=makeScheduler(store,{},async(sub,notification)=>{
+    sent.push({sub,notification});
+    return {ok:true,status:200};
+  });
+  await scheduler.tick();
+  assert.equal(sent.length,1);
+  assert.equal(sent[0].sub.provider,'expo');
+  assert.equal(sent[0].notification.eventId,event.id);
+  assert.equal(store.data.queued.length,0);
+});
+
 
 test('la base crea la carpeta data ausente y la recrea si desaparece',()=>{
   const tmp=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-data-missing-'));

@@ -9,6 +9,7 @@ export function makeScheduler(store, vapidKeys, push = sendPush) {
       const outcome = await push(profile.subscription, payload, vapidKeys);
       store.logDelivery({ deviceId: profile.deviceId, eventId, kind, status: outcome.status,
         statusType: outcome.ok ? 'push_accepted' : 'push_rejected',
+        ...(outcome.detail ? { detail: String(outcome.detail).slice(0, 120) } : {}),
         marginHours: eventId ? hoursBefore(store.data.events.find(e => e.id === eventId)?.startsAt, nowMs) : null });
       if ([404, 410].includes(outcome.status)) store.detachSubscription(profile.deviceId);
       return outcome.ok || [404, 410].includes(outcome.status);
