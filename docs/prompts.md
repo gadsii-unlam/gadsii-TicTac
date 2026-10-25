@@ -12,3 +12,4 @@
 | 07/09/2026 | Claude Code – Sonnet 5   | Mejorar la redacción de los puntos 10.1 (Anclaje), 10.2 (Descarte) y 10.3 (Elemento crítico) del TP3, reescribiendo cada uno según las correcciones de enfoque y de lectura de la evidencia que fue marcando el equipo. | TP 3 |
 | 20/09/2026 | Claude Code – Opus 5 | Evaluación heurística del wireframe y brief v3 de UNLaMigo (equipo Arcade), con la misma plantilla de checklist y matriz de hallazgos que usó el equipo. Resultado en docs/evaluacion/evaluacion-ia.md. | TP 4 |
 
+| 24/10/2026 | ChatGPT – GPT-6 | A partir de los TP1–TP4 y la consigna de TP5, proponer un borrador de dos métricas accionables, una vanidosa y criterios numéricos previos a la sesión, distinguiendo la evidencia del TP2 de las observaciones futuras. El equipo debe revisarlos y aprobarlos: la consigna reserva estas decisiones a los estudiantes. | TP 5 (Parte 1) |
