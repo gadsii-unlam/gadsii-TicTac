@@ -24,3 +24,8 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Datos locales del servidor (suscripciones push / claves privadas)
+server/data/*.json
+server/data/*.key
+!server/data/.gitkeep
