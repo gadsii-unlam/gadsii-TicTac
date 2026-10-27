@@ -58,10 +58,10 @@ export function makeScheduler(store, vapidKeys, push = sendPush) {
             if (ok) store.setReminderSent(reminder.id);
           }
         }
-        if (p.explore && p.alerts) {
+        if (p.explore) {
           const key = dueBucket(nowMs, p.exploreFrequency || 'semanal');
           if (key && `${p.exploreFrequency}:${key}` !== p.lastExploreKey) {
-            const accepted = await notify(p, { title: 'Recordame revisar la app', body: 'Entrá a Nodo UNLaM para consultar eventos de tu carrera.', url: '/', eventId: null }, 'explore', null, nowMs);
+            const accepted = await notify(p, { title: '¿Revisaste tus eventos?', body: 'Entrá a Nodo UNLaM para consultar los próximos eventos de tu carrera.', url: '/', eventId: null }, 'explore', null, nowMs);
             if (accepted) store.setExploreSent(p.deviceId, `${p.exploreFrequency}:${key}`);
           }
         }

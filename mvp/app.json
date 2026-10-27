@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "scheme": "nodounlam",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "bundleIdentifier": "ar.edu.unlam.nodounlam",
       "supportsTablet": true
@@ -28,7 +28,7 @@
       [
         "expo-notifications",
         {
-          "color": "#3E54D3"
+          "color": "#128268"
         }
       ]
     ]

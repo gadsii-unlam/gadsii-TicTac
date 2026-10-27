@@ -91,6 +91,18 @@ test('resúmenes diario y semanal solo se entregan en el corte',async()=>{
   assert.ok(Number.isFinite(hoursBefore(ev.startsAt,Date.now())));
 });
 
+test('el recordatorio de revisar la app no depende de la alerta de eventos nuevos',async()=>{
+  const {store}=tempStore();
+  store.updateProfile(device,{...profile,alerts:false,explore:true,exploreFrequency:'diaria'});
+  store.attachSubscription(device,subscription);
+  const sent=[];const scheduler=makeScheduler(store,{},async(sub,payload)=>{sent.push(payload);return {ok:true,status:201};});
+  await scheduler.tick(Date.parse('2030-01-02T19:01:00Z'));
+  assert.equal(sent.length,1);
+  assert.equal(sent[0].title,'¿Revisaste tus eventos?');
+  await scheduler.tick(Date.parse('2030-01-02T20:00:00Z'));
+  assert.equal(sent.length,1);
+});
+
 test('web push cifra información real con aes128gcm y firma VAPID', async()=>{
   const receiver=crypto.createECDH('prime256v1');receiver.generateKeys();
   const auth=crypto.randomBytes(16);

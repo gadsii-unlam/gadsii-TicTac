@@ -54,6 +54,10 @@ Ejecutar las pruebas del backend desde `mvp`: `npm test`.
 
 Las notificaciones se entregan a través de Expo Push. El sistema operativo controla su presentación y los permisos. El backend debe permanecer encendido para enviar las alertas programadas. No hay un backend público desplegado; el uso desde otros dispositivos requiere configurar una dirección accesible y HTTPS para un entorno estable.
 
+### Notificaciones de escritorio
+
+En la versión web, "Activar notificaciones" registra el service worker `mvp/public/sw.js` y suscribe el navegador por Web Push con la clave VAPID del backend. El navegador solo lo permite en `localhost` o con HTTPS. Si se cambia de backend (otra clave VAPID), la app renueva la suscripción al volver a activarlas.
+
 ### Recorrido del alumno
 
 1. Seleccionar departamento y carrera (sin registro). Se filtran en el backend los eventos propios.
