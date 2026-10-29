@@ -58,6 +58,21 @@ Las notificaciones se entregan a través de Expo Push. El sistema operativo cont
 
 En la versión web, "Activar notificaciones" registra el service worker `mvp/public/sw.js` y suscribe el navegador por Web Push con la clave VAPID del backend. El navegador solo lo permite en `localhost` o con HTTPS. Si se cambia de backend (otra clave VAPID), la app renueva la suscripción al volver a activarlas.
 
+### Levantar la web y API con Docker
+
+Requiere Docker con el plugin de Docker Compose. Desde `mvp`:
+
+```bash
+cp .env.example .env
+docker compose up --build -d
+```
+
+La web queda en **http://localhost:8080** y la API en **http://localhost:3000**. El servicio API tiene una comprobación de salud; Compose espera a que responda antes de iniciar el servicio web. Para ver los registros: `docker compose logs -f api web`.
+
+La base JSON, la clave VAPID y la clave administrativa se crean en el volumen persistente `server-data`, fuera de las imágenes. `docker compose down` conserva el volumen; no usar `docker compose down -v` si se quiere conservar perfiles, suscripciones y eventos. El despliegue ejecuta una sola instancia de API, ya que el estado y el scheduler actuales son locales a un proceso.
+
+Configurar `VAPID_SUBJECT` con un contacto del operador. En despliegues reales, proporcionar `ADMIN_TOKEN` como secreto y no guardar credenciales en el repositorio ni en la imagen. Los perfiles EAS `preview` (APK de distribución interna) y `production` ya compilan la app apuntando a `https://nodounlam.zabalgoitia.ar`; el perfil `development` sigue usando la URL local definida al construirlo.
+
 ### Recorrido del alumno
 
 1. Seleccionar departamento y carrera (sin registro). Se filtran en el backend los eventos propios.

@@ -31,6 +31,17 @@
           "color": "#128268"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cbb0949a-5443-4cca-ab35-63ef12b9d242"
+      },
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      }
+    },
+    "owner": "seventhactivism"
   }
 }
