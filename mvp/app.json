@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Nodo UNLaM",
+    "slug": "nodo-unlam",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "nodounlam",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "ar.edu.unlam.nodounlam",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "ar.edu.unlam.nodounlam",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "color": "#128268"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cbb0949a-5443-4cca-ab35-63ef12b9d242"
+      },
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      }
+    },
+    "owner": "seventhactivism"
+  }
+}
