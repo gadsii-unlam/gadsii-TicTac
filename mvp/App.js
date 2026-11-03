@@ -21,7 +21,7 @@ import Constants from 'expo-constants';
 import * as Crypto from 'expo-crypto';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useGlobalSearchParams } from 'expo-router';
 import { CheckBadge, Icon, Logo, Trama } from './src/ui/brand';
 
 const API_URL = (process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000').replace(/\/$/, '');
@@ -583,8 +583,12 @@ async function subscribeWebPush(vapidKey) {
   return { endpoint, keys: { p256dh: keys.p256dh, auth: keys.auth } };
 }
 
+// Pantalla visible; evita apilar la misma pantalla dos veces en el historial.
+let currentScreen = 'feed';
+
 function goTo(screen) {
-  router.setParams({ screen, eventId: undefined, source: undefined, from: undefined });
+  if (screen === currentScreen) return;
+  router.push({ pathname: '/', params: { screen } });
 }
 
 function NodoApp() {
@@ -593,7 +597,7 @@ function NodoApp() {
   const wide = width >= WIDE_BREAKPOINT;
   const insets = useSafeAreaInsets();
   const statusBarStyle = scheme === 'dark' ? 'light-content' : 'dark-content';
-  const routeParams = useLocalSearchParams();
+  const routeParams = useGlobalSearchParams();
   const routeScreen = Array.isArray(routeParams.screen) ? routeParams.screen[0] : routeParams.screen;
   const routeEventId = Array.isArray(routeParams.eventId) ? routeParams.eventId[0] : routeParams.eventId;
   const routeFrom = Array.isArray(routeParams.from) ? routeParams.from[0] : routeParams.from;
@@ -620,6 +624,7 @@ function NodoApp() {
   const [welcomeFrequency, setWelcomeFrequency] = useState('instantanea');
   const openEventRef = useRef(null);
   const screen = !profile ? 'onboarding' : ['settings', 'detail', 'reminders'].includes(routeScreen) ? routeScreen : 'feed';
+  currentScreen = screen;
 
   const showNotice = useCallback(message => {
     setError('');
@@ -689,7 +694,7 @@ function NodoApp() {
       showNotice('Este evento ya no está disponible.');
       return;
     }
-    router.setParams({ screen: 'detail', eventId: id, source, from });
+    router.push({ pathname: '/', params: { screen: 'detail', eventId: id, source, from } });
     try {
       await request('/api/analytics/open', {
         method: 'POST',
@@ -758,12 +763,9 @@ function NodoApp() {
         setDrawerOpen(false);
         return true;
       }
-      if (screen === 'detail') {
-        goTo(backTarget);
-        return true;
-      }
-      if (screen === 'settings' || screen === 'reminders') {
-        goTo('feed');
+      if (screen === 'detail' || screen === 'settings' || screen === 'reminders') {
+        if (router.canGoBack()) router.back();
+        else goTo(screen === 'detail' ? backTarget : 'feed');
         return true;
       }
       return false;
