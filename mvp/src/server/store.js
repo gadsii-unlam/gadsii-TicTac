@@ -16,16 +16,35 @@ const MAX_IMAGES = 5;
 const DEMO_IMAGES = {
   'Charla sobre inteligencia artificial responsable': ['/media/flyer-ia-principal.jpg', '/media/flyer-ia-charla.jpg']
 };
+// Lugar y descripción de los eventos de muestra (sin marcas de "ejemplo" ni "ficticio").
+const DEMO_CONTENT = {
+  'Taller introductorio de ciberseguridad': {
+    place: 'Laboratorio de informática',
+    description: 'Resolución de ejercicios básicos de seguridad en redes, intercambio de ideas y espacio para consultas.'
+  },
+  'Charla sobre inteligencia artificial responsable': {
+    place: 'Aula de conferencias',
+    description: 'Charlas, preguntas y casos prácticos sobre el impacto de la IA en distintas áreas. Consultar siempre la fuente oficial antes de asistir.'
+  },
+  'Encuentro de proyectos tecnológicos': {
+    place: 'Hall del DIIT',
+    description: 'Presentación de proyectos de diferentes carreras del departamento, con intercambio entre estudiantes.'
+  },
+  'Jornada de comunicación y medios': {
+    place: 'Aula de Humanidades',
+    description: 'Jornada de encuentro y debate sobre comunicación y medios.'
+  }
+};
 const validImages = images => Array.isArray(images) && images.length <= MAX_IMAGES &&
   images.every(url => typeof url === 'string' && (MEDIA_PATH.test(url) || /^https:\/\/\S{1,500}$/.test(url)));
 
 function seed() {
   const examples = [
-    { title: 'Taller introductorio de ciberseguridad', department: 'diit', career: 'Ingeniería en Informática', startsAt: isoPlus(12), place: 'Laboratorio de informática (ejemplo)', description: 'Actividad de demostración: resolución de ejercicios básicos de seguridad en redes, intercambio de ideas y espacio para consultas. No corresponde a un evento oficial confirmado.', registrationUrl: 'https://www.unlam.edu.ar/' },
-    { title: 'Charla sobre inteligencia artificial responsable', department: 'diit', career: 'Ingeniería en Informática', startsAt: isoPlus(16), place: 'Aula de conferencias (ejemplo)', description: 'Evento ficticio para probar una ficha completa: charlas, preguntas y casos prácticos sobre el impacto de la IA en distintas áreas. Consultar siempre la fuente oficial antes de asistir.', registrationUrl: null, images: DEMO_IMAGES['Charla sobre inteligencia artificial responsable'] },
-    { title: 'Encuentro de proyectos tecnológicos', department: 'diit', career: '', startsAt: isoPlus(18), place: 'Hall del DIIT (ejemplo)', description: 'Encuentro ficticio de presentación de proyectos de diferentes carreras del departamento, con intercambio entre estudiantes.', registrationUrl: null },
-    { title: 'Jornada de comunicación y medios', department: 'humanidades', career: 'Licenciatura en Comunicación Social', startsAt: isoPlus(14), place: 'Aula de Humanidades (ejemplo)', description: 'Evento ficticio para verificar que el filtrado entre departamentos excluya avisos ajenos al perfil.', registrationUrl: null }
-  ];
+    { title: 'Taller introductorio de ciberseguridad', department: 'diit', career: 'Ingeniería en Informática', startsAt: isoPlus(12), registrationUrl: 'https://www.unlam.edu.ar/' },
+    { title: 'Charla sobre inteligencia artificial responsable', department: 'diit', career: 'Ingeniería en Informática', startsAt: isoPlus(16), registrationUrl: null, images: DEMO_IMAGES['Charla sobre inteligencia artificial responsable'] },
+    { title: 'Encuentro de proyectos tecnológicos', department: 'diit', career: '', startsAt: isoPlus(18), registrationUrl: null },
+    { title: 'Jornada de comunicación y medios', department: 'humanidades', career: 'Licenciatura en Comunicación Social', startsAt: isoPlus(14), registrationUrl: null }
+  ].map(e => ({ ...e, ...DEMO_CONTENT[e.title] }));
   return { version: 1, profiles: {}, events: examples.map(e => ({ images: [], ...e, id: id(), demo: true, publishedAt: addHours(-12), sourcePublishedAt: addHours(-20), createdAt: addHours(-12), reviewed: true })),
     queued: [], reminders: [], deliveries: [], opens: [] };
 }
@@ -36,6 +55,15 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
   // Bases anteriores a las imágenes: cada evento recibe su lista (los de demostración, sus flyers de ejemplo).
   const migrated = db.events.filter(e => !Array.isArray(e.images));
   for (const e of migrated) e.images = (e.demo && DEMO_IMAGES[e.title]) || [];
+  // Eventos de muestra con la redacción anterior ("(ejemplo)", "ficticio"): pasan al texto actual.
+  let reworded = 0;
+  for (const e of db.events) {
+    const content = e.demo && DEMO_CONTENT[e.title];
+    if (content && (e.place !== content.place || e.description !== content.description)) {
+      Object.assign(e, content);
+      reworded++;
+    }
+  }
   // Carreras con el nombre anterior (perfiles y eventos) pasan al nombre oficial actual.
   let renamed = 0;
   for (const item of [...Object.values(db.profiles), ...db.events]) {
@@ -48,7 +76,7 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
     fs.writeFileSync(tmp, JSON.stringify(db, null, 2), { mode: 0o600 });
     fs.renameSync(tmp, file);
   }
-  if (!fs.existsSync(file) || fresh || migrated.length || renamed) save();
+  if (!fs.existsSync(file) || fresh || migrated.length || renamed || reworded) save();
   function profileFor(deviceId) { return db.profiles[deviceId] ?? null; }
   function updateProfile(deviceId, data) {
     if (!validProfile(data)) throw Object.assign(new Error('Configuración de perfil inválida'), { status: 400 });
@@ -108,26 +136,33 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
     return db.events.filter(e => ids.has(e.id) && isUpcoming(e)).sort(byStart);
   }
   function addEvent(data) {
-    const { title, department, career, startsAt, place, description, registrationUrl, sourceUrl, sourcePublishedAt, reviewed, demo = false, images = [] } = data ?? {};
+    const { title, department, career, startsAt, place, description, registrationUrl, noRegistration = false, sourceUrl, sourcePublishedAt, reviewed, demo = false, images = [] } = data ?? {};
     const trimmed = v => typeof v === 'string' ? v.trim() : '';
     if (!trimmed(title) || title.length > 170 || !DEPARTMENTS[department] ||
       (career && !DEPARTMENTS[department].careers.includes(career)) || !Number.isFinite(Date.parse(startsAt)) ||
-      Date.parse(startsAt) <= Date.now() || !trimmed(place) || !trimmed(description) || description.length > 4000 ||
+      !trimmed(place) || !trimmed(description) || description.length > 4000 ||
       !Number.isFinite(Date.parse(sourcePublishedAt)) || !reviewed ||
       (!demo && !/^https:\/\//.test(sourceUrl || '')) ||
       (registrationUrl && !/^https:\/\//.test(registrationUrl))) {
-      throw Object.assign(new Error('Evento inválido: revisar campos, fuente HTTPS, fecha futura y aprobación de segunda revisión'), { status: 400 });
+      throw Object.assign(new Error('Evento inválido: revisar campos, fuente HTTPS y aprobación de segunda revisión'), { status: 400 });
     }
     if (!validImages(images)) {
       throw Object.assign(new Error(`Imágenes inválidas: hasta ${MAX_IMAGES}, cada una una URL HTTPS o un archivo /media/<nombre>.jpg|png|webp`), { status: 400 });
     }
+    if (typeof noRegistration !== 'boolean') {
+      throw Object.assign(new Error('noRegistration debe ser true o false'), { status: 400 });
+    }
+    if (noRegistration && registrationUrl) {
+      throw Object.assign(new Error('Un evento que no requiere inscripción no puede tener enlace de inscripción'), { status: 400 });
+    }
     const now = new Date().toISOString();
     const event = { id: id(), title: trimmed(title), department, career: career || '', startsAt: new Date(startsAt).toISOString(),
-      place: trimmed(place), description: trimmed(description), registrationUrl: registrationUrl || null,
+      place: trimmed(place), description: trimmed(description), registrationUrl: registrationUrl || null, noRegistration,
       sourceUrl: sourceUrl || null, sourcePublishedAt: new Date(sourcePublishedAt).toISOString(),
       images, createdAt: now, publishedAt: now, reviewed: true, demo: Boolean(demo) };
     db.events.push(event);
-    for (const p of Object.values(db.profiles)) {
+    // Un evento que ya ocurrió se publica en "pasados" pero no avisa a nadie.
+    for (const p of isUpcoming(event) ? Object.values(db.profiles) : []) {
       if (p.alerts && p.subscription && matches(event, p)) {
         db.queued.push({ id: id(), deviceId: p.deviceId, eventId: event.id, kind: 'new', createdAt: now });
       }

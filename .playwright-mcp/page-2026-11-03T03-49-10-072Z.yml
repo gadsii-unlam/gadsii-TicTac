@@ -1,0 +1,45 @@
+- generic [active] [ref=f16e1]:
+  - generic [ref=f16e2]:
+    - banner [ref=f16e3]:
+      - navigation "Global" [ref=f16e4]:
+        - link "UNLaM Actividades" [ref=f16e6] [cursor=pointer]:
+          - /url: /
+        - button "Open main menu" [ref=f16e22]
+    - generic [ref=f16e26]:
+      - link "Actividades" [ref=f16e28] [cursor=pointer]:
+        - /url: /
+      - heading "Departamento de Ingeniería e Inv. Tecnológicas" [level=1] [ref=f16e33]
+    - contentinfo [ref=f16e43]:
+      - generic [ref=f16e44]:
+        - generic [ref=f16e45]:
+          - link "Instagram" [ref=f16e46] [cursor=pointer]:
+            - /url: https://instagram.com/unlamoficial
+          - link "Facebook" [ref=f16e50] [cursor=pointer]:
+            - /url: https://www.facebook.com/UnlamOficial
+          - link "Twitter X" [ref=f16e54] [cursor=pointer]:
+            - /url: https://twitter.com/intent/follow?source=followbutton&variant=1.0&screen_name=UnlamOficial
+            - generic [ref=f16e55]: Twitter
+            - img "X" [ref=f16e56]
+          - link "Email" [ref=f16e58] [cursor=pointer]:
+            - /url: mailto:deportes@unlam.edu.ar
+          - link "Web" [ref=f16e62] [cursor=pointer]:
+            - /url: https://actividades.unlam.edu.ar
+        - link "UNLaM" [ref=f16e69] [cursor=pointer]:
+          - /url: https://www.unlam.edu.ar
+      - generic [ref=f16e131]:
+        - generic [ref=f16e132]:
+          - paragraph [ref=f16e134]:
+            - text: © 2026 Universidad Nacional de La Matanza -
+            - generic [ref=f16e135]: v1.20.5
+          - generic [ref=f16e136]:
+            - link "Ayuda" [ref=f16e137] [cursor=pointer]:
+              - /url: /ayuda
+            - link "Términos y Condiciones" [ref=f16e138] [cursor=pointer]:
+              - /url: /terminos-condiciones
+            - link "Privacidad" [ref=f16e139] [cursor=pointer]:
+              - /url: /privacidad
+            - link "Administración" [ref=f16e140] [cursor=pointer]:
+              - /url: /ingresar/admin
+        - button "Toggle theme" [ref=f16e142] [cursor=pointer]
+  - region "Notifications alt+T"
+  - alert [ref=f16e144]

@@ -1,0 +1,60 @@
+- generic [active] [ref=f15e1]:
+  - generic [ref=f15e2]:
+    - banner [ref=f15e3]:
+      - navigation "Global" [ref=f15e4]:
+        - link "UNLaM Actividades" [ref=f15e6] [cursor=pointer]:
+          - /url: /
+        - button "Open main menu" [ref=f15e22]
+    - generic [ref=f15e26]:
+      - heading "Actividades" [level=1] [ref=f15e31]
+      - generic [ref=f15e32]:
+        - link [ref=f15e33] [cursor=pointer]:
+          - /url: /actividades/deportes
+          - heading "Deportes" [level=2] [ref=f15e34]
+          - paragraph [ref=f15e35]: Deportes.
+        - link [ref=f15e36] [cursor=pointer]:
+          - /url: /actividades/extension
+          - heading "Extensión" [level=2] [ref=f15e37]
+          - paragraph [ref=f15e38]: Cursos, extensiones y capacitaciones.
+        - link [ref=f15e39] [cursor=pointer]:
+          - /url: /actividades/escuela-de-artes-medios-e-innovacion
+          - heading "Escuela de Artes, Medios e Innovación" [level=2] [ref=f15e40]
+          - paragraph [ref=f15e41]: Cursos y diplomaturas.
+        - link [ref=f15e42] [cursor=pointer]:
+          - /url: /actividades/departamento-de-ingenieria-e-inv.-tecnologicas
+          - heading "Departamento de Ingeniería e Inv. Tecnológicas" [level=2] [ref=f15e43]
+          - paragraph [ref=f15e44]: Cursos - Oficios Técnicos - Actualización profesional - Diplomaturas - Cursos de Posgrado
+    - contentinfo [ref=f15e45]:
+      - generic [ref=f15e46]:
+        - generic [ref=f15e47]:
+          - link "Instagram" [ref=f15e48] [cursor=pointer]:
+            - /url: https://instagram.com/unlamoficial
+          - link "Facebook" [ref=f15e52] [cursor=pointer]:
+            - /url: https://www.facebook.com/UnlamOficial
+          - link "Twitter X" [ref=f15e56] [cursor=pointer]:
+            - /url: https://twitter.com/intent/follow?source=followbutton&variant=1.0&screen_name=UnlamOficial
+            - generic [ref=f15e57]: Twitter
+            - img "X" [ref=f15e58]
+          - link "Email" [ref=f15e60] [cursor=pointer]:
+            - /url: mailto:deportes@unlam.edu.ar
+          - link "Web" [ref=f15e64] [cursor=pointer]:
+            - /url: https://actividades.unlam.edu.ar
+        - link "UNLaM" [ref=f15e71] [cursor=pointer]:
+          - /url: https://www.unlam.edu.ar
+      - generic [ref=f15e133]:
+        - generic [ref=f15e134]:
+          - paragraph [ref=f15e136]:
+            - text: © 2026 Universidad Nacional de La Matanza -
+            - generic [ref=f15e137]: v1.20.5
+          - generic [ref=f15e138]:
+            - link "Ayuda" [ref=f15e139] [cursor=pointer]:
+              - /url: /ayuda
+            - link "Términos y Condiciones" [ref=f15e140] [cursor=pointer]:
+              - /url: /terminos-condiciones
+            - link "Privacidad" [ref=f15e141] [cursor=pointer]:
+              - /url: /privacidad
+            - link "Administración" [ref=f15e142] [cursor=pointer]:
+              - /url: /ingresar/admin
+        - button "Toggle theme" [ref=f15e144] [cursor=pointer]
+  - region "Notifications alt+T"
+  - alert [ref=f15e146]

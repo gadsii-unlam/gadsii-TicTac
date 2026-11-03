@@ -43,6 +43,8 @@ const THEME_OPTIONS = [
   { value: 'dark', label: 'Oscuro' },
 ];
 const WIDE_BREAKPOINT = 900;
+const FEED_RATIO_MOBILE = 0.85; // ancho/alto: algo más alta que cuadrada
+const FEED_RATIO_WIDE = 1.1;
 const ENTRADA_UNLAM = require('./assets/design/Fotografia/unlam-entrada.png');
 // Colores del design system Nodo UNLaM (tokens.json). El tema oscuro no está en el diseño: se deriva de la misma paleta.
 const HEADER_TRAMA = { bg: '#0C7A55', line: '#1E8A63', node: '#33997A', ring: '#5DB394' };
@@ -75,6 +77,7 @@ const PALETTES = {
     sidebarLinkBg: 'rgba(255,255,255,0.55)',
     sidebarBorder: '#C8E0C9',
     timeline: '#B9D9C2',
+    flyerBg: '#C4E3D6',
     logo: 'stacked',
     tramaGris: { bg: '#F6F7FB', line: '#DDE1E6', node: '#C7CDD5', ring: '#AAB2BD' },
     banners: ['#E9E3FF', '#DDEBFA', '#FFF0CB', '#FFE1E6'],
@@ -107,6 +110,7 @@ const PALETTES = {
     sidebarLinkBg: 'rgba(255,255,255,0.04)',
     sidebarBorder: '#24382F',
     timeline: '#2F5A49',
+    flyerBg: '#10261F',
     logo: 'stackedDark',
     tramaGris: { bg: '#0E1319', line: '#1B232C', node: '#26303B', ring: '#34414F' },
     banners: ['#2D2747', '#1B2E44', '#3A3119', '#40242B'],
@@ -386,58 +390,61 @@ function Sidebar({ department, career, selected, others, onSelect, onReminders, 
 
 function PostCard({ event, index, department, flush, onPress }) {
   const { colors, styles } = useTheme();
-  const [imageFailed, setImageFailed] = useState(false);
-  const cover = event.images?.[0];
+  const images = event.images || [];
   return (
-    <Pressable
-      accessibilityRole="button"
-      onPress={onPress}
-      style={({ pressed }) => [styles.postCard, flush && styles.postCardFlush, pressed && styles.pressed]}
-    >
-      <View style={styles.postHead}>
-        <View style={styles.postAvatar}><Text style={styles.postAvatarText}>{event.department.slice(0, 2).toUpperCase()}</Text></View>
-        <View style={styles.postHeadCopy}>
-          <Text style={styles.postPage} numberOfLines={1}>{department}</Text>
-          {event.publishedAt ? <Text style={styles.postTime}>{timeAgo(event.publishedAt)}</Text> : null}
+    <View style={[styles.postCard, flush && styles.postCardFlush]}>
+      <Pressable onPress={onPress} accessibilityRole="button" style={({ pressed }) => pressed && styles.pressed}>
+        <View style={styles.postHead}>
+          <View style={styles.postAvatar}><Text style={styles.postAvatarText}>{event.department.slice(0, 2).toUpperCase()}</Text></View>
+          <View style={styles.postHeadCopy}>
+            <Text style={styles.postPage} numberOfLines={1}>{department}</Text>
+            {event.publishedAt ? <Text style={styles.postTime}>{timeAgo(event.publishedAt)}</Text> : null}
+          </View>
         </View>
-      </View>
-      <View style={styles.postBody}>
-        <Text style={styles.postTitle}>{event.title}</Text>
-        <Text style={styles.postSub}>{formatShort(event.startsAt)} · {event.place}</Text>
-        <Text numberOfLines={2} style={styles.postDescription}>{event.description}</Text>
-      </View>
-      {cover && !imageFailed ? (
-        <View>
-          <Image
-            source={{ uri: imageUri(cover) }}
-            accessibilityLabel={`Flyer: ${event.title}`}
-            resizeMode="cover"
-            onError={() => setImageFailed(true)}
-            style={[styles.postPhoto, { aspectRatio: flush ? 4 / 3 : 16 / 9 }]}
-          />
-          {event.demo ? <Text style={styles.postChip}>DEMO · EVENTO FICTICIO</Text> : null}
+        <View style={styles.postBody}>
+          <Text style={styles.postTitle}>{event.title}</Text>
+          <Text style={styles.postSub}>{formatShort(event.startsAt)} · {event.place}</Text>
+          <Text numberOfLines={2} style={styles.postDescription}>{event.description}</Text>
         </View>
+      </Pressable>
+      {images.length ? (
+        <FlyerCarousel
+          images={images}
+          title={event.title}
+          flush
+          padded
+          aspectRatio={flush ? FEED_RATIO_MOBILE : FEED_RATIO_WIDE}
+          fit="contain"
+          background={colors.flyerBg}
+          onPressImage={onPress}
+        />
       ) : (
-        <View style={[styles.postImage, { backgroundColor: colors.banners[index % colors.banners.length] }]}>
+        <Pressable
+          onPress={onPress}
+          accessibilityRole="button"
+          accessibilityLabel={`Ver ficha de ${event.title}`}
+          style={[styles.postImage, { backgroundColor: colors.banners[index % colors.banners.length] }]}
+        >
           <Icon name="image" size={18} color={colors.textSecondary} />
-          {event.demo ? <Text style={styles.postChip}>DEMO · EVENTO FICTICIO</Text> : null}
-        </View>
+        </Pressable>
       )}
-      <View style={styles.postFooter}>
+      <Pressable onPress={onPress} accessibilityRole="button" style={({ pressed }) => [styles.postFooter, pressed && styles.pressed]}>
         <Text style={styles.postFooterText}>Ver ficha completa</Text>
         <Icon name="arrowRight" size={15} color={colors.accent} />
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
 
-// Carrusel de flyers de la ficha: formato 4:5, contador, flechas y puntos.
-function FlyerCarousel({ images, title, flush }) {
+// Carrusel de flyers con contador, flechas y puntos. En la ficha recorta a 4:5; en Inicio muestra el flyer
+// completo ajustado al alto, con un color a los costados.
+function FlyerCarousel({ images, title, flush, aspectRatio = 4 / 5, fit = 'cover', background, padded = false, onPressImage }) {
   const { colors, styles } = useTheme();
   const [width, setWidth] = useState(0);
   const [index, setIndex] = useState(0);
   const scroller = useRef(null);
   const total = images.length;
+  const slideHeight = width / aspectRatio;
   const show = target => {
     const next = Math.max(0, Math.min(total - 1, target));
     setIndex(next);
@@ -446,27 +453,36 @@ function FlyerCarousel({ images, title, flush }) {
   return (
     <View style={styles.carousel} accessibilityLabel="Flyers del evento">
       <View
-        style={[styles.carouselFrame, flush && styles.carouselFrameFlush]}
+        style={[styles.carouselFrame, flush && styles.carouselFrameFlush, { aspectRatio, backgroundColor: background || colors.border }]}
         onLayout={event => setWidth(event.nativeEvent.layout.width)}
       >
         {width ? (
           <ScrollView
             ref={scroller}
+            style={{ height: slideHeight }}
             horizontal
             pagingEnabled
             showsHorizontalScrollIndicator={false}
             scrollEventThrottle={16}
             onScroll={event => setIndex(Math.round(event.nativeEvent.contentOffset.x / width))}
           >
-            {images.map((uri, position) => (
-              <Image
-                key={uri}
-                source={{ uri: imageUri(uri) }}
-                accessibilityLabel={`Flyer ${position + 1} de ${total}: ${title}`}
-                resizeMode="cover"
-                style={{ width, height: (width * 5) / 4 }}
-              />
-            ))}
+            {images.map((uri, position) => {
+              const image = (
+                <Image
+                  source={{ uri: imageUri(uri) }}
+                  accessibilityLabel={`Flyer ${position + 1} de ${total}: ${title}`}
+                  resizeMode={fit}
+                  style={{ width, height: slideHeight }}
+                />
+              );
+              return (
+                <View key={uri} style={{ width, height: slideHeight }}>
+                  {onPressImage ? (
+                    <Pressable onPress={onPressImage} style={{ width, height: slideHeight }} accessibilityRole="button">{image}</Pressable>
+                  ) : image}
+                </View>
+              );
+            })}
           </ScrollView>
         ) : null}
         {total > 1 ? (
@@ -486,7 +502,7 @@ function FlyerCarousel({ images, title, flush }) {
         ) : null}
       </View>
       {total > 1 ? (
-        <View style={styles.carouselDots}>
+        <View style={[styles.carouselDots, padded && styles.carouselDotsPadded]}>
           {images.map((uri, position) => (
             <View key={uri} style={[styles.carouselDot, position === index && styles.carouselDotActive]} />
           ))}
@@ -1244,16 +1260,23 @@ function NodoApp() {
                     />
                     {selectedEvent.registrationUrl ? (
                       <Button
-                        title={selectedEvent.demo ? 'Consultar sitio de ejemplo' : 'Inscribirme'}
+                        title="Inscribirme"
                         trailingIcon="externalLink"
                         kind="outlined"
                         style={[styles.actionButton, wide && styles.actionButtonWide]}
                         onPress={() => openExternal(selectedEvent.registrationUrl)}
                       />
+                    ) : selectedEvent.noRegistration ? (
+                      <View style={[styles.noRegistration, styles.actionButton, wide && styles.actionButtonWide]}>
+                        <Icon name="check" size={18} color={colors.accentDark} strokeWidth={2.2} />
+                        <Text style={styles.noRegistrationText}>No requiere inscripción</Text>
+                      </View>
                     ) : null}
-                    <Text style={styles.actionNote}>
-                      {selectedEvent.registrationUrl ? 'Al inscribirte, se abre una página externa.' : 'Este evento no tiene un enlace de inscripción informado.'}
-                    </Text>
+                    {selectedEvent.noRegistration && !selectedEvent.registrationUrl ? null : (
+                      <Text style={styles.actionNote}>
+                        {selectedEvent.registrationUrl ? 'Al inscribirte, se abre una página externa.' : 'Este evento no tiene un enlace de inscripción informado.'}
+                      </Text>
+                    )}
                   </View>
                   {selectedEvent.images?.length ? (
                     <View style={wide ? styles.carouselWrap : styles.carouselBleed}>
@@ -1527,7 +1550,7 @@ function createStyles(colors) {
     noUpcoming: { color: colors.muted, fontSize: 14, marginBottom: 4 },
     pastSection: { marginTop: 28 },
     pastLine: { height: 1, backgroundColor: colors.border },
-    pastLabel: { color: colors.muted, fontSize: 13, fontWeight: '700', letterSpacing: 0.2, marginTop: 10, marginBottom: 16 },
+    pastLabel: { color: colors.ink, fontSize: 20, lineHeight: 26, fontWeight: '800', letterSpacing: -0.3, marginTop: 16, marginBottom: 16 },
     postCard: { overflow: 'hidden', borderRadius: 14, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface },
     postCardFlush: { borderRadius: 0, borderLeftWidth: 0, borderRightWidth: 0 },
     postHead: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingTop: 14, paddingHorizontal: 16 },
@@ -1541,7 +1564,6 @@ function createStyles(colors) {
     postSub: { color: colors.accent, fontSize: 13, lineHeight: 19, fontWeight: '700', marginBottom: 8 },
     postDescription: { color: colors.muted, fontSize: 14, lineHeight: 21, marginBottom: 12 },
     postImage: { height: 150, alignItems: 'center', justifyContent: 'center' },
-    postChip: { position: 'absolute', top: 10, left: 10, overflow: 'hidden', color: colors.ink, backgroundColor: colors.chip, borderRadius: 20, paddingHorizontal: 9, paddingVertical: 5, fontSize: 9, fontWeight: '800', letterSpacing: 0.4 },
     postFooter: { minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, borderTopWidth: 1, borderTopColor: colors.borderSoft },
     postFooterText: { color: colors.accent, fontSize: 14, fontWeight: '800' },
     emptyCard: { alignItems: 'center', padding: 28, paddingHorizontal: 20, borderRadius: 16, borderWidth: 1, borderColor: colors.borderSoft, backgroundColor: colors.surface },
@@ -1580,6 +1602,8 @@ function createStyles(colors) {
     actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 18 },
     actionButton: { flex: 1, marginTop: 0, paddingHorizontal: 12 },
     actionButtonWide: { flexGrow: 0, flexShrink: 0, flexBasis: 'auto', paddingHorizontal: 20 },
+    noRegistration: { minHeight: 48, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 },
+    noRegistrationText: { color: colors.accentDark, fontSize: 15, fontWeight: '700' },
     actionNote: { width: '100%', color: colors.muted, fontSize: 12, lineHeight: 18, textAlign: 'center' },
 
     // Mis recordatorios.
@@ -1638,7 +1662,6 @@ function createStyles(colors) {
     drawerPanel: { position: 'absolute', top: 0, bottom: 0, left: 0, width: 300, maxWidth: '88%', backgroundColor: colors.sidebarBg, shadowColor: '#101828', shadowOpacity: 0.2, shadowRadius: 18, shadowOffset: { width: 4, height: 0 }, elevation: 24 },
 
     // Imágenes del evento.
-    postPhoto: { width: '100%', backgroundColor: colors.border },
     browseSpinner: { marginVertical: 40 },
     carouselWrap: { alignSelf: 'center', width: '100%', maxWidth: 560, marginBottom: 28 },
     carouselBleed: { marginHorizontal: -16, marginBottom: 20 },
@@ -1652,6 +1675,7 @@ function createStyles(colors) {
     carouselDots: { flexDirection: 'row', justifyContent: 'center', gap: 6 },
     carouselDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: colors.trackOff },
     carouselDotActive: { backgroundColor: colors.accentDark },
+    carouselDotsPadded: { paddingBottom: 10 },
   });
 }
 

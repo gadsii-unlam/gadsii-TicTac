@@ -8,6 +8,7 @@
   "sourcePublishedAt": "2027-01-29T18:00:00-03:00",
   "sourceUrl": "https://www.unlam.edu.ar/",
   "registrationUrl": null,
+  "noRegistration": false,
   "reviewed": true,
   "demo": false
 }

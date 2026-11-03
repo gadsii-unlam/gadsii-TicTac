@@ -276,6 +276,16 @@ test('perfiles y eventos con el nombre anterior de una carrera se actualizan al 
   assert.ok(!reopened.data.events.some(e=>e.career==='Comunicación Social'));
 });
 
+test('un evento con fecha pasada se publica como pasado y no encola avisos',()=>{
+  const {store}=tempStore();store.updateProfile(device,profile);store.attachSubscription(device,subscription);
+  const past=store.addEvent(futureEvent({department:'diit',startsAt:new Date(Date.now()-3*86400000).toISOString()}));
+  assert.equal(store.findEvent(past.id).id,past.id);
+  assert.equal(store.eventsByDepartment('diit').at(-1).id,past.id);
+  assert.equal(store.data.queued.filter(q=>q.eventId===past.id).length,0);
+  const upcoming=store.addEvent(futureEvent({department:'diit'}));
+  assert.equal(store.data.queued.filter(q=>q.eventId===upcoming.id).length,1);
+});
+
 test('las listas traen primero los próximos (más cercano primero) y después los pasados (más reciente primero)',()=>{
   const {store}=tempStore();store.updateProfile(device,profile);
   const day=86400000;
@@ -295,4 +305,36 @@ test('las listas traen primero los próximos (más cercano primero) y después l
   assert.throws(()=>store.markReminder(device,a.id,true),/no disponible/);
   assert.equal(store.markReminder(device,a.id,false),false);
   assert.deepEqual(store.reminderEventsFor(device),[]);
+});
+
+test('los eventos de muestra no dicen "demo", "ficticio" ni "ejemplo", y las bases viejas se reescriben',()=>{
+  const marcas=/ficticio|ejemplo|demostraci|simulad|\bdemo\b/i;
+  const {store,dir}=tempStore();
+  for (const e of store.data.events) {
+    assert.ok(!marcas.test(`${e.title} ${e.place} ${e.description}`),e.title);
+  }
+  // Una base con la redacción anterior se actualiza al abrirla.
+  const old=JSON.parse(fs.readFileSync(path.join(dir,'db.json'),'utf8'));
+  const taller=old.events.find(e=>e.title==='Taller introductorio de ciberseguridad');
+  taller.place='Laboratorio de informática (ejemplo)';
+  taller.description='Actividad de demostración: ... No corresponde a un evento oficial confirmado.';
+  fs.writeFileSync(path.join(dir,'db.json'),JSON.stringify(old));
+  const reopened=createStore({file:path.join(dir,'db.json')});
+  const limpio=reopened.data.events.find(e=>e.title===taller.title);
+  assert.equal(limpio.place,'Laboratorio de informática');
+  assert.ok(!marcas.test(limpio.description));
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dir,'db.json'),'utf8')).events.find(e=>e.title===taller.title).place,'Laboratorio de informática');
+});
+
+test('un evento puede declarar que no requiere inscripción, sin enlace',()=>{
+  const {store}=tempStore();
+  assert.equal(store.addEvent(futureEvent()).noRegistration,false);
+  const libre=store.addEvent(futureEvent({noRegistration:true,registrationUrl:null}));
+  assert.equal(libre.noRegistration,true);
+  assert.equal(libre.registrationUrl,null);
+  assert.equal(store.findEvent(libre.id).noRegistration,true);
+  assert.throws(()=>store.addEvent(futureEvent({noRegistration:true,registrationUrl:'https://inscripcion.example.com'})),/no puede tener enlace/);
+  assert.throws(()=>store.addEvent(futureEvent({noRegistration:'si'})),/true o false/);
+  const conEnlace=store.addEvent(futureEvent({registrationUrl:'https://inscripcion.example.com'}));
+  assert.equal(conEnlace.noRegistration,false);
 });

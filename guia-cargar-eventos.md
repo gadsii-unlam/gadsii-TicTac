@@ -6,13 +6,25 @@ La app no incluye una pantalla administrativa para publicar eventos. El equipo p
 
 Para publicar un evento real, completá un JSON tomando como base [`docs/configuracion/ejemplo-evento.json`](docs/configuracion/ejemplo-evento.json). Verificá todos los datos en una fuente oficial y pedí a otra persona del equipo que revise el contenido antes de publicarlo: la operación guarda el evento y crea notificaciones pendientes.
 
-Completá el título, departamento, carrera, fecha y hora, lugar o modalidad, descripción, fecha de publicación de la fuente y URL oficial. Usá `""` en `career` si el evento es para todo el departamento. `startsAt` debe ser una fecha futura en formato ISO 8601 con zona horaria, por ejemplo:
+Completá el título, departamento, carrera, fecha y hora, lugar o modalidad, descripción, fecha de publicación de la fuente y URL oficial. Usá `""` en `career` si el evento es para todo el departamento. `startsAt` va en formato ISO 8601 con zona horaria, por ejemplo (también se aceptan fechas pasadas: el evento aparece en la lista de pasados y no genera avisos):
 
 ```json
 "startsAt": "2027-02-10T19:00:00-03:00"
 ```
 
 Después de la revisión, usá `"reviewed": true` y `"demo": false`. La URL de la fuente oficial debe usar HTTPS. No agregues claves ni credenciales al archivo.
+
+## Inscripción
+
+Hay tres casos, y se eligen con dos campos del JSON:
+
+| Caso | Campos | Qué muestra la ficha |
+| --- | --- | --- |
+| Tiene enlace de inscripción | `"registrationUrl": "https://…"` | Botón **Inscribirme**, que abre la página externa. |
+| No hace falta inscribirse | `"noRegistration": true` y `"registrationUrl": null` | El texto **No requiere inscripción**, en lugar del botón. |
+| No se informó nada | `"registrationUrl": null` (y `noRegistration` en `false` u omitido) | "Este evento no tiene un enlace de inscripción informado." |
+
+`noRegistration` y `registrationUrl` no se pueden usar juntos: el cargador lo rechaza. El enlace tiene que usar HTTPS.
 
 ## Departamentos y carreras válidos
 
@@ -64,7 +76,7 @@ El contenedor usa su base persistente y la clave administrativa configurada en e
 
 ## Comprobar publicación y avisos
 
-El comando informa el identificador del evento y cuántos avisos quedaron pendientes. Ante un error, verificá que el backend esté disponible, que el JSON sea válido, que los campos requeridos estén completos y que la fecha del evento siga siendo futura.
+El comando informa el identificador del evento y cuántos avisos quedaron pendientes. Ante un error, verificá que el backend esté disponible, que el JSON sea válido, y que los campos requeridos estén completos.
 
 La app muestra el evento a los perfiles que coincidan con el departamento y, si corresponde, la carrera cuando actualicen su lista. Para recibir notificaciones push, esos perfiles también deben tener alertas activadas y una suscripción válida. La frecuencia instantánea intenta enviar el aviso enseguida; los resúmenes diarios y semanales esperan su próximo horario programado. La aceptación del push no confirma que la persona lo haya visto.
 
