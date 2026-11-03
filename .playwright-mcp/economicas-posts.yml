@@ -1,0 +1,563 @@
+- generic [ref=f280e2]:
+  - heading "0 notificaciones" [level=2] [ref=f280e3]
+  - generic [ref=f280e4]:
+    - generic:
+      - generic "Omitir el menú de navegación":
+        - generic [ref=f280e5]:
+          - button "Pasar a la búsqueda" [ref=f280e6] [cursor=pointer]
+          - button "Ir al contenido principal" [ref=f280e9] [cursor=pointer]
+          - button "Ir a contenido principal" [ref=f280e12] [cursor=pointer]
+          - button "Ir a al margen" [ref=f280e15] [cursor=pointer]
+          - button "Ir a pie de página" [ref=f280e18] [cursor=pointer]
+          - button "Cerrar menú de omisión" [ref=f280e22] [cursor=pointer]
+    - generic [ref=f280e26]:
+      - banner [ref=f280e28]:
+        - generic [ref=f280e30]:
+          - generic [ref=f280e31]:
+            - generic [ref=f280e32]:
+              - button [ref=f280e33] [cursor=pointer]:
+                - img "LinkedIn" [ref=f280e34]
+              - generic [ref=f280e36]:
+                - status [ref=f280e37]
+                - search [ref=f280e38]:
+                  - textbox "Buscar" [ref=f280e43]
+            - navigation [ref=f280e45]:
+              - list [ref=f280e46]:
+                - listitem [ref=f280e47]:
+                  - button "Inicio, 0 nuevas notificaciones" [ref=f280e48] [cursor=pointer]:
+                    - generic: Inicio
+                - listitem [ref=f280e54]:
+                  - link "Mi red, 0 nuevas notificaciones" [ref=f280e55] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/mynetwork
+                    - generic: Mi red
+                - listitem [ref=f280e60]:
+                  - link "Empleos, 0 nuevas notificaciones" [ref=f280e61] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/jobs/
+                    - generic: Empleos
+                - listitem [ref=f280e66]:
+                  - link "Mensajes, 0 notificaciones nuevas" [ref=f280e67] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/messaging/
+                    - generic: Mensajes
+                - listitem [ref=f280e73]:
+                  - link "Notificaciones, 0 notificaciones nuevas" [ref=f280e74] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/notifications/
+                    - generic: Notificaciones
+                - listitem [ref=f280e79]:
+                  - button "Más" [ref=f280e80] [cursor=pointer]
+            - generic [ref=f280e87]:
+              - button [ref=f280e89] [cursor=pointer]:
+                - generic "Florencia Berenice Licarzi Yo" [ref=f280e90]:
+                  - figure [aria-hidden] [ref=f280e92]
+              - generic [ref=f280e93]:
+                - navigation [ref=f280e94]:
+                  - list [ref=f280e95]:
+                    - listitem [ref=f280e96]:
+                      - button "Para negocios" [ref=f280e97] [cursor=pointer]
+                - button [ref=f280e106] [cursor=pointer]:
+                  - paragraph [ref=f280e108]:
+                    - link "Probar Premium por 0 ARS" [ref=f280e110]:
+                      - /url: "#"
+          - figure [aria-hidden] [ref=f280e115]
+      - generic [ref=f280e116]:
+        - toolbar [aria-hidden]:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - figure [aria-hidden]
+                        - generic:
+                          - generic:
+                            - generic:
+                              - paragraph: Depto. de Ciencias Económicas de la Universidad Nacional de La Matanza
+                      - button
+                      - button:
+                        - generic: Enviar mensaje
+                      - generic:
+                        - button:
+                          - generic: Seguir
+                    - generic:
+                      - navigation:
+                        - list:
+                          - listitem:
+                            - link:
+                              - /url: https://www.linkedin.com/company/economicasunlam/home/
+                              - generic: Inicio
+                          - listitem:
+                            - link:
+                              - /url: https://www.linkedin.com/company/economicasunlam/about/
+                              - generic: Acerca de
+                          - listitem:
+                            - link:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                              - generic: Publicaciones
+                          - listitem:
+                            - link:
+                              - /url: https://www.linkedin.com/company/economicasunlam/jobs/
+                              - generic: Empleos
+                          - listitem:
+                            - link:
+                              - /url: https://www.linkedin.com/company/economicasunlam/people/
+                              - generic: Personas
+        - main [ref=f280e117]:
+          - generic [ref=f280e119]:
+            - region "Contenido principal" [ref=f280e120]:
+              - generic [ref=f280e121]:
+                - generic [ref=f280e123]:
+                  - generic [ref=f280e128]:
+                    - generic [ref=f280e129]:
+                      - figure [ref=f280e132]:
+                        - img "Foto de portada" [ref=f280e133]
+                      - generic "Foto de la página" [ref=f280e134]:
+                        - figure [aria-hidden] [ref=f280e136]
+                    - generic [ref=f280e137]:
+                      - generic [ref=f280e138]:
+                        - heading "Depto. de Ciencias Económicas de la Universidad Nacional de La Matanza" [level=2] [ref=f280e139]
+                        - paragraph [ref=f280e140]: "\"El camino a la excelencia\""
+                        - generic [ref=f280e141]:
+                          - paragraph [ref=f280e142]: Enseñanza superior
+                          - paragraph [aria-hidden] [ref=f280e143]: ·
+                          - paragraph [ref=f280e144]: San Justo, Buenos Aires
+                          - paragraph [aria-hidden] [ref=f280e145]: ·
+                          - paragraph [ref=f280e146]: 1,2 mil seguidores
+                          - paragraph [aria-hidden] [ref=f280e147]: ·
+                          - paragraph [ref=f280e148]:
+                            - link "Buscar más empleados" [ref=f280e149] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/search/results/people/?currentCompany=%5B%2290887715%22%5D&origin=COMPANY_PAGE_CANNED_SEARCH
+                              - text: 5 mil-10 mil empleados
+                      - link [ref=f280e151] [cursor=pointer]:
+                        - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                        - generic [ref=f280e152]:
+                          - figure [aria-hidden] [ref=f280e153]
+                          - paragraph [ref=f280e155]:
+                            - link "Gustavo sigue esta página" [ref=f280e157]:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                      - generic [ref=f280e159]:
+                        - button "Seguir a Depto. de Ciencias Económicas de la Universidad Nacional de La Matanza" [ref=f280e161] [cursor=pointer]:
+                          - generic [ref=f280e162]: Seguir
+                        - button "Enviar mensaje" [ref=f280e167] [cursor=pointer]
+                        - button "Más acciones para Depto. de Ciencias Económicas de la Universidad Nacional de La Matanza" [ref=f280e173] [cursor=pointer]
+                  - navigation [ref=f280e179]:
+                    - list [ref=f280e180]:
+                      - listitem [ref=f280e181]:
+                        - link "Inicio" [ref=f280e182] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/company/economicasunlam/home/
+                      - listitem [ref=f280e185]:
+                        - link "Acerca de" [ref=f280e186] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/company/economicasunlam/about/
+                      - listitem [ref=f280e189]:
+                        - link "Publicaciones" [ref=f280e190] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                      - listitem [ref=f280e193]:
+                        - link "Empleos" [ref=f280e194] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/company/economicasunlam/jobs/
+                      - listitem [ref=f280e197]:
+                        - link "Personas" [ref=f280e198] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/company/economicasunlam/people/
+                - generic [ref=f280e203]:
+                  - generic [ref=f280e206]:
+                    - paragraph [ref=f280e207]: Mira una colección de los anuncios activos o anteriores de Depto. de Ciencias Económicas de la Universidad Nacional de La Matanza.
+                    - link "Ver biblioteca de anuncios" [ref=f280e208] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/ad-library/search/?companyIds=90887715
+                  - generic [ref=f280e216]:
+                    - heading "Aún no hay publicaciones" [level=2] [ref=f280e289]
+                    - paragraph [ref=f280e290]: Sigue a Depto. de Ciencias Económicas de la Universidad Nacional de La Matanza para recibir notificaciones cuando se creen publicaciones
+                    - button "Seguir a Depto. de Ciencias Económicas de la Universidad Nacional de La Matanza" [ref=f280e292] [cursor=pointer]:
+                      - generic [ref=f280e293]: Seguir
+            - complementary "Al margen" [ref=f280e298]:
+              - generic [ref=f280e299]:
+                - iframe [ref=f280e302]:
+                  - link [ref=f283e4] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/jobs/?trk=li_FA_global_careers_jobsgtm_jsFA_v1&mcid=6899045044465016833
+                    - img "Advertise on LinkedIn" [ref=f283e5]
+                - generic [ref=f280e304]:
+                  - generic [ref=f280e308]:
+                    - heading "Otros perfiles vistos" [level=2] [ref=f280e310]
+                    - list [ref=f280e311]:
+                      - listitem [ref=f280e312]:
+                        - generic [ref=f280e314]:
+                          - link [ref=f280e315] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/company/universidad-nacional-de-la-matanza-cátedra-proyecto-final-diit/
+                            - generic [ref=f280e316]:
+                              - figure [aria-hidden] [ref=f280e317]
+                              - generic [ref=f280e318]:
+                                - paragraph [ref=f280e321]:
+                                  - link "Ver página de Cátedra Proyecto Final - DIIT - Universidad Nacional de La Matanza" [ref=f280e323]:
+                                    - /url: https://www.linkedin.com/company/universidad-nacional-de-la-matanza-cátedra-proyecto-final-diit/
+                                    - text: Cátedra Proyecto Final - DIIT - Universidad Nacional de La Matanza
+                                - paragraph [ref=f280e325]: Tecnología, información e internet
+                                - paragraph [ref=f280e326]: 343 seguidores
+                          - generic [ref=f280e327]:
+                            - link [ref=f280e328] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                              - generic [ref=f280e329]:
+                                - figure [aria-hidden] [ref=f280e330]
+                                - paragraph [ref=f280e332]:
+                                  - link "Ariana y 13 contactos más siguen esta página" [ref=f280e334]:
+                                    - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                            - button "Seguir a Cátedra Proyecto Final - DIIT - Universidad Nacional de La Matanza" [ref=f280e337] [cursor=pointer]:
+                              - generic [ref=f280e338]: Seguir
+                      - separator [aria-hidden] [ref=f280e343]
+                      - listitem [ref=f280e344]:
+                        - generic [ref=f280e346]:
+                          - link [ref=f280e347] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/company/diit-unlam/
+                            - generic [ref=f280e348]:
+                              - figure [aria-hidden] [ref=f280e349]
+                              - generic [ref=f280e350]:
+                                - paragraph [ref=f280e353]:
+                                  - link "Ver página de DIIT UNLaM" [ref=f280e355]:
+                                    - /url: https://www.linkedin.com/company/diit-unlam/
+                                    - text: DIIT UNLaM
+                                - paragraph [ref=f280e357]: Enseñanza superior
+                                - paragraph [ref=f280e358]: 1.243 seguidores
+                          - generic [ref=f280e359]:
+                            - link [ref=f280e360] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                              - generic [ref=f280e361]:
+                                - figure [aria-hidden] [ref=f280e362]
+                                - paragraph [ref=f280e364]:
+                                  - link "Iván y 22 contactos más siguen esta página" [ref=f280e366]:
+                                    - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                            - button "Siguiendo, haz clic para dejar de seguir a DIIT UNLaM" [ref=f280e369] [cursor=pointer]:
+                              - generic [ref=f280e370]: Siguiendo
+                      - separator [aria-hidden] [ref=f280e375]
+                      - listitem [ref=f280e376]:
+                        - generic [ref=f280e378]:
+                          - link [ref=f280e379] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/company/mercedesbenzcamionesybusesarg/
+                            - generic [ref=f280e380]:
+                              - figure [aria-hidden] [ref=f280e381]
+                              - generic [ref=f280e382]:
+                                - paragraph [ref=f280e385]:
+                                  - link "Ver página de Mercedes-Benz Camiones y Buses Argentina" [ref=f280e387]:
+                                    - /url: https://www.linkedin.com/company/mercedesbenzcamionesybusesarg/
+                                    - text: Mercedes-Benz Camiones y Buses Argentina
+                                - paragraph [ref=f280e389]: Fabricación de vehículos de motor
+                                - paragraph [ref=f280e390]: 31.480 seguidores
+                          - generic [ref=f280e391]:
+                            - link [ref=f280e392] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                              - generic [ref=f280e393]:
+                                - figure [aria-hidden] [ref=f280e394]
+                                - paragraph [ref=f280e396]:
+                                  - link "Gian Luca y 8 contactos más siguen esta página" [ref=f280e398]:
+                                    - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                            - button "Seguir a Mercedes-Benz Camiones y Buses Argentina" [ref=f280e401] [cursor=pointer]:
+                              - generic [ref=f280e402]: Seguir
+                    - link "Mostrar todas las páginas similares" [ref=f280e408] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                      - generic [ref=f280e409]: Mostrar todo
+                  - generic [ref=f280e416]:
+                    - heading "Otros perfiles seguidos" [level=2] [ref=f280e418]
+                    - list [ref=f280e419]:
+                      - listitem [ref=f280e420]:
+                        - generic [ref=f280e422]:
+                          - link [ref=f280e423] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/company/github/
+                            - generic [ref=f280e424]:
+                              - figure [aria-hidden] [ref=f280e425]
+                              - generic [ref=f280e426]:
+                                - paragraph [ref=f280e429]:
+                                  - link "Ver página de GitHub" [ref=f280e431]:
+                                    - /url: https://www.linkedin.com/company/github/
+                                    - text: GitHub
+                                - paragraph [ref=f280e433]: Desarrollo de software
+                                - paragraph [ref=f280e434]: 6.810.765 seguidores
+                          - generic [ref=f280e435]:
+                            - link [ref=f280e436] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                              - generic [ref=f280e437]:
+                                - figure [aria-hidden] [ref=f280e438]
+                                - paragraph [ref=f280e440]:
+                                  - link "Iván y 61 contactos más siguen esta página" [ref=f280e442]:
+                                    - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                            - button "Seguir a GitHub" [ref=f280e445] [cursor=pointer]:
+                              - generic [ref=f280e446]: Seguir
+                      - separator [aria-hidden] [ref=f280e451]
+                      - listitem [ref=f280e452]:
+                        - generic [ref=f280e454]:
+                          - link [ref=f280e455] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/showcase/vs-code/
+                            - generic [ref=f280e456]:
+                              - figure [aria-hidden] [ref=f280e457]
+                              - generic [ref=f280e458]:
+                                - paragraph [ref=f280e461]:
+                                  - link "Ver página de Visual Studio Code" [ref=f280e463]:
+                                    - /url: https://www.linkedin.com/showcase/vs-code/
+                                    - text: Visual Studio Code
+                                - paragraph [ref=f280e465]: Desarrollo de software
+                                - paragraph [ref=f280e466]: 666.907 seguidores
+                          - generic [ref=f280e467]:
+                            - link [ref=f280e468] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                              - generic [ref=f280e469]:
+                                - figure [aria-hidden] [ref=f280e470]
+                                - paragraph [ref=f280e472]:
+                                  - link "Alejandro y 1 contacto más siguen esta página" [ref=f280e474]:
+                                    - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                            - button "Seguir a Visual Studio Code" [ref=f280e477] [cursor=pointer]:
+                              - generic [ref=f280e478]: Seguir
+                      - separator [aria-hidden] [ref=f280e483]
+                      - listitem [ref=f280e484]:
+                        - generic [ref=f280e486]:
+                          - link [ref=f280e487] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/company/openai/
+                            - generic [ref=f280e488]:
+                              - figure [aria-hidden] [ref=f280e489]
+                              - generic [ref=f280e490]:
+                                - paragraph [ref=f280e493]:
+                                  - link "Ver página de OpenAI" [ref=f280e495]:
+                                    - /url: https://www.linkedin.com/company/openai/
+                                    - text: OpenAI
+                                - paragraph [ref=f280e497]: Servicios de investigación
+                                - paragraph [ref=f280e498]: 12.110.643 seguidores
+                          - generic [ref=f280e499]:
+                            - link [ref=f280e500] [cursor=pointer]:
+                              - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                              - generic [ref=f280e501]:
+                                - figure [aria-hidden] [ref=f280e502]
+                                - paragraph [ref=f280e504]:
+                                  - link "Ariana y 60 contactos más siguen esta página" [ref=f280e506]:
+                                    - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                            - button "Seguir a OpenAI" [ref=f280e509] [cursor=pointer]:
+                              - generic [ref=f280e510]: Seguir
+                    - link "Mostrar todas las páginas recomendadas" [ref=f280e516] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                      - generic [ref=f280e517]: Mostrar todo
+                  - generic [ref=f280e524]:
+                    - heading "Antiguos alumnos que trabajan aquí" [level=2] [ref=f280e526]
+                    - list [ref=f280e527]:
+                      - listitem [ref=f280e528]:
+                        - generic [ref=f280e530]:
+                          - link [ref=f280e532] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/in/mat%C3%ADas-gabriel-pedreira/
+                            - generic [ref=f280e533]:
+                              - figure [aria-hidden] [ref=f280e534]
+                              - generic [ref=f280e535]:
+                                - generic [ref=f280e536]:
+                                  - paragraph [ref=f280e538]:
+                                    - generic [ref=f280e539]:
+                                      - text: Matías Gabriel Pedreira
+                                      - img "Verificado" [ref=f280e540]
+                                  - paragraph [ref=f280e544]: · 3er
+                                - paragraph [ref=f280e546]: Asistente de investigación con habilidades en administración y ventas
+                          - link "Enviar mensaje a Matías Gabriel Pedreira" [ref=f280e550] [cursor=pointer]:
+                            - /url: /messaging/compose/?profileUrn=urn%3Ali%3Afsd_profile%3AACoAADT0bmMByr0CmQ8wT4N5Y2AMGrvrGffVpKY&recipient=ACoAADT0bmMByr0CmQ8wT4N5Y2AMGrvrGffVpKY&screenContext=NON_SELF_PROFILE_VIEW&interop=msgOverlay
+                            - generic [ref=f280e551]: Enviar mensaje
+                      - separator [aria-hidden] [ref=f280e555]
+                      - listitem [ref=f280e556]:
+                        - generic [ref=f280e558]:
+                          - link [ref=f280e560] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/in/miguel-sayago-b66574171/
+                            - generic [ref=f280e561]:
+                              - figure [aria-hidden] [ref=f280e562]
+                              - generic [ref=f280e563]:
+                                - generic [ref=f280e564]:
+                                  - paragraph [ref=f280e566]:
+                                    - generic [ref=f280e567]:
+                                      - text: Miguel Sayago
+                                      - img "Verificado" [ref=f280e568]
+                                  - paragraph [ref=f280e572]: • 2º
+                                - paragraph [ref=f280e574]: Licenciado en Administración | Data-Driven Business Analyst | Control de Gestión Comercial | Agile Mindset & Tech Stack (SQL, Power BI)
+                          - button "Invita a Miguel Sayago a conectar" [ref=f280e580] [cursor=pointer]:
+                            - generic [ref=f280e581]: Conectar
+                      - separator [aria-hidden] [ref=f280e587]
+                      - listitem [ref=f280e588]:
+                        - generic [ref=f280e590]:
+                          - link [ref=f280e592] [cursor=pointer]:
+                            - /url: https://www.linkedin.com/in/laura-polola-6a35a724/
+                            - generic [ref=f280e593]:
+                              - figure [aria-hidden] [ref=f280e594]
+                              - generic [ref=f280e595]:
+                                - generic [ref=f280e596]:
+                                  - paragraph [ref=f280e598]:
+                                    - generic [ref=f280e599]:
+                                      - text: Laura Polola
+                                      - img "Verificado" [ref=f280e600]
+                                  - paragraph [ref=f280e604]: • 2º
+                                - paragraph [ref=f280e606]: Directora del LabCE - Laboratorio de Datos y Estadísticas del DCE-UNLaM. Formadora de RRHH en Investigación
+                          - button "Seguir a Laura Polola" [ref=f280e612] [cursor=pointer]:
+                            - generic [ref=f280e613]: Seguir
+                    - link "Mostrar todos los antiguos alumnos" [ref=f280e619] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/company/economicasunlam/posts/
+                      - generic [ref=f280e620]: Mostrar todo
+                - iframe [ref=f280e627]:
+                  - link [ref=f284e4] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/jobs/?trk=li_FA_global_careers_jobsgtm_jsFA_v1&mcid=6899045044465016833
+                    - img "Advertise on LinkedIn" [ref=f284e5]
+            - generic "Pie de página" [ref=f280e628]:
+              - generic [ref=f280e631]:
+                - generic [ref=f280e632]:
+                  - navigation [ref=f280e633]:
+                    - link [ref=f280e634] [cursor=pointer]:
+                      - /url: https://about.linkedin.com/
+                      - paragraph [ref=f280e635]: Acerca de
+                    - link [ref=f280e636] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/accessibility/
+                      - paragraph [ref=f280e637]: Accesibilidad
+                    - link [ref=f280e638] [cursor=pointer]:
+                      - /url: https://business.linkedin.com/talent-solutions?trk=flagship_nav&veh=li-footer-lts-control&src=li-footer
+                      - paragraph [ref=f280e639]: Talent Solutions
+                    - link [ref=f280e640] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/legal/professional-community-policies/
+                      - paragraph [ref=f280e641]: Pautas comunitarias
+                    - link [ref=f280e642] [cursor=pointer]:
+                      - /url: https://careers.linkedin.com/
+                      - paragraph [ref=f280e643]: Empleo
+                    - link [ref=f280e644] [cursor=pointer]:
+                      - /url: https://business.linkedin.com/advertise?trk=n_nav_lms_f&src=li-footer
+                      - paragraph [ref=f280e645]: Marketing Solutions
+                    - button [ref=f280e646] [cursor=pointer]:
+                      - paragraph [ref=f280e648]: Privacidad y condiciones
+                    - link [ref=f280e651] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/help/linkedin/answer/62931/
+                      - paragraph [ref=f280e652]: Opciones de publicidad
+                    - link [ref=f280e653] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/ad/start/?trk=n_nav_ads_rr
+                      - paragraph [ref=f280e654]: Publicidad
+                    - link [ref=f280e655] [cursor=pointer]:
+                      - /url: https://business.linkedin.com/sales-solutions?trk=flagship_nav&veh=li-footer-lss-control&src=li-footer
+                      - paragraph [ref=f280e656]: Sales Solutions
+                    - link [ref=f280e657] [cursor=pointer]:
+                      - /url: https://mobile.linkedin.com/
+                      - paragraph [ref=f280e658]: Móvil
+                    - link [ref=f280e659] [cursor=pointer]:
+                      - /url: https://business.linkedin.com/grow?src=li-footer
+                      - paragraph [ref=f280e660]: Pequeñas empresas
+                    - link [ref=f280e661] [cursor=pointer]:
+                      - /url: https://safety.linkedin.com/
+                      - paragraph [ref=f280e662]: Centro de seguridad
+                  - paragraph [ref=f280e664]: LinkedIn Corporation © 2026
+                - generic [ref=f280e665]:
+                  - list [ref=f280e666]:
+                    - listitem [ref=f280e667]:
+                      - generic [ref=f280e672]:
+                        - link [ref=f280e673] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/help/linkedin/
+                          - paragraph [ref=f280e674]: ¿Tienes preguntas?
+                        - paragraph [ref=f280e675]: Visita nuestro Centro de ayuda.
+                    - listitem [ref=f280e676]:
+                      - generic [ref=f280e681]:
+                        - link [ref=f280e682] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/mypreferences/d/
+                          - paragraph [ref=f280e683]: Gestiona tu cuenta y la privacidad
+                        - paragraph [ref=f280e684]: Accede a tu Configuración.
+                    - listitem [ref=f280e685]:
+                      - generic [ref=f280e689]:
+                        - link [ref=f280e690] [cursor=pointer]:
+                          - /url: https://www.linkedin.com/help/linkedin/answer/a1339724/
+                          - paragraph [ref=f280e691]: Transparencia de las recomendaciones
+                        - paragraph [ref=f280e692]: Más información sobre el contenido recomendado.
+                  - generic [ref=f280e694]:
+                    - paragraph [ref=f280e696]: Seleccionar idioma
+                    - combobox "Seleccionar idioma" [ref=f280e698] [cursor=pointer]:
+                      - option "العربية (árabe)"
+                      - option "বাংলা (bengalí)"
+                      - option "Čeština (checo)"
+                      - option "Dansk (danés)"
+                      - option "Deutsch (alemán)"
+                      - option "Ελληνικά (griego)"
+                      - option "English (inglés)"
+                      - option "Español" [selected]
+                      - option "لاررل (persa)"
+                      - option "Suomi (finlandés)"
+                      - option "Français (francés)"
+                      - option "हिंदी (hindi)"
+                      - option "Magyar (húngaro)"
+                      - option "Bahasa Indonesia (indonesio)"
+                      - option "Italiano (italiano)"
+                      - option "עברית (hebreo)"
+                      - option "日本語 (japonés)"
+                      - option "한국어 (coreano)"
+                      - option "मराठी (marati)"
+                      - option "Bahasa Malaysia (malayo)"
+                      - option "Nederlands (neerlandés)"
+                      - option "Norsk (noruego)"
+                      - option "ਪੰਜਾਬੀ (punyabí)"
+                      - option "Polski (polaco)"
+                      - option "Português (portugués)"
+                      - option "Română (rumano)"
+                      - option "Русский (ruso)"
+                      - option "Svenska (sueco)"
+                      - option "తెలుగు (telugu)"
+                      - option "ภาษาไทย (tailandés)"
+                      - option "Tagalog (tagalo)"
+                      - option "Türkçe (turco)"
+                      - option "Українська (ucraniano)"
+                      - option "Tiếng Việt (vietnamita)"
+                      - option "简体中文 (chino simplificado)"
+                      - option "正體中文 (chino tradicional)"
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - complementary:
+            - generic [ref=f280e700]:
+              - generic [ref=f280e702] [cursor=pointer]:
+                - generic [ref=f280e703]:
+                  - img "Florencia Berenice Licarzi" [ref=f280e704]
+                  - generic [ref=f280e705]: "Estado: con conexión"
+                - button "Estás en la superposición de mensajería. Pulsa Intro para abrir la lista de conversaciones." [ref=f280e707]:
+                  - generic [ref=f280e708]:
+                    - generic [aria-hidden] [ref=f280e709]: Mensajes
+                    - generic [ref=f280e710]: Estás en la superposición de mensajería. Pulsa Intro para abrir la lista de conversaciones.
+              - generic [ref=f280e711]:
+                - button [ref=f280e713] [cursor=pointer]:
+                  - img "Abrir menú despegable de la mensajería" [ref=f280e714]
+                - button "Redactar mensaje" [ref=f280e717] [cursor=pointer]
+                - button "Estás en la superposición de mensajería. Pulsa Intro para abrir la lista de conversaciones." [ref=f280e721] [cursor=pointer]
+          - complementary "Asistente de IA que te ayuda con tu desarrollo profesional, empleos, etc."
+  - iframe [ref=f280e725]:
+    - generic [ref=f285e1]:
+      - generic:
+        - region "Mensaje del sistema":
+          - heading "0 notificaciones en total" [level=2] [ref=f285e3]
+          - alert
+      - region [ref=f285e4]
+      - generic [ref=f285e5]:
+        - generic [ref=f285e7]:
+          - button "Pasar a la búsqueda" [ref=f285e8] [cursor=pointer]
+          - button "Pasar al contenido principal" [ref=f285e10] [cursor=pointer]
+          - button "Atajos de teclado" [ref=f285e12] [cursor=pointer]
+          - button "Cerrar menú de saltar" [ref=f285e14] [cursor=pointer]
+        - banner "Navegación global" [ref=f285e18]:
+          - generic [ref=f285e19]:
+            - generic [ref=f285e20]:
+              - link [ref=f285e21] [cursor=pointer]:
+                - /url: https://www.linkedin.com/feed/
+                - img "LinkedIn" [ref=f285e24]
+              - button "Haz clic para empezar una búsqueda" [ref=f285e29] [cursor=pointer]
+            - navigation "Navegación principal" [ref=f285e33]:
+              - list [ref=f285e34]:
+                - listitem [ref=f285e35]:
+                  - link "actualizaciones del feed notificaciones nuevas Inicio" [ref=f285e36] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/feed/
+                    - generic [ref=f285e37]: actualizaciones del feed notificaciones nuevas
+                    - generic "Inicio" [ref=f285e45]
+                - listitem [ref=f285e46]:
+                  - link "Mi red" [ref=f285e47] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/mynetwork/?
+                - listitem [ref=f285e53]:
+                  - link "Empleos" [ref=f285e54] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/jobs/?
+                - listitem [ref=f285e60]:
+                  - link "Mensajes" [ref=f285e61] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/messaging/?
+                - listitem [ref=f285e67]:
+                  - link "Notificaciones" [ref=f285e68] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/notifications/?
+                - listitem [ref=f285e74]:
+                  - button "Más" [ref=f285e76] [cursor=pointer]
+            - navigation [ref=f285e82]:
+              - list [ref=f285e83]:
+                - button [ref=f285e85] [cursor=pointer]:
+                  - img "Florencia Berenice Licarzi" [ref=f285e86]
+                  - generic [ref=f285e87]: Yo
+                - separator [ref=f285e90]
+                - button "Para negocios" [ref=f285e92] [cursor=pointer]
+                - listitem [ref=f285e100]:
+                  - link "Probar Premium por 0 ARS" [ref=f285e102] [cursor=pointer]:
+                    - /url: javascript:void(0)
