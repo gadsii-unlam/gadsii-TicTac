@@ -35,6 +35,8 @@ const EXPLORE_FREQUENCY_OPTIONS = [
   { value: 'semanal', label: 'Semanal' },
 ];
 const THEME_KEY = 'nodo_theme';
+// Sin una elección guardada, la app arranca en modo claro (no sigue al dispositivo).
+const DEFAULT_THEME = 'light';
 const THEME_OPTIONS = [
   { value: 'system', label: 'Usar el del dispositivo' },
   { value: 'light', label: 'Claro' },
@@ -113,7 +115,7 @@ const PALETTES = {
 const THEMES = Object.fromEntries(Object.entries(PALETTES).map(([scheme, colors]) => [
   scheme, { scheme, colors, styles: createStyles(colors) },
 ]));
-const ThemeContext = createContext({ ...THEMES.light, preference: 'system', setPreference: () => {} });
+const ThemeContext = createContext({ ...THEMES.light, preference: DEFAULT_THEME, setPreference: () => {} });
 const useTheme = () => useContext(ThemeContext);
 
 Notifications.setNotificationHandler({
@@ -496,7 +498,7 @@ function FlyerCarousel({ images, title, flush }) {
 
 export default function App() {
   const systemScheme = useColorScheme();
-  const [preference, setPreferenceState] = useState('system');
+  const [preference, setPreferenceState] = useState(DEFAULT_THEME);
 
   useEffect(() => {
     AsyncStorage.getItem(THEME_KEY)
@@ -1070,260 +1072,259 @@ function NodoApp() {
         {wide && feed ? (
           <Sidebar {...sidebarProps} />
         ) : null}
-        <ScrollView
-          style={styles.flex}
-          contentContainerStyle={[styles.content, wide && styles.contentWide, feed && !wide && styles.contentFeed]}
-          keyboardShouldPersistTaps="handled"
-        >
+        <View style={styles.flex}>
           {feed ? (
             <View style={styles.feedTrama} pointerEvents="none">
               <Trama palette={colors.tramaGris} tile={170} fade />
             </View>
           ) : null}
-          <View style={[styles.column, { maxWidth: columnWidth }]}>
-            {screen === 'settings' ? (
-              <View>
-                <BackPill label="Inicio" onPress={() => goTo('feed')} />
-                <Text style={[styles.pageTitle, wide && styles.pageTitleWide]} accessibilityRole="header">Configuración</Text>
-                <View style={[styles.section, wide && styles.sectionWide]}>
-                  <View style={styles.sectionHead}>
-                    <Icon name="gradCap" size={20} color={colors.accentDark} />
-                    <Text style={styles.sectionHeadText}>Mi carrera</Text>
-                  </View>
-                  <Text style={[styles.helpText, styles.panelIntro]}>Los eventos y las alertas se actualizan según lo que elijas.</Text>
-                  <View style={wide && styles.fieldsRow}>
-                    <View style={wide && styles.flex}>
-                      <SelectField label="Departamento" value={draft?.department} options={departmentOptions} onChange={department => {
-                        patchDraft({ department, career: config.departments[department].careers[0] });
-                      }} />
+          <ScrollView
+            style={styles.flex}
+            contentContainerStyle={[styles.content, wide && styles.contentWide, feed && !wide && styles.contentFeed]}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={[styles.column, { maxWidth: columnWidth }]}>
+              {screen === 'settings' ? (
+                <View>
+                  <BackPill label="Inicio" onPress={() => goTo('feed')} />
+                  <Text style={[styles.pageTitle, wide && styles.pageTitleWide]} accessibilityRole="header">Configuración</Text>
+                  <View style={[styles.section, wide && styles.sectionWide]}>
+                    <View style={styles.sectionHead}>
+                      <Icon name="gradCap" size={20} color={colors.accentDark} />
+                      <Text style={styles.sectionHeadText}>Mi carrera</Text>
                     </View>
-                    <View style={wide && styles.flex}>
-                      <SelectField label="Carrera" value={draft?.career} options={careerOptions} onChange={career => patchDraft({ career })} />
-                    </View>
-                  </View>
-                </View>
-                <View style={[styles.section, wide && styles.sectionWide]}>
-                  <ToggleRow
-                    icon="bell"
-                    title="Alertas de eventos nuevos"
-                    description="Solo de tu departamento y tu carrera."
-                    value={Boolean(draft?.alerts)}
-                    onValueChange={alerts => patchDraft({ alerts })}
-                  />
-                  <RadioGroup
-                    label="FRECUENCIA"
-                    options={FREQUENCY_OPTIONS}
-                    value={draft?.frequency}
-                    onChange={frequency => patchDraft({ frequency })}
-                    columns={wide ? 3 : 1}
-                    disabled={!draft?.alerts}
-                  />
-                  <View style={styles.permissionBox}>
-                    <Icon name={profile?.subscribed ? 'bell' : 'bellOff'} size={22} color={colors.accentDark} style={styles.permissionIcon} />
-                    <View style={styles.flex}>
-                      <Text style={styles.explainerTitle}>Estado del dispositivo</Text>
-                      <Text style={styles.helpText}>{profile?.subscribed ? 'Notificaciones activas en este dispositivo.' : 'Todavía no activaste las notificaciones en este dispositivo.'}</Text>
-                      {!profile?.subscribed ? <Button small title="Activar notificaciones" onPress={() => enableNotifications()} disabled={busy} /> : null}
+                    <Text style={[styles.helpText, styles.panelIntro]}>Los eventos y las alertas se actualizan según lo que elijas.</Text>
+                    <View style={wide && styles.fieldsRow}>
+                      <View style={wide && styles.flex}>
+                        <SelectField label="Departamento" value={draft?.department} options={departmentOptions} onChange={department => {
+                          patchDraft({ department, career: config.departments[department].careers[0] });
+                        }} />
+                      </View>
+                      <View style={wide && styles.flex}>
+                        <SelectField label="Carrera" value={draft?.career} options={careerOptions} onChange={career => patchDraft({ career })} />
+                      </View>
                     </View>
                   </View>
-                </View>
-                <View style={[styles.section, wide && styles.sectionWide]}>
-                  <ToggleRow
-                    icon="clock"
-                    title="Recordarme revisar la app"
-                    description="Un aviso para entrar a ver eventos, aunque no haya novedades."
-                    value={Boolean(draft?.explore)}
-                    onValueChange={explore => patchDraft({ explore })}
-                  />
-                  <View style={wide && styles.radioNarrow}>
+                  <View style={[styles.section, wide && styles.sectionWide]}>
+                    <ToggleRow
+                      icon="bell"
+                      title="Alertas de eventos nuevos"
+                      description="Solo de tu departamento y tu carrera."
+                      value={Boolean(draft?.alerts)}
+                      onValueChange={alerts => patchDraft({ alerts })}
+                    />
                     <RadioGroup
                       label="FRECUENCIA"
-                      options={EXPLORE_FREQUENCY_OPTIONS}
-                      value={draft?.exploreFrequency}
-                      onChange={exploreFrequency => patchDraft({ exploreFrequency })}
-                      columns={2}
-                      disabled={!draft?.explore}
+                      options={FREQUENCY_OPTIONS}
+                      value={draft?.frequency}
+                      onChange={frequency => patchDraft({ frequency })}
+                      columns={wide ? 3 : 1}
+                      disabled={!draft?.alerts}
                     />
-                  </View>
-                </View>
-                <View style={[styles.section, wide && styles.sectionWide]}>
-                  <Text style={styles.sectionHeadText}>Apariencia</Text>
-                  <Text style={[styles.helpText, styles.panelIntro, styles.sectionIntroGap]}>El tema se aplica al instante y se guarda en este dispositivo.</Text>
-                  <SelectField label="Tema" value={preference} options={THEME_OPTIONS} onChange={setPreference} />
-                </View>
-              </View>
-            ) : screen === 'reminders' ? (
-              <View>
-                <BackPill label="Inicio" onPress={() => goTo('feed')} />
-                <Text style={[styles.pageTitle, wide && styles.pageTitleWide]} accessibilityRole="header">Mis recordatorios</Text>
-                <Text style={[styles.lead, wide && styles.leadWide]}>Te avisamos 1 día antes de cada evento que marcaste.</Text>
-                {!profile?.subscribed ? (
-                  <View style={styles.warningBox}>
-                    <Icon name="bellOff" size={22} color={colors.amber} style={styles.permissionIcon} />
-                    <View style={styles.flex}>
-                      <Text style={styles.explainerTitle}>Las notificaciones están desactivadas</Text>
-                      <Text style={styles.helpText}>Sin ellas, los recordatorios no te van a llegar a este dispositivo.</Text>
-                      <Button small title="Activar notificaciones" onPress={() => enableNotifications()} disabled={busy} />
+                    <View style={styles.permissionBox}>
+                      <Icon name={profile?.subscribed ? 'bell' : 'bellOff'} size={22} color={colors.accentDark} style={styles.permissionIcon} />
+                      <View style={styles.flex}>
+                        <Text style={styles.explainerTitle}>Estado del dispositivo</Text>
+                        <Text style={styles.helpText}>{profile?.subscribed ? 'Notificaciones activas en este dispositivo.' : 'Todavía no activaste las notificaciones en este dispositivo.'}</Text>
+                        {!profile?.subscribed ? <Button small title="Activar notificaciones" onPress={() => enableNotifications()} disabled={busy} /> : null}
+                      </View>
                     </View>
                   </View>
-                ) : null}
-                {reminderEvents.length ? (
-                  <View style={styles.timeline}>
-                    <View style={styles.timelineLine} />
-                    {reminderEvents.map(event => (
-                      <View key={event.id} style={styles.reminderCard}>
-                        <View style={styles.timelineDot} />
-                        <Text style={styles.cardTitle}>{event.title}</Text>
-                        <Text style={styles.reminderSub}>{formatShort(event.startsAt)} · {event.place}</Text>
-                        <View style={styles.reminderFooter}>
-                          <View style={styles.reminderWhen}>
-                            <Icon name="bell" size={14} color={colors.green} filled />
-                            <Text style={styles.reminderWhenText}>Recordatorio activado</Text>
-                          </View>
-                          <View style={styles.reminderActions}>
-                            <Pressable style={styles.reminderAction} onPress={() => openEvent(event.id, 'feed', 'reminders')} accessibilityRole="button">
-                              <Text style={styles.reminderActionPrimary}>Ver ficha</Text>
-                            </Pressable>
-                            <Pressable style={styles.reminderAction} onPress={() => toggleReminder(event.id)} disabled={busy} accessibilityRole="button">
-                              <Text style={styles.reminderActionMuted}>Quitar</Text>
-                            </Pressable>
+                  <View style={[styles.section, wide && styles.sectionWide]}>
+                    <ToggleRow
+                      icon="clock"
+                      title="Recordarme revisar la app"
+                      description="Un aviso para entrar a ver eventos, aunque no haya novedades."
+                      value={Boolean(draft?.explore)}
+                      onValueChange={explore => patchDraft({ explore })}
+                    />
+                    <View style={wide && styles.radioNarrow}>
+                      <RadioGroup
+                        label="FRECUENCIA"
+                        options={EXPLORE_FREQUENCY_OPTIONS}
+                        value={draft?.exploreFrequency}
+                        onChange={exploreFrequency => patchDraft({ exploreFrequency })}
+                        columns={2}
+                        disabled={!draft?.explore}
+                      />
+                    </View>
+                  </View>
+                  <View style={[styles.section, wide && styles.sectionWide]}>
+                    <Text style={styles.sectionHeadText}>Apariencia</Text>
+                    <Text style={[styles.helpText, styles.panelIntro, styles.sectionIntroGap]}>El tema se aplica al instante y se guarda en este dispositivo.</Text>
+                    <SelectField label="Tema" value={preference} options={THEME_OPTIONS} onChange={setPreference} />
+                  </View>
+                </View>
+              ) : screen === 'reminders' ? (
+                <View>
+                  <BackPill label="Inicio" onPress={() => goTo('feed')} />
+                  <Text style={[styles.pageTitle, wide && styles.pageTitleWide]} accessibilityRole="header">Mis recordatorios</Text>
+                  <Text style={[styles.lead, wide && styles.leadWide]}>Te avisamos 1 día antes de cada evento que marcaste.</Text>
+                  {!profile?.subscribed ? (
+                    <View style={styles.warningBox}>
+                      <Icon name="bellOff" size={22} color={colors.amber} style={styles.permissionIcon} />
+                      <View style={styles.flex}>
+                        <Text style={styles.explainerTitle}>Las notificaciones están desactivadas</Text>
+                        <Text style={styles.helpText}>Sin ellas, los recordatorios no te van a llegar a este dispositivo.</Text>
+                        <Button small title="Activar notificaciones" onPress={() => enableNotifications()} disabled={busy} />
+                      </View>
+                    </View>
+                  ) : null}
+                  {reminderEvents.length ? (
+                    <View style={styles.timeline}>
+                      <View style={styles.timelineLine} />
+                      {reminderEvents.map(event => (
+                        <View key={event.id} style={styles.reminderCard}>
+                          <View style={styles.timelineDot} />
+                          <Text style={styles.cardTitle}>{event.title}</Text>
+                          <Text style={styles.reminderSub}>{formatShort(event.startsAt)} · {event.place}</Text>
+                          <View style={styles.reminderFooter}>
+                            <View style={styles.reminderWhen}>
+                              <Icon name="bell" size={14} color={colors.green} filled />
+                              <Text style={styles.reminderWhenText}>Recordatorio activado</Text>
+                            </View>
+                            <View style={styles.reminderActions}>
+                              <Pressable style={styles.reminderAction} onPress={() => openEvent(event.id, 'feed', 'reminders')} accessibilityRole="button">
+                                <Text style={styles.reminderActionPrimary}>Ver ficha</Text>
+                              </Pressable>
+                              <Pressable style={styles.reminderAction} onPress={() => toggleReminder(event.id)} disabled={busy} accessibilityRole="button">
+                                <Text style={styles.reminderActionMuted}>Quitar</Text>
+                              </Pressable>
+                            </View>
                           </View>
                         </View>
+                      ))}
+                    </View>
+                  ) : (
+                    <View style={styles.emptyCard}>
+                      <Icon name="bell" size={34} color={colors.accent} strokeWidth={1.8} style={styles.emptyIcon} />
+                      <Text style={styles.emptyTitle}>Todavía no marcaste eventos</Text>
+                      <Text style={styles.emptyText}>Tocá “Recordarme” en la ficha de un evento para que te avisemos 1 día antes.</Text>
+                      <Button title="Ir a Inicio" kind="neutral" onPress={() => goTo('feed')} />
+                    </View>
+                  )}
+                </View>
+              ) : screen === 'detail' && selectedEvent ? (
+                <View>
+                  <BackPill label={backTarget === 'reminders' ? 'Mis recordatorios' : 'Inicio'} onPress={() => goTo(backTarget)} />
+                  <Text style={[styles.detailTitle, wide && styles.detailTitleWide]} accessibilityRole="header">{selectedEvent.title}</Text>
+                  <View style={styles.metaRow}>
+                    <View>
+                      <Text style={styles.overline}>FECHA Y HORA</Text>
+                      <View style={styles.metaValueRow}>
+                        <Icon name="calendar" size={18} color={colors.accentDark} />
+                        <Text style={[styles.detailValue, wide && styles.detailValueWide]}>{formatShort(selectedEvent.startsAt)}</Text>
                       </View>
-                    ))}
-                  </View>
-                ) : (
-                  <View style={styles.emptyCard}>
-                    <Icon name="bell" size={34} color={colors.accent} strokeWidth={1.8} style={styles.emptyIcon} />
-                    <Text style={styles.emptyTitle}>Todavía no marcaste eventos</Text>
-                    <Text style={styles.emptyText}>Tocá “Recordarme” en la ficha de un evento para que te avisemos 1 día antes.</Text>
-                    <Button title="Ir a Inicio" kind="neutral" onPress={() => goTo('feed')} />
-                  </View>
-                )}
-              </View>
-            ) : screen === 'detail' && selectedEvent ? (
-              <View>
-                <BackPill label={backTarget === 'reminders' ? 'Mis recordatorios' : 'Inicio'} onPress={() => goTo(backTarget)} />
-                <Text style={[styles.detailTitle, wide && styles.detailTitleWide]} accessibilityRole="header">{selectedEvent.title}</Text>
-                {selectedEvent.demo ? (
-                  <Text style={styles.demoWarning}>Este evento es un ejemplo del MVP; no existe una actividad oficial confirmada.</Text>
-                ) : null}
-                <View style={styles.metaRow}>
-                  <View>
-                    <Text style={styles.overline}>FECHA Y HORA</Text>
-                    <View style={styles.metaValueRow}>
-                      <Icon name="calendar" size={18} color={colors.accentDark} />
-                      <Text style={[styles.detailValue, wide && styles.detailValueWide]}>{formatShort(selectedEvent.startsAt)}</Text>
+                    </View>
+                    <View style={styles.metaPlace}>
+                      <Text style={styles.overline}>LUGAR</Text>
+                      <View style={styles.metaValueRow}>
+                        <Icon name="pin" size={18} color={colors.accentDark} />
+                        <Text style={[styles.detailValue, styles.detailValueFlex, wide && styles.detailValueWide]}>{selectedEvent.place}</Text>
+                      </View>
                     </View>
                   </View>
-                  <View style={styles.metaPlace}>
-                    <Text style={styles.overline}>LUGAR</Text>
-                    <View style={styles.metaValueRow}>
-                      <Icon name="pin" size={18} color={colors.accentDark} />
-                      <Text style={[styles.detailValue, styles.detailValueFlex, wide && styles.detailValueWide]}>{selectedEvent.place}</Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.divider} />
-                <View style={styles.actions}>
-                  <Button
-                    title={selectedReminded ? 'Recordatorio activado' : 'Recordarme'}
-                    icon="bell"
-                    kind={selectedReminded ? 'success' : 'primary'}
-                    style={[styles.actionButton, wide && styles.actionButtonWide]}
-                    onPress={() => toggleReminder(selectedEvent.id)}
-                    disabled={busy || new Date(selectedEvent.startsAt).getTime() <= Date.now()}
-                  />
-                  {selectedEvent.registrationUrl ? (
+                  <View style={styles.divider} />
+                  <View style={styles.actions}>
                     <Button
-                      title={selectedEvent.demo ? 'Consultar sitio de ejemplo' : 'Inscribirme'}
-                      trailingIcon="externalLink"
-                      kind="outlined"
+                      title={selectedReminded ? 'Recordatorio activado' : 'Recordarme'}
+                      icon="bell"
+                      kind={selectedReminded ? 'success' : 'primary'}
                       style={[styles.actionButton, wide && styles.actionButtonWide]}
-                      onPress={() => openExternal(selectedEvent.registrationUrl)}
+                      onPress={() => toggleReminder(selectedEvent.id)}
+                      disabled={busy || new Date(selectedEvent.startsAt).getTime() <= Date.now()}
                     />
-                  ) : null}
-                  <Text style={styles.actionNote}>
-                    {selectedEvent.registrationUrl ? 'Al inscribirte, se abre una página externa.' : 'Este evento no tiene un enlace de inscripción informado.'}
-                  </Text>
-                </View>
-                {selectedEvent.images?.length ? (
-                  <View style={wide ? styles.carouselWrap : styles.carouselBleed}>
-                    <FlyerCarousel images={selectedEvent.images} title={selectedEvent.title} flush={!wide} />
-                  </View>
-                ) : null}
-                <Text style={styles.overline}>DESCRIPCIÓN</Text>
-                <Text style={[styles.bodyText, wide && styles.bodyTextWide]}>{selectedEvent.description}</Text>
-                {selectedEvent.sourceUrl ? <Button title="Ver publicación de origen" trailingIcon="externalLink" kind="outlined" small onPress={() => openExternal(selectedEvent.sourceUrl)} /> : null}
-              </View>
-            ) : (
-              <View>
-                <Text style={[styles.feedTitle, wide && styles.feedTitleWide, !wide && styles.feedInset]} accessibilityRole="header">
-                  Eventos de {feedLabel}
-                </Text>
-                {browseDept ? (
-                  <Pressable
-                    style={({ pressed }) => [styles.filterRow, !wide && styles.feedInset, pressed && styles.pressed]}
-                    onPress={() => selectDepartment(null)}
-                    accessibilityRole="button"
-                    accessibilityHint="Vuelve a los eventos de tu carrera"
-                  >
-                    <Icon name="filter" size={16} color={colors.green} />
-                    <Text style={styles.filterText}>Estás viendo otro departamento. Tus avisos siguen siendo de tu carrera.</Text>
-                    <Text style={styles.filterAction}>Volver</Text>
-                  </Pressable>
-                ) : (
-                  <Pressable
-                    style={({ pressed }) => [styles.filterRow, !wide && styles.feedInset, pressed && styles.pressed]}
-                    onPress={editProfile}
-                    accessibilityRole="button"
-                    accessibilityHint="Abre Configuración para cambiar tu carrera"
-                  >
-                    <Icon name="filter" size={16} color={colors.green} />
-                    <Text style={styles.filterText}>
-                      Solo eventos de <Text style={styles.filterStrong}>{profile?.career}</Text> y del departamento en general.
-                    </Text>
-                    <Text style={styles.filterAction}>Cambiar</Text>
-                  </Pressable>
-                )}
-                {browseLoading ? (
-                  <ActivityIndicator size="large" color={colors.accent} style={styles.browseSpinner} />
-                ) : feedEvents.length ? (
-                  <View style={styles.postList}>
-                    {feedEvents.map((event, index) => (
-                      <PostCard
-                        key={event.id}
-                        event={event}
-                        index={index}
-                        flush={!wide}
-                        department={config.departments[event.department]?.label || ''}
-                        onPress={() => openEvent(event.id)}
+                    {selectedEvent.registrationUrl ? (
+                      <Button
+                        title={selectedEvent.demo ? 'Consultar sitio de ejemplo' : 'Inscribirme'}
+                        trailingIcon="externalLink"
+                        kind="outlined"
+                        style={[styles.actionButton, wide && styles.actionButtonWide]}
+                        onPress={() => openExternal(selectedEvent.registrationUrl)}
                       />
-                    ))}
+                    ) : null}
+                    <Text style={styles.actionNote}>
+                      {selectedEvent.registrationUrl ? 'Al inscribirte, se abre una página externa.' : 'Este evento no tiene un enlace de inscripción informado.'}
+                    </Text>
                   </View>
-                ) : (
-                  <View style={[styles.emptyCard, !wide && styles.feedInset]}>
-                    <Icon name="calendar" size={36} color={colors.accent} strokeWidth={1.8} style={styles.emptyIcon} />
-                    <Text style={styles.emptyTitle}>{browseDept ? 'Aún no hay eventos en este departamento' : 'Aún no hay eventos para tu carrera'}</Text>
-                    <Text style={styles.emptyText}>{browseDept ? 'Cuando se publique una actividad, aparece acá.' : 'Cuando se publique una actividad de tu departamento, te avisamos y aparece acá.'}</Text>
-                    {browseDept ? (
-                      <Button title="Volver a mi carrera" kind="outlined" onPress={() => selectDepartment(null)} />
-                    ) : (
-                      <Button title="Configuración" kind="outlined" onPress={editProfile} />
-                    )}
-                  </View>
-                )}
-                {!profile?.subscribed ? (
-                  <View style={[styles.tipBox, !wide && styles.feedInset]}>
-                    <Text style={styles.explainerTitle}>No te pierdas las novedades</Text>
-                    <Text style={styles.helpText}>Activá las notificaciones para recibir los avisos.</Text>
-                    <Button title="Activar notificaciones" onPress={enableNotifications} disabled={busy} />
-                  </View>
-                ) : null}
-              </View>
-            )}
-          </View>
-        </ScrollView>
+                  {selectedEvent.images?.length ? (
+                    <View style={wide ? styles.carouselWrap : styles.carouselBleed}>
+                      <FlyerCarousel images={selectedEvent.images} title={selectedEvent.title} flush={!wide} />
+                    </View>
+                  ) : null}
+                  <Text style={styles.overline}>DESCRIPCIÓN</Text>
+                  <Text style={[styles.bodyText, wide && styles.bodyTextWide]}>{selectedEvent.description}</Text>
+                  {selectedEvent.sourceUrl ? <Button title="Ver publicación de origen" trailingIcon="externalLink" kind="outlined" small onPress={() => openExternal(selectedEvent.sourceUrl)} /> : null}
+                </View>
+              ) : (
+                <View>
+                  <Text style={[styles.feedTitle, wide && styles.feedTitleWide, !wide && styles.feedInset]} accessibilityRole="header">
+                    Eventos de {feedLabel}
+                  </Text>
+                  {browseDept ? (
+                    <Pressable
+                      style={({ pressed }) => [styles.filterRow, !wide && styles.feedInset, pressed && styles.pressed]}
+                      onPress={() => selectDepartment(null)}
+                      accessibilityRole="button"
+                      accessibilityHint="Vuelve a los eventos de tu carrera"
+                    >
+                      <Icon name="filter" size={16} color={colors.green} />
+                      <Text style={styles.filterText}>Estás viendo otro departamento. Tus avisos siguen siendo de tu carrera.</Text>
+                      <Text style={styles.filterAction}>Volver</Text>
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      style={({ pressed }) => [styles.filterRow, !wide && styles.feedInset, pressed && styles.pressed]}
+                      onPress={editProfile}
+                      accessibilityRole="button"
+                      accessibilityHint="Abre Configuración para cambiar tu carrera"
+                    >
+                      <Icon name="filter" size={16} color={colors.green} />
+                      <Text style={styles.filterText}>
+                        Solo eventos de <Text style={styles.filterStrong}>{profile?.career}</Text> y del departamento en general.
+                      </Text>
+                      <Text style={styles.filterAction}>Cambiar</Text>
+                    </Pressable>
+                  )}
+                  {browseLoading ? (
+                    <ActivityIndicator size="large" color={colors.accent} style={styles.browseSpinner} />
+                  ) : feedEvents.length ? (
+                    <View style={styles.postList}>
+                      {feedEvents.map((event, index) => (
+                        <PostCard
+                          key={event.id}
+                          event={event}
+                          index={index}
+                          flush={!wide}
+                          department={config.departments[event.department]?.label || ''}
+                          onPress={() => openEvent(event.id)}
+                        />
+                      ))}
+                    </View>
+                  ) : (
+                    <View style={[styles.emptyCard, !wide && styles.feedInset]}>
+                      <Icon name="calendar" size={36} color={colors.accent} strokeWidth={1.8} style={styles.emptyIcon} />
+                      <Text style={styles.emptyTitle}>{browseDept ? 'Aún no hay eventos en este departamento' : 'Aún no hay eventos para tu carrera'}</Text>
+                      <Text style={styles.emptyText}>{browseDept ? 'Cuando se publique una actividad, aparece acá.' : 'Cuando se publique una actividad de tu departamento, te avisamos y aparece acá.'}</Text>
+                      {browseDept ? (
+                        <Button title="Volver a mi carrera" kind="outlined" onPress={() => selectDepartment(null)} />
+                      ) : (
+                        <Button title="Configuración" kind="outlined" onPress={editProfile} />
+                      )}
+                    </View>
+                  )}
+                  {!profile?.subscribed ? (
+                    <View style={[styles.tipBox, !wide && styles.feedInset]}>
+                      <Text style={styles.explainerTitle}>No te pierdas las novedades</Text>
+                      <Text style={styles.helpText}>Activá las notificaciones para recibir los avisos.</Text>
+                      <Button title="Activar notificaciones" onPress={enableNotifications} disabled={busy} />
+                    </View>
+                  ) : null}
+                </View>
+              )}
+            </View>
+          </ScrollView>
+        </View>
       </View>
 
       {settingsDirty ? (
@@ -1534,7 +1535,6 @@ function createStyles(colors) {
     // Ficha del evento.
     detailTitle: { color: colors.ink, fontSize: 27, lineHeight: 34, fontWeight: '800', letterSpacing: -0.6, marginBottom: 16 },
     detailTitleWide: { fontSize: 34, lineHeight: 42, letterSpacing: -0.8, marginBottom: 18 },
-    demoWarning: { color: colors.amber, backgroundColor: colors.amberLight, padding: 12, borderRadius: 10, marginBottom: 16, fontSize: 13, lineHeight: 19 },
     metaRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 24 },
     metaPlace: { flexShrink: 1 },
     metaValueRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
