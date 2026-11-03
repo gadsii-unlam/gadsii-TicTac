@@ -16,6 +16,8 @@ const secretFile = path.join(dataDir, 'admin.key');
 if (!fs.existsSync(secretFile)) fs.writeFileSync(secretFile, crypto.randomBytes(32).toString('hex'), { mode: 0o600 });
 const adminKey = process.env.ADMIN_TOKEN || fs.readFileSync(secretFile, 'utf8').trim();
 const scheduler = makeScheduler(store, vapid);
+const mediaDirs = [path.join(dataDir, 'media'), path.join(root, 'server', 'media')];
+const MEDIA_TYPES = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
 const PORT = Number(process.env.PORT || 3000);
 const allowedOrigins = new Set((process.env.CORS_ORIGINS || 'http://localhost:8081,http://127.0.0.1:8081')
   .split(',').map(origin => origin.trim()).filter(Boolean));
@@ -52,12 +54,16 @@ async function api(req, res, url) {
     return json(res,200, { ok: true });
   }
   if (req.method === 'GET' && url.pathname === '/api/events') {
-    validDevice(device); return json(res,200, { events: store.eventsFor(device) });
+    validDevice(device);
+    const department = url.searchParams.get('department');
+    if (department === null) return json(res,200, { events: store.eventsFor(device) });
+    if (!DEPARTMENTS[department]) bad('Departamento inválido');
+    return json(res,200, { events: store.eventsByDepartment(department) });
   }
   if (req.method === 'GET' && /^\/api\/events\/[0-9a-f-]{36}$/i.test(url.pathname)) {
     validDevice(device); const eid = url.pathname.split('/').at(-1);
-    const event = store.eventsFor(device).find(e => e.id === eid);
-    return json(res,event ? 200 : 404, event ? {event} : {error:'Evento no disponible para tu carrera'});
+    const event = store.findEvent(eid);
+    return json(res,event ? 200 : 404, event ? {event} : {error:'Evento no disponible'});
   }
   if (req.method === 'POST' && url.pathname === '/api/reminder') {
     const data = await readJson(req); validDevice(data.deviceId);
@@ -67,7 +73,7 @@ async function api(req, res, url) {
   }
   if (req.method === 'GET' && url.pathname === '/api/reminders') {
     validDevice(device);
-    return json(res,200,{eventIds:store.data.reminders.filter(r=>r.deviceId===device).map(r=>r.eventId)});
+    return json(res,200,{eventIds:store.data.reminders.filter(r=>r.deviceId===device).map(r=>r.eventId),events:store.reminderEventsFor(device)});
   }
   if (req.method === 'POST' && url.pathname === '/api/analytics/open') {
     const data = await readJson(req); validDevice(data.deviceId);
@@ -86,6 +92,13 @@ async function api(req, res, url) {
     return json(res,201,{event, pending:store.data.queued.length});
   }
   bad('Ruta no encontrada',404);
+}
+function serveMedia(res, name) {
+  const file = mediaDirs.map(dir => path.join(dir, name)).find(candidate => fs.existsSync(candidate));
+  if (!file) return json(res,404,{error:'Imagen no encontrada'});
+  res.writeHead(200, { 'Content-Type': MEDIA_TYPES[name.split('.').pop().toLowerCase()], 'Cache-Control': 'public, max-age=86400',
+    'X-Content-Type-Options': 'nosniff', 'Cross-Origin-Resource-Policy': 'cross-origin' });
+  fs.createReadStream(file).pipe(res);
 }
 function publicProfile(p) {
   return { deviceId:p.deviceId,department:p.department,career:p.career,
@@ -107,7 +120,9 @@ const server = http.createServer(async (req,res)=>{
       return;
     }
     const url = new URL(req.url, 'http://localhost');
-    if (url.pathname.startsWith('/api/')) await api(req,res,url);
+    const media = req.method === 'GET' && url.pathname.match(/^\/media\/([A-Za-z0-9._-]{1,100}\.(?:jpe?g|png|webp))$/i);
+    if (media) serveMedia(res, media[1]);
+    else if (url.pathname.startsWith('/api/')) await api(req,res,url);
     else json(res,404,{error:'Ruta no encontrada'});
   } catch(err) {
     if (!res.headersSent) json(res,err.status || 500,{error:err.status ? err.message : 'Error del servidor'});

@@ -50,7 +50,8 @@ export function makeScheduler(store, vapidKeys, push = sendPush) {
         }
         for (const reminder of store.data.reminders.filter(r => r.deviceId === p.deviceId && !r.sentAt)) {
           const e = store.data.events.find(event => event.id === reminder.eventId);
-          if (!e || !matches(e,p)) continue;
+          // El recordatorio lo pidió la persona de forma explícita: se envía aunque el evento sea de otro departamento.
+          if (!e) continue;
           const remaining = hoursBefore(e.startsAt, nowMs);
           if (remaining > 0 && remaining <= 24) {
             const ok = await notify(p, { title: 'Tu evento se acerca', body: `${e.title} · mañana o dentro de las próximas 24 h`,

@@ -99,6 +99,10 @@ npm run add:event -- ruta/al/evento.json
 
 La carga manual debe realizarse antes de 48 h de la publicación oficial y **ser revisada por otra persona antes de la ejecución del comando**, ya que publicar crea la cola de avisos. El comando obtiene la clave privada de administración desde `src/server/data/admin.key`, sin exponerla en el navegador. Alternativamente se puede utilizar el endpoint interno autenticado `POST /api/admin/events`, con `Authorization: Bearer <clave>`. No publicar jamás la clave ni el directorio `server/data/`.
 
+**Imágenes de los eventos.** El JSON del evento acepta `images`: hasta 5 flyers, cada uno una URL HTTPS o un archivo servido por el propio backend como `/media/<nombre>.jpg|png|webp`. Los archivos se copian a `src/server/media/` (incluidos en la imagen Docker) o a `<carpeta de datos>/media/` (volumen persistente). La primera imagen ilustra la tarjeta de Inicio y todas forman el carrusel de la ficha; sin imágenes se muestra un bloque de color. Las bases creadas antes de este campo se completan solas al iniciar el servidor.
+
+**Otros departamentos.** `GET /api/events?deviceId=…&department=<clave>` devuelve los próximos eventos de cualquier carrera de ese departamento, y `GET /api/events/<id>` la ficha de cualquier evento próximo. Se puede marcar un recordatorio en esos eventos y el aviso se envía igual; los avisos de eventos nuevos siguen limitados al departamento y la carrera del perfil.
+
 En esta distribución, los archivos locales del servidor están en `mvp/src/server/data/`; no compartir ni subir esa carpeta.
 
 **No usar ejemplos ficticios como evidencia** de eficacia real, anticipación de siete días o asistencia a eventos oficiales. Los ejemplos no representan actividades organizadas por la UNLaM.
