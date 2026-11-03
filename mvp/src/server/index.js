@@ -7,10 +7,13 @@ import { createStore } from './store.js';
 import { loadVapid, vapidPublicKey } from './push.js';
 import { makeScheduler } from './scheduler.js';
 import { DEPARTMENTS } from './catalog.js';
+import { seedEvents } from './seed-events.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const dataDir = path.resolve(process.env.NODO_DATA_DIR || path.join(root, 'server', 'data'));
 const store = createStore({ file: path.join(dataDir, 'db.json') });
+const seeded = seedEvents(store);
+if (seeded) console.log(`Eventos publicados desde src/server/events: ${seeded}`);
 const vapid = loadVapid(dataDir);
 const secretFile = path.join(dataDir, 'admin.key');
 if (!fs.existsSync(secretFile)) fs.writeFileSync(secretFile, crypto.randomBytes(32).toString('hex'), { mode: 0o600 });

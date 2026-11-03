@@ -41,6 +41,12 @@ En el JSON, `department` lleva la clave de la tabla y `career` el nombre exacto 
 
 La lista vive en `mvp/src/server/catalog.js`. Si una carrera cambia de nombre, agregá el nombre anterior a `CAREER_RENAMES` en ese archivo para que los perfiles y eventos ya guardados se actualicen solos.
 
+## Eventos incluidos en el despliegue
+
+Los JSON de [`mvp/src/server/events/`](mvp/src/server/events/) y las imágenes de `mvp/src/server/media/` viajan dentro de la imagen de la API. Cada vez que el servidor arranca publica los eventos de esa carpeta que todavía no existen (se comparan por título y fecha), así que una base nueva, como el volumen vacío de un servidor, queda con los eventos reales sin cargarlos a mano. Si el evento ya está, no se duplica.
+
+Para que un evento nuevo viaje con el despliegue, guardá su JSON en esa carpeta, copiá sus imágenes a `mvp/src/server/media/`, hacé commit y volvé a construir la imagen. Los eventos que cargues solo con el cargador manual quedan en la base del servidor, pero no en una base nueva. Un evento borrado de la base se vuelve a publicar al reiniciar mientras su JSON siga en la carpeta.
+
 ## Ejecución local con Node
 
 Dejá el servidor corriendo. Abrí otra terminal, cambiá a la carpeta `mvp` y ejecutá el cargador con la ruta al JSON:

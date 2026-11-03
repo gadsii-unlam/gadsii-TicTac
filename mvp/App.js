@@ -24,7 +24,8 @@ import * as Notifications from 'expo-notifications';
 import { router, useGlobalSearchParams } from 'expo-router';
 import { CheckBadge, Icon, Logo, Trama } from './src/ui/brand';
 
-const API_URL = (process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3000').replace(/\/$/, '');
+// Vacío ("") = mismo origen que la web: es lo que usa Docker, donde nginx reenvía /api y /media a la API.
+const API_URL = (process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 const FREQUENCY_OPTIONS = [
   { value: 'instantanea', label: 'Cada evento nuevo' },
   { value: 'diaria', label: 'Resumen diario' },
@@ -139,7 +140,7 @@ async function request(path, options = {}) {
       headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
     });
   } catch {
-    throw new Error(`No se pudo conectar con el servidor en ${API_URL}. Revisá la dirección y que Node esté iniciado.`);
+    throw new Error(`No se pudo conectar con el servidor en ${API_URL || 'este sitio'}. Revisá la dirección y que Node esté iniciado.`);
   }
   let body;
   try {

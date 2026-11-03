@@ -5,7 +5,8 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 
-ARG EXPO_PUBLIC_API_URL=http://localhost:3000
+# Vacío = la web usa su mismo origen (nginx reenvía /api y /media a la API).
+ARG EXPO_PUBLIC_API_URL=
 ENV EXPO_PUBLIC_API_URL=${EXPO_PUBLIC_API_URL}
 RUN npx expo export --platform web
 

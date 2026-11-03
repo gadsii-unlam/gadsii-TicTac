@@ -8,6 +8,7 @@ import { createStore } from '../src/server/store.js';
 import { matches, dueBucket, hoursBefore, DEPARTMENTS, validProfile } from '../src/server/catalog.js';
 import { encryptPayload, loadVapid, sendPush } from '../src/server/push.js';
 import { makeScheduler } from '../src/server/scheduler.js';
+import { seedEvents } from '../src/server/seed-events.js';
 
 function tempStore() {
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-test-'));
@@ -337,4 +338,24 @@ test('un evento puede declarar que no requiere inscripción, sin enlace',()=>{
   assert.throws(()=>store.addEvent(futureEvent({noRegistration:'si'})),/true o false/);
   const conEnlace=store.addEvent(futureEvent({registrationUrl:'https://inscripcion.example.com'}));
   assert.equal(conEnlace.noRegistration,false);
+});
+
+test('eventos de src/server/events: se publican una sola vez y sus imágenes existen',()=>{
+  const {store}=tempStore();
+  const dir=path.resolve('src/server/events');
+  const files=fs.readdirSync(dir).filter(n=>n.endsWith('.json'));
+  assert.ok(files.length>0);
+  assert.equal(seedEvents(store),files.length);
+  assert.equal(seedEvents(store),0);
+  const real=store.data.events.filter(e=>!e.demo);
+  assert.equal(real.length,files.length);
+  for (const e of real) for (const image of e.images.filter(i=>i.startsWith('/media/'))) {
+    assert.ok(fs.existsSync(path.resolve('src/server',image.slice(1))),`falta ${image}`);
+  }
+  const errors=[];
+  assert.equal(seedEvents(store,{dir:fs.mkdtempSync(path.join(os.tmpdir(),'nodo-seed-')),log:{error:m=>errors.push(m)}}),0);
+  const broken=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-seed-'));
+  fs.writeFileSync(path.join(broken,'roto.json'),'{"title":"x"}');
+  assert.equal(seedEvents(store,{dir:broken,log:{error:m=>errors.push(m)}}),0);
+  assert.match(errors[0],/roto\.json omitido/);
 });
