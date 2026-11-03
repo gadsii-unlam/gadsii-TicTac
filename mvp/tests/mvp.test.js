@@ -275,3 +275,24 @@ test('perfiles y eventos con el nombre anterior de una carrera se actualizan al 
   assert.equal(reopened.eventsFor(device).length,1);
   assert.ok(!reopened.data.events.some(e=>e.career==='Comunicación Social'));
 });
+
+test('las listas traen primero los próximos (más cercano primero) y después los pasados (más reciente primero)',()=>{
+  const {store}=tempStore();store.updateProfile(device,profile);
+  const day=86400000;
+  const [a,b,c]=store.eventsFor(device);
+  assert.ok(Date.parse(a.startsAt)<Date.parse(b.startsAt)&&Date.parse(b.startsAt)<Date.parse(c.startsAt));
+  // a empezó hace 10 días y b hace 2: pasan a "pasados"; c sigue siendo próximo.
+  store.data.events.find(e=>e.id===a.id).startsAt=new Date(Date.now()-10*day).toISOString();
+  store.data.events.find(e=>e.id===b.id).startsAt=new Date(Date.now()-2*day).toISOString();
+  assert.deepEqual(store.eventsFor(device).map(e=>e.id),[c.id,b.id,a.id]);
+  assert.deepEqual(store.eventsByDepartment('diit').map(e=>e.id),[c.id,b.id,a.id]);
+  // Un próximo más cercano que c se ubica antes que c.
+  const sooner=store.addEvent(futureEvent({department:'diit',startsAt:new Date(Date.now()+day).toISOString()}));
+  assert.deepEqual(store.eventsFor(device).map(e=>e.id),[sooner.id,c.id,b.id,a.id]);
+  // Un evento pasado se puede abrir, pero ya no admite recordatorios nuevos.
+  assert.equal(store.findEvent(a.id).id,a.id);
+  assert.equal(store.trackOpen(device,a.id,'feed'),true);
+  assert.throws(()=>store.markReminder(device,a.id,true),/no disponible/);
+  assert.equal(store.markReminder(device,a.id,false),false);
+  assert.deepEqual(store.reminderEventsFor(device),[]);
+});

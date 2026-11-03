@@ -790,7 +790,13 @@ function NodoApp() {
   const otherDepartments = departmentOptions.filter(option => option.value !== profile?.department);
   const feedDepartment = browseDept || profile?.department;
   const feedLabel = config?.departments?.[feedDepartment]?.label || '';
+  // Próximos del más cercano al más lejano; pasados del más reciente al más antiguo.
   const feedEvents = browseDept ? browseEvents : events;
+  const now = Date.now();
+  const upcomingEvents = feedEvents.filter(event => Date.parse(event.startsAt) > now)
+    .sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
+  const pastEvents = feedEvents.filter(event => Date.parse(event.startsAt) <= now)
+    .sort((a, b) => Date.parse(b.startsAt) - Date.parse(a.startsAt));
   const selectedEvent = [...events, ...browseEvents, ...reminderList, ...extraEvents].find(event => event.id === routeEventId);
   const reminderEvents = reminderList;
   const settingsDirty = screen === 'settings' && Boolean(draft && profile) && (
@@ -1291,17 +1297,41 @@ function NodoApp() {
                   {browseLoading ? (
                     <ActivityIndicator size="large" color={colors.accent} style={styles.browseSpinner} />
                   ) : feedEvents.length ? (
-                    <View style={styles.postList}>
-                      {feedEvents.map((event, index) => (
-                        <PostCard
-                          key={event.id}
-                          event={event}
-                          index={index}
-                          flush={!wide}
-                          department={config.departments[event.department]?.label || ''}
-                          onPress={() => openEvent(event.id)}
-                        />
-                      ))}
+                    <View>
+                      {upcomingEvents.length ? (
+                        <View style={styles.postList}>
+                          {upcomingEvents.map((event, index) => (
+                            <PostCard
+                              key={event.id}
+                              event={event}
+                              index={index}
+                              flush={!wide}
+                              department={config.departments[event.department]?.label || ''}
+                              onPress={() => openEvent(event.id)}
+                            />
+                          ))}
+                        </View>
+                      ) : (
+                        <Text style={[styles.noUpcoming, !wide && styles.feedInset]}>No hay eventos próximos por ahora.</Text>
+                      )}
+                      {pastEvents.length ? (
+                        <View style={styles.pastSection}>
+                          <View style={[styles.pastLine, !wide && styles.feedInset]} />
+                          <Text style={[styles.pastLabel, !wide && styles.feedInset]} accessibilityRole="header">Eventos pasados</Text>
+                          <View style={styles.postList}>
+                            {pastEvents.map((event, index) => (
+                              <PostCard
+                                key={event.id}
+                                event={event}
+                                index={upcomingEvents.length + index}
+                                flush={!wide}
+                                department={config.departments[event.department]?.label || ''}
+                                onPress={() => openEvent(event.id)}
+                              />
+                            ))}
+                          </View>
+                        </View>
+                      ) : null}
                     </View>
                   ) : (
                     <View style={[styles.emptyCard, !wide && styles.feedInset]}>
@@ -1494,6 +1524,10 @@ function createStyles(colors) {
     filterStrong: { fontWeight: '700' },
     filterAction: { color: colors.green, fontSize: 13, fontWeight: '800' },
     postList: { gap: 16 },
+    noUpcoming: { color: colors.muted, fontSize: 14, marginBottom: 4 },
+    pastSection: { marginTop: 28 },
+    pastLine: { height: 1, backgroundColor: colors.border },
+    pastLabel: { color: colors.muted, fontSize: 13, fontWeight: '700', letterSpacing: 0.2, marginTop: 10, marginBottom: 16 },
     postCard: { overflow: 'hidden', borderRadius: 14, borderWidth: 1, borderColor: colors.border, backgroundColor: colors.surface },
     postCardFlush: { borderRadius: 0, borderLeftWidth: 0, borderRightWidth: 0 },
     postHead: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingTop: 14, paddingHorizontal: 16 },

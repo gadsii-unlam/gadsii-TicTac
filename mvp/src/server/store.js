@@ -88,16 +88,21 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
     if (db.profiles[deviceId]) delete db.profiles[deviceId].subscription;
     save();
   }
-  function eventsFor(deviceId) {
-    return db.events.filter(e => Date.parse(e.startsAt) > Date.now() && matches(e, profileFor(deviceId))).sort((a,b)=>Date.parse(a.startsAt)-Date.parse(b.startsAt));
-  }
   const isUpcoming = e => Date.parse(e.startsAt) > Date.now();
   const byStart = (a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt);
-  // Todos los eventos próximos de un departamento, de cualquier carrera (para explorar otros departamentos).
-  function eventsByDepartment(department) {
-    return db.events.filter(e => e.department === department && isUpcoming(e)).sort(byStart);
+  // Primero los próximos, del más cercano al más lejano; después los pasados, del más reciente al más antiguo.
+  const chronological = list => [
+    ...list.filter(isUpcoming).sort(byStart),
+    ...list.filter(e => !isUpcoming(e)).sort((a, b) => byStart(b, a))
+  ];
+  function eventsFor(deviceId) {
+    return chronological(db.events.filter(e => matches(e, profileFor(deviceId))));
   }
-  function findEvent(eventId) { return db.events.find(e => e.id === eventId && isUpcoming(e)) ?? null; }
+  // Todos los eventos de un departamento, de cualquier carrera (para explorar otros departamentos).
+  function eventsByDepartment(department) {
+    return chronological(db.events.filter(e => e.department === department));
+  }
+  function findEvent(eventId) { return db.events.find(e => e.id === eventId) ?? null; }
   function reminderEventsFor(deviceId) {
     const ids = new Set(db.reminders.filter(r => r.deviceId === deviceId).map(r => r.eventId));
     return db.events.filter(e => ids.has(e.id) && isUpcoming(e)).sort(byStart);
@@ -130,7 +135,8 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
     save(); return event;
   }
   function markReminder(deviceId, eventId, enabled) {
-    if (!findEvent(eventId)) throw Object.assign(new Error('Evento no disponible'), { status: 404 });
+    const event = findEvent(eventId);
+    if (!event || (enabled && !isUpcoming(event))) throw Object.assign(new Error('Evento no disponible'), { status: 404 });
     const existing = db.reminders.find(r => r.deviceId === deviceId && r.eventId === eventId);
     if (!enabled) db.reminders = db.reminders.filter(r => r !== existing);
     else if (!existing) db.reminders.push({ id: id(), deviceId, eventId, sentAt: null, createdAt: new Date().toISOString() });
