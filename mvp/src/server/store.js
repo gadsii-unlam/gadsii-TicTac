@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import crypto from 'node:crypto';
-import { DEPARTMENTS, FREQUENCIES, validProfile, matches } from './catalog.js';
+import { DEPARTMENTS, CAREER_RENAMES, FREQUENCIES, validProfile, matches } from './catalog.js';
 
 // fileURLToPath maneja correctamente las unidades de Windows (C:\\...), a diferencia de URL.pathname.
 const dir = path.resolve(process.env.NODO_DATA_DIR || path.join(path.dirname(fileURLToPath(import.meta.url)), 'data'));
@@ -24,7 +24,7 @@ function seed() {
     { title: 'Taller introductorio de ciberseguridad', department: 'diit', career: 'Ingeniería en Informática', startsAt: isoPlus(12), place: 'Laboratorio de informática (ejemplo)', description: 'Actividad de demostración: resolución de ejercicios básicos de seguridad en redes, intercambio de ideas y espacio para consultas. No corresponde a un evento oficial confirmado.', registrationUrl: 'https://www.unlam.edu.ar/' },
     { title: 'Charla sobre inteligencia artificial responsable', department: 'diit', career: 'Ingeniería en Informática', startsAt: isoPlus(16), place: 'Aula de conferencias (ejemplo)', description: 'Evento ficticio para probar una ficha completa: charlas, preguntas y casos prácticos sobre el impacto de la IA en distintas áreas. Consultar siempre la fuente oficial antes de asistir.', registrationUrl: null, images: DEMO_IMAGES['Charla sobre inteligencia artificial responsable'] },
     { title: 'Encuentro de proyectos tecnológicos', department: 'diit', career: '', startsAt: isoPlus(18), place: 'Hall del DIIT (ejemplo)', description: 'Encuentro ficticio de presentación de proyectos de diferentes carreras del departamento, con intercambio entre estudiantes.', registrationUrl: null },
-    { title: 'Jornada de comunicación y medios', department: 'humanidades', career: 'Comunicación Social', startsAt: isoPlus(14), place: 'Aula de Humanidades (ejemplo)', description: 'Evento ficticio para verificar que el filtrado entre departamentos excluya avisos ajenos al perfil.', registrationUrl: null }
+    { title: 'Jornada de comunicación y medios', department: 'humanidades', career: 'Licenciatura en Comunicación Social', startsAt: isoPlus(14), place: 'Aula de Humanidades (ejemplo)', description: 'Evento ficticio para verificar que el filtrado entre departamentos excluya avisos ajenos al perfil.', registrationUrl: null }
   ];
   return { version: 1, profiles: {}, events: examples.map(e => ({ images: [], ...e, id: id(), demo: true, publishedAt: addHours(-12), sourcePublishedAt: addHours(-20), createdAt: addHours(-12), reviewed: true })),
     queued: [], reminders: [], deliveries: [], opens: [] };
@@ -36,6 +36,11 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
   // Bases anteriores a las imágenes: cada evento recibe su lista (los de demostración, sus flyers de ejemplo).
   const migrated = db.events.filter(e => !Array.isArray(e.images));
   for (const e of migrated) e.images = (e.demo && DEMO_IMAGES[e.title]) || [];
+  // Carreras con el nombre anterior (perfiles y eventos) pasan al nombre oficial actual.
+  let renamed = 0;
+  for (const item of [...Object.values(db.profiles), ...db.events]) {
+    if (CAREER_RENAMES[item.career]) { item.career = CAREER_RENAMES[item.career]; renamed++; }
+  }
   function save() {
     // Recuperar el directorio si fue omitido por la extracción del ZIP o se eliminó.
     fs.mkdirSync(path.dirname(file), { recursive: true });
@@ -43,7 +48,7 @@ export function createStore({ file = dbPath, fresh = false } = {}) {
     fs.writeFileSync(tmp, JSON.stringify(db, null, 2), { mode: 0o600 });
     fs.renameSync(tmp, file);
   }
-  if (!fs.existsSync(file) || fresh || migrated.length) save();
+  if (!fs.existsSync(file) || fresh || migrated.length || renamed) save();
   function profileFor(deviceId) { return db.profiles[deviceId] ?? null; }
   function updateProfile(deviceId, data) {
     if (!validProfile(data)) throw Object.assign(new Error('Configuración de perfil inválida'), { status: 400 });

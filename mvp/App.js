@@ -781,7 +781,7 @@ function NodoApp() {
   }, [deviceId, events, pendingEvent]);
 
   const departmentOptions = useMemo(() => Object.entries(config?.departments || {}).map(([value, item]) => ({
-    value, label: `Departamento de ${item.label}`,
+    value, label: item.name || `Departamento de ${item.label}`,
   })), [config]);
   const careerOptions = useMemo(() => (config?.departments?.[draft?.department]?.careers || []).map(value => ({
     value, label: value,
@@ -1048,7 +1048,7 @@ function NodoApp() {
   }
 
   const sidebarProps = {
-    department: `Departamento de ${departmentLabel}`,
+    department: config?.departments?.[profile?.department]?.name || departmentLabel,
     career: profile?.career,
     selected: browseDept,
     others: otherDepartments,

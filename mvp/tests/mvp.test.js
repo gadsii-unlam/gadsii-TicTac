@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { createStore } from '../src/server/store.js';
-import { matches, dueBucket, hoursBefore } from '../src/server/catalog.js';
+import { matches, dueBucket, hoursBefore, DEPARTMENTS, validProfile } from '../src/server/catalog.js';
 import { encryptPayload, loadVapid, sendPush } from '../src/server/push.js';
 import { makeScheduler } from '../src/server/scheduler.js';
 
@@ -24,7 +24,7 @@ test('perfil, filtro por carrera y cambios de preferencia',()=>{
   const original=store.eventsFor(device);
   assert.equal(original.length,3);
   assert.ok(original.every(e=>e.department==='diit'));
-  store.updateProfile(device,{...profile,department:'humanidades',career:'Comunicación Social'});
+  store.updateProfile(device,{...profile,department:'humanidades',career:'Licenciatura en Comunicación Social'});
   assert.equal(store.eventsFor(device).length,1);
   assert.ok(store.eventsFor(device).every(e=>e.department==='humanidades'));
   assert.throws(()=>store.updateProfile(device,{...profile,career:'Carrera inventada'}),/inválida/);
@@ -36,7 +36,7 @@ test('ingesta manual validada publica, segmenta y guarda ficha completa',()=>{
   store.updateProfile(device,profile);
   store.attachSubscription(device,subscription);
   const other='dispositivo_test_0002';
-  store.updateProfile(other,{...profile,department:'economicas',career:'Administración'});
+  store.updateProfile(other,{...profile,department:'economicas',career:'Licenciatura en Administración'});
   store.attachSubscription(other,subscription);
   const data={title:'Nueva charla de redes',department:'diit',career:'Ingeniería en Informática',
     startsAt:new Date(Date.now()+10*86400000).toISOString(),place:'Aula 12',description:'Aprendé a configurar redes y proyectos',
@@ -245,4 +245,33 @@ test('imágenes del evento: URL HTTPS o archivo de /media, con tope y valor por 
   const reopened=createStore({file:path.join(dir,'db.json')});
   assert.ok(reopened.data.events.every(e=>Array.isArray(e.images)));
   assert.equal(reopened.data.events.find(e=>e.title===ia.title).images.length,2);
+});
+
+test('el catálogo tiene los 6 departamentos y 24 carreras oficiales, sin repetidos',()=>{
+  assert.deepEqual(Object.keys(DEPARTMENTS),['diit','salud','humanidades','economicas','derecho','arquitectura']);
+  assert.deepEqual(Object.values(DEPARTMENTS).map(d=>d.careers.length),[6,5,6,4,2,1]);
+  const careers=Object.values(DEPARTMENTS).flatMap(d=>d.careers);
+  assert.equal(careers.length,24);
+  assert.equal(new Set(careers).size,24);
+  assert.ok(Object.values(DEPARTMENTS).every(d=>d.label&&d.name));
+  assert.equal(DEPARTMENTS.arquitectura.name,'Escuela de Arquitectura, Urbanismo y Diseño');
+  assert.equal(DEPARTMENTS.salud.name,'Departamento de Ciencias de la Salud');
+  for (const [department,{careers:list}] of Object.entries(DEPARTMENTS)) {
+    for (const career of list) assert.equal(validProfile({...profile,department,career}),true,career);
+  }
+  // Una carrera de otro departamento no es válida.
+  assert.equal(validProfile({...profile,department:'salud',career:'Arquitectura'}),false);
+});
+
+test('perfiles y eventos con el nombre anterior de una carrera se actualizan al abrir la base',()=>{
+  const {store,dir}=tempStore();
+  store.updateProfile(device,{...profile,department:'humanidades',career:'Licenciatura en Comunicación Social'});
+  const old=JSON.parse(fs.readFileSync(path.join(dir,'db.json'),'utf8'));
+  old.profiles[device].career='Comunicación Social';
+  for (const e of old.events) if (e.career==='Licenciatura en Comunicación Social') e.career='Comunicación Social';
+  fs.writeFileSync(path.join(dir,'db.json'),JSON.stringify(old));
+  const reopened=createStore({file:path.join(dir,'db.json')});
+  assert.equal(reopened.profileFor(device).career,'Licenciatura en Comunicación Social');
+  assert.equal(reopened.eventsFor(device).length,1);
+  assert.ok(!reopened.data.events.some(e=>e.career==='Comunicación Social'));
 });

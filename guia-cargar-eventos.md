@@ -14,6 +14,21 @@ Completá el título, departamento, carrera, fecha y hora, lugar o modalidad, de
 
 Después de la revisión, usá `"reviewed": true` y `"demo": false`. La URL de la fuente oficial debe usar HTTPS. No agregues claves ni credenciales al archivo.
 
+## Departamentos y carreras válidos
+
+En el JSON, `department` lleva la clave de la tabla y `career` el nombre exacto de la carrera (o `""` para todo el departamento). Cualquier otro valor es rechazado.
+
+| `department` | Unidad académica | `career` |
+| --- | --- | --- |
+| `diit` | Departamento de Ingeniería e Investigaciones Tecnológicas | Ingeniería en Informática · Ingeniería Mecánica · Ingeniería Civil · Ingeniería Electrónica · Ingeniería Industrial · Ingeniería en Energías Renovables |
+| `salud` | Departamento de Ciencias de la Salud | Licenciatura en Nutrición · Odontología · Licenciatura en Kinesiología y Fisiatría · Medicina · Licenciatura en Enfermería |
+| `humanidades` | Departamento de Humanidades y Ciencias Sociales | Licenciatura en Relaciones Laborales · Licenciatura en Comunicación Social · Licenciatura en Relaciones Públicas · Licenciatura en Trabajo Social · Profesorado de Educación Física · Licenciatura en Educación Física |
+| `economicas` | Departamento de Ciencias Económicas | Licenciatura en Administración · Contador Público · Licenciatura en Comercio Internacional · Licenciatura en Economía |
+| `derecho` | Departamento de Derecho y Ciencia Política | Abogacía · Licenciatura en Ciencia Política |
+| `arquitectura` | Escuela de Arquitectura, Urbanismo y Diseño | Arquitectura |
+
+La lista vive en `mvp/src/server/catalog.js`. Si una carrera cambia de nombre, agregá el nombre anterior a `CAREER_RENAMES` en ese archivo para que los perfiles y eventos ya guardados se actualicen solos.
+
 ## Ejecución local con Node
 
 Dejá el servidor corriendo. Abrí otra terminal, cambiá a la carpeta `mvp` y ejecutá el cargador con la ruta al JSON:
