@@ -2,7 +2,7 @@
 
 ## Versión 4 — Noviembre 2026
 
-> **Registro de cambios.** Esta versión incorpora lo aprendido en la prueba del MVP del TP5. La hicimos el viernes 30/10/2026 con tres alumnos de Ingeniería en Informática (U1 a U3). Según el criterio fijado antes de construir, dos quedaron a favor y el tercero, sin datos: **la hipótesis se sostiene y perseveramos**. El detalle está en [docs/evidencia/tp5/](evidencia/tp5/README.md).
+> **Registro de cambios.** Esta versión incorpora lo aprendido en la prueba del MVP del TP5. La hicimos el viernes 30/10/2026 con tres alumnos de Ingeniería en Informática (U1 a U3). Según el criterio fijado antes de construir, dos quedaron a favor y el tercero, sin datos: **la hipótesis se sostiene y perseveramos**. El detalle está en los [resultados de la prueba](evidencia/tp5/resultados.md).
 >
 > **Qué cambió y por qué.**
 >
@@ -141,7 +141,7 @@ La trazabilidad de cada parte a los datos del relevamiento está en el [punto 5 
 
 ### Estado de la hipótesis (nuevo en v4)
 
-**Se sostiene**, según la prueba del MVP del 30/10/2026 y el criterio fijado antes de construir ([TP5, Parte 1](TP5-parte1.md)). U1 y U3 quedaron a favor y U2, sin datos.
+**Se sostiene**, según la prueba del MVP del 30/10/2026 y el criterio fijado antes de construir ([TP5, Parte 1](tp5/TP5-parte1.md)). U1 y U3 quedaron a favor y U2, sin datos.
 
 | Métrica | Resultado |
 |---|---|
@@ -199,7 +199,7 @@ Tres usuarios y un día de uso: lo que sigue son indicios, no confirmaciones. Lo
 
 > El detalle completo, con trazabilidad a la evidencia, está en el [TP3.md](TP3.md). Acá se resume lo mínimo necesario para testear la hipótesis de valor del punto 7.
 >
-> *Nota v4.* El MVP se construyó con este alcance y las correcciones aceptadas del TP4 ([TP5, Parte 2](TP5-parte2.md)), y se probó el 30/10/2026. Lo que cambia para la próxima versión está en el punto 10.3. Corrección a lo dicho en el TP3: la configuración de la frecuencia no era neutral para la prueba, porque decide si la alerta llega dentro de la ventana de prueba y con qué antelación.
+> *Nota v4.* El MVP se construyó con este alcance y las correcciones aceptadas del TP4 ([TP5, Parte 2](tp5/TP5-parte2.md)), y se probó el 30/10/2026. Lo que cambia para la próxima versión está en el punto 10.3. Corrección a lo dicho en el TP3: la configuración de la frecuencia no era neutral para la prueba, porque decide si la alerta llega dentro de la ventana de prueba y con qué antelación.
 
 ### 9.1 Scope: qué se incluye y qué se excluye
 
@@ -271,7 +271,7 @@ Se describe como flujo disparado por la alerta (push) y no por la consulta activ
 
 ## 10. Aprendizaje de la prueba del MVP (nuevo en v4)
 
-> El detalle de la prueba está en [docs/evidencia/tp5/](evidencia/tp5/README.md), y el criterio con que se evaluó, en la [Parte 1 del TP5](TP5-parte1.md).
+> El detalle de la prueba está en los [resultados de la prueba](evidencia/tp5/resultados.md), y el criterio con que se evaluó, en la [Parte 1 del TP5](tp5/TP5-parte1.md).
 
 ### 10.1 Qué se probó
 

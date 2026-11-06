@@ -4,10 +4,10 @@ Registro de la prueba del MVP con tres usuarios reales, identificados como U1, U
 
 | Archivo | Qué contiene |
 |---|---|
-| [guia-de-sesion.md](guia-de-sesion.md) | Tareas, qué se observa, cómo se registra y preguntas finales, tal como se prepararon antes de la sesión. |
-| [U1.md](U1.md), [U2.md](U2.md), [U3.md](U3.md) | Notas de observación de cada usuario: cronología, tiempos, citas textuales y respuestas. |
-| [resultados.md](resultados.md) | Métricas, clasificación de cada usuario contra el criterio de la [Parte 1](../../TP5-parte1.md) y problemas de usabilidad. |
-| [registro-servidor.md](registro-servidor.md) | Extracto anonimizado del registro de envíos, aperturas y recordatorios del servidor, del 29/10 al 3/11. |
+| [guia-de-sesion.md](../evidencia/tp5/guia-de-sesion.md) | Tareas, qué se observa, cómo se registra y preguntas finales, tal como se prepararon antes de la sesión. |
+| [U1.md](../evidencia/tp5/U1.md), [U2.md](../evidencia/tp5/U2.md), [U3.md](../evidencia/tp5/U3.md) | Notas de observación de cada usuario: cronología, tiempos, citas textuales y respuestas. |
+| [resultados.md](../evidencia/tp5/resultados.md) | Métricas, clasificación de cada usuario contra el criterio de la [Parte 1](TP5-parte1.md) y problemas de usabilidad. |
+| [registro-servidor.md](../evidencia/tp5/registro-servidor.md) | Extracto anonimizado del registro de envíos, aperturas y recordatorios del servidor, del 29/10 al 3/11. |
 
 ## Datos de la prueba
 
@@ -60,7 +60,7 @@ Los tres eventos están dirigidos a todo el departamento (`career: ""`), no a un
 La Parte 1 preveía una primera sesión, unos días de uso y una segunda sesión. Como los tres usuarios trabajan con nosotros y ese viernes coincidíamos todos en el Polo, hicimos las dos sesiones el mismo día, y la jornada de trabajo fue el período de uso. El criterio de éxito no cambió. Este cambio tuvo tres consecuencias:
 
 1. Solo entraron tres eventos reales en la ventana de la prueba.
-2. El resumen semanal de U2 quedó fuera de la ventana. Ver [U2.md](U2.md) y el punto 9 del informe.
+2. El resumen semanal de U2 quedó fuera de la ventana. Ver [U2.md](../evidencia/tp5/U2.md) y el punto 9 del informe.
 3. No se puede evaluar la antelación, porque la carga la cronometramos nosotros.
 
 ## Sesgos y limitaciones

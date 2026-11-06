@@ -45,7 +45,7 @@ Definimos estos criterios antes de la prueba con usuarios y evaluamos por separa
 
 #### Usabilidad
 
-El recorrido principal funciona si al menos 2 de los 3 usuarios completan la configuración inicial y llegan de la alerta a la ficha del evento sin ayuda. Lo observamos en la primera sesión, con una alerta real que se envía durante esa sesión, y lo contrastamos con las aperturas desde la notificación que registra la app durante los días de uso.
+El recorrido principal funciona si al menos 2 de los 3 usuarios completan la configuración inicial y llegan de la alerta a la ficha del evento sin ayuda. Lo observamos en la primera sesión, con una alerta real que se envía durante esa sesión, y lo contrastamos con las aperturas desde la notificación que registra la app durante el día de uso.
 
 #### Hipótesis de valor
 
