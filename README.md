@@ -109,10 +109,10 @@ En esta distribución, los archivos locales del servidor están en `mvp/src/serv
 
 ## Documentación, alcance y pruebas
 
-- [TP5 - Parte 1: métricas y umbrales PREVIOS a la construcción](docs/TP5-parte1.md) (borrador sujeto a aprobación del equipo, consigna §11).
-- [TP5 - Parte 2: arquitectura, alcance y correcciones del TP4](docs/TP5-parte2.md).
+- [TP5 - Parte 1: métricas y umbrales PREVIOS a la construcción](docs/tp5/TP5-parte1.md)
+- [TP5 - Parte 2: arquitectura, alcance y correcciones del TP4](docs/tp5/TP5-parte2.md).
 - [Registro del trabajo con IA](docs/prompts.md).
-- [Brief v3 (TP3)](docs/brief.md) y [decisiones de scope y flujo](docs/TP3.md).
+- [Brief v4 (TP5)](docs/brief.md) y [decisiones de scope y flujo](docs/TP3.md).
 - [Procedimiento de prueba manual y soporte de evidencia](docs/evidencia/tp5/README.md).
 
 **Arquitectura actual:** un solo proyecto en `mvp/`, con frontend React Native/Expo (`App.js`, `app/`, `assets/`) y backend Node.js (`src/server/`), compartiendo `package.json` y `package-lock.json`. La PWA anterior fue retirada; la vista web local se renderiza desde la misma app React Native mediante React Native Web, sin mantener un frontend aparte. Para probar notificaciones nativas hay que compilar e instalar la app en un dispositivo y configurar Expo Push. No se ha publicado en una tienda ni se ha desplegado un backend público.
