@@ -109,7 +109,7 @@ En esta distribución, los archivos locales del servidor están en `mvp/src/serv
 
 ## Documentación, alcance y pruebas
 
-- [TP5 - Parte 1: métricas y umbrales PREVIOS a la construcción](docs/TP5-parte1.md) (borrador sujeto a aprobación del equipo, consigna §11).
+- [TP5 - Parte 1: métricas y umbrales PREVIOS a la construcción](docs/TP5-parte1.md)
 - [TP5 - Parte 2: arquitectura, alcance y correcciones del TP4](docs/TP5-parte2.md).
 - [Registro del trabajo con IA](docs/prompts.md).
 - [Brief v3 (TP3)](docs/brief.md) y [decisiones de scope y flujo](docs/TP3.md).

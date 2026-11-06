@@ -102,4 +102,4 @@ Severidad en la escala de 1 a 4 del TP4: 1 cosmético, 2 menor, 3 grave, 4 catas
 
 ## Decisión
 
-**Perseverar.** El fundamento y lo próximo a construir están en el punto 10 del [brief v4](../../brief.md).
+**Perseverar.** El fundamento y lo próximo a construir están en el punto 10 del brief.
