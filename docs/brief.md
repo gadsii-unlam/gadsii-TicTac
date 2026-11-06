@@ -2,7 +2,7 @@
 
 ## Versión 4 — Noviembre 2026
 
-> **Registro de cambios.** Esta versión incorpora lo aprendido en la prueba del MVP del TP5. La hicimos el viernes 30/10/2026 con tres alumnos de Ingeniería en Informática (U1 a U3). Según el criterio fijado antes de construir, dos quedaron a favor y el tercero, sin datos: **la hipótesis se sostiene y perseveramos**. El detalle está en los [resultados de la prueba](evidencia/tp5/resultados.md).
+> **Registro de cambios.** Esta versión incorpora lo aprendido en la prueba del MVP del TP5. La hicimos el viernes 30/10/2026 con tres alumnos de Ingeniería en Informática (U1 a U3). Según el criterio de la Parte 1, dos quedaron a favor y el tercero, sin datos: **la hipótesis se sostiene y perseveramos**. El detalle está en los [resultados de la prueba](evidencia/tp5/resultados.md).
 >
 > **Qué cambió y por qué.**
 >
@@ -12,7 +12,7 @@
 >   - el 12: el alumno reenvía la ficha a sus grupos.
 > - La segmentación pasa a ser también **por público destinatario y por año**. Las 4 alertas que no terminaron en nada fueron eventos que no estaban dirigidos a los usuarios.
 > - La frecuencia configurable tiene que **respetar la antelación**. El resumen semanal dejó a un usuario sin ninguna alerta durante la prueba y después le entregó un evento a 3 horas de empezar.
-> - Se agregan notas en los puntos 3, 4 y 9, y un **punto 10 nuevo** con lo aprendido, la decisión de perseverar y su fundamento, lo próximo a construir, la próxima prueba y qué nos haría pivotar.
+> - Se agregan notas en los puntos 3, 4 y 9, y un **punto 10 nuevo** con lo aprendido, la decisión de perseverar y su fundamento, lo próximo a construir, la próxima prueba, qué nos haría pivotar, el resultado que no esperábamos y la métrica que podría estar mintiendo.
 >
 > **Qué no cambió y por qué.** El problema, el segmento y el texto de la hipótesis siguen igual que en la v3, porque la prueba no dio motivos para cambiarlos. El canal de la alerta sigue siendo una decisión abierta: el push en el celular funcionó, pero no se comparó con otra vía. Las metas de "un cuatrimestre de uso" del punto 7 siguen pendientes, porque una prueba de un día no las mide.
 
@@ -141,7 +141,7 @@ La trazabilidad de cada parte a los datos del relevamiento está en el [punto 5 
 
 ### Estado de la hipótesis (nuevo en v4)
 
-**Se sostiene**, según la prueba del MVP del 30/10/2026 y el criterio fijado antes de construir ([TP5, Parte 1](tp5/TP5-parte1.md)). U1 y U3 quedaron a favor y U2, sin datos.
+**Se sostiene**, según la prueba del MVP del 30/10/2026 y el criterio de la [Parte 1 del TP5](tp5/TP5-parte1.md). U1 y U3 quedaron a favor y U2, sin datos.
 
 | Métrica | Resultado |
 |---|---|
@@ -275,23 +275,37 @@ Se describe como flujo disparado por la alerta (push) y no por la consulta activ
 
 ### 10.1 Qué se probó
 
-El viernes 30/10/2026, en el Polo Tecnológico de la UNLaM, tres alumnos de Ingeniería en Informática de 3.º, 4.º y 5.º año (U1 a U3) usaron el MVP en su celular durante una jornada, con dos sesiones observadas. Recibieron alertas de tres eventos reales del DIIT, cargados durante la jornada: dos capacitaciones (E1 y E2) y el cierre de una convocatoria a becas doctorales (E3).
+El viernes 30/10/2026, en el Polo Tecnológico de la UNLaM, tres alumnos de Ingeniería en Informática de 3.º, 4.º y 5.º año (U1 a U3) usaron el MVP en su celular Android, sin instalar nada. Hubo dos sesiones observadas el mismo día (12:30 – 13:15 y 17:30 – 18:05), y la jornada de trabajo entre ambas fue el período de uso. Tres integrantes observaron, uno por usuario, y no ayudaron.
+
+Las cinco tareas estaban redactadas como situaciones: T1 dejar la app configurada, T2 seguir usando el celular mientras llega una alerta real, T3 resolver que no se les pase un evento, T4 bajar las interrupciones y T5 ver los eventos marcados. Cargamos durante la jornada tres eventos reales del DIIT: dos capacitaciones (E1 y E2) y el cierre de una convocatoria a becas doctorales (E3). U1 y U3 recibieron la alerta de cada uno en el momento. A U2 le quedaron en cola hasta el resumen semanal del lunes 2/11.
 
 ### 10.2 Qué aprendimos
 
-1. **En los eventos chicos, la alerta llega antes que los otros canales.** Fue la primera noticia en 5 de los 6 eventos notificados. Lo grande les llega igual: los tres conocían ExpoProyecto por carteles, Instagram o WhatsApp. U2: *"De lo grande, como la Expo, me entero porque está en todos lados; lo chico se me pasa."*
-2. **El ruido no viene de otros departamentos, sino de otro público.** Las 4 alertas que no terminaron en nada eran eventos que no estaban dirigidos a ellos: una capacitación en eficiencia energética abierta a la comunidad y una convocatoria para graduados. Filtrar por departamento y carrera no alcanza (supuesto 11).
-3. **La frecuencia baja puede romper la antelación.** U2 eligió el resumen semanal para no saturarse y no recibió nada durante la prueba. El lunes le llegó un evento a 3 horas de empezar y otro ya cerrado.
-4. **Un evento de varios días no entra en el modelo.** ExpoProyecto figuró como pasada el día de la Teclatón y no se pudo marcar.
-5. **Cuando la alerta le sirve, el alumno decide desde la ficha.** U1 y U3 activaron el recordatorio de E1 sin consultar otro canal, y los dos lo abrieron el lunes 2/11.
+**Capa de usabilidad: ¿el MVP funciona bien?** El criterio se cumple. Los tres completaron la configuración, y U1 y U3 llegaron de la alerta a la ficha en 15 y 12 segundos, sin ayuda. La única tarea sin completar fue T3 de U2, y hubo un solo pedido de ayuda, también de U2. De los problemas que había anticipado el TP4, solo reapareció a medias la leyenda de cuándo avisa "Recordarme" (N6). Aparecieron siete problemas nuevos (severidad del TP4: 1 cosmético, 4 catastrófico):
+
+| # | Problema | Observación | Sev. |
+|---|---|---|---|
+| N1 | Un evento de varios días figura como pasado desde el primer día y "Recordarme" queda deshabilitado. | U2: *"¿Pasado? Si hoy es la Teclatón."* | 3 |
+| N2 | Los resúmenes salen en horario fijo (el semanal, los lunes a las 16:00) e incluyen eventos cerrados o a punto de empezar. | Servidor, 2/11: E2 empezaba en 3 h y E3 había cerrado el viernes. | 3 |
+| N3 | Toda alerta dice "Nuevo evento de tu carrera", aunque sea para todo el departamento. | U1 sobre E2: *"pensé que era algo de sistemas"*. U3 lo repitió. | 2 |
+| N4 | En el celular, Configuración y Mis recordatorios solo están dentro del menú ☰. | U1 buscó un engranaje durante 55 segundos. | 2 |
+| N5 | "Publicado hace…" cuenta desde la carga en Nodo, no desde la publicación original. | U2: *"¿Hace 15 horas? Lo vienen anunciando hace dos semanas."* | 2 |
+| N6 | Cuándo llega el recordatorio solo aparece en un aviso de 4 segundos. | U3 en T5: *"¿Y cuándo me avisa?"* | 2 |
+| N7 | Inicio no se actualiza solo. | U2 recargó desde el menú de Chrome. | 1 |
+
+**Capa de negocio: ¿la hipótesis se sostiene?**
+
+- **M1, alertas que fueron la primera noticia del evento: 5 de 6 (83 %).** Solo E3 de U3 no cuenta, porque ya lo había visto en una historia de Instagram del DIIT. U2 queda fuera porque no se le notificó nada. En los eventos chicos la alerta llega antes que los otros canales, y lo grande les llega igual. U2: *"De lo grande, como la Expo, me entero porque está en todos lados; lo chico se me pasa."*
+- **M2, alertas que terminan en una decisión sin salir de la app: 2 de 4 (50 %).** U1 y U3 activaron el recordatorio de E1 sin consultar otro canal, y U1 también fue a la inscripción. En las otras dos alertas abiertas, y en las dos que no se abrieron, el evento no estaba dirigido a ellos: una capacitación abierta a la comunidad y una convocatoria para graduados (supuesto 11).
+- **Clasificación:** U1 a favor, U3 a favor y U2 sin datos, porque eligió el resumen semanal y no recibió ninguna alerta hasta el lunes. Con 2 de 3 a favor, la hipótesis se sostiene.
 
 ### 10.3 Decisión: perseverar
 
 **Fundamento.**
 
-- La hipótesis se sostiene según el criterio fijado antes de construir: 2 de 3 usuarios a favor y ninguno en contra.
+- La hipótesis se sostiene según el criterio de la Parte 1: 2 de 3 usuarios a favor y ninguno en contra.
 - Ninguna alerta quedó sin usar por un motivo que la app no pueda resolver. El único motivo fue la relevancia, y eso es un problema de segmentación de la solución, no del problema elegido.
-- No hay señal para un pivote. Nadie conocía de antes los eventos chicos que le interesaron, y la barrera de agenda apareció una sola vez, fuera de las alertas.
+- No hay señal para un pivote. Nadie conocía de antes los eventos chicos que le interesaron, y la barrera de agenda apareció una sola vez, fuera de las alertas (U2: *"curso a esa hora. No puedo."*).
 
 **Qué construimos ahora, en este orden:**
 
@@ -327,3 +341,18 @@ Lo dejamos escrito antes de la próxima prueba:
 - Si la mayoría queda **en contra porque ya conocía** los eventos que le interesan → **pivote de canal**: llevar la alerta a donde ya están (supuesto 9).
 - Si la mayoría no actúa porque **se superpone con la cursada** → **pivote de necesidad**: el problema deja de ser enterarse y pasa a ser poder ir (supuesto 7).
 
+### 10.6 El resultado que no esperábamos
+
+**ExpoProyecto, un evento de tres días, figuró como "pasado" el día en que se hacía, y no se pudo activar su recordatorio.** El MVP guarda solo la fecha de inicio, no un período. Las fotos y la descripción tenían toda la información, pero la fecha decía que ya había terminado. U2 no pudo marcarla en T3: *"No me deja. Lo que me interesa es la Expo y dice que ya pasó."* ([U2.md](evidencia/tp5/U2.md), [N1 en resultados](evidencia/tp5/resultados.md)). Fue la única tarea sin completar de toda la prueba, y salió de una decisión de la herramienta, no del equipo.
+
+**Qué hicimos con eso.** Lo registramos como N1 (severidad 3) y pasó a lo que construimos ahora (10.3, punto 3): eventos con fecha de fin, estado "En curso" y recordatorio disponible mientras duren.
+
+### 10.7 La métrica que podría estar mintiendo
+
+**La métrica 1, "alertas que fueron la primera noticia del evento".** Dio 5 de 6 (83 %), una lectura tranquilizadora, pero:
+
+- **Cuenta eventos que no querían.** Si se cuentan solo los que además les interesaban, baja a 2 de 6 (33 %). U3 sobre E3: *"Es para graduados."*
+- **El evento que más les importaba no entra.** ExpoProyecto no se notificó y los tres la conocían por carteles, Instagram o WhatsApp. Lo que la métrica mide son los eventos chicos que cargamos nosotros.
+- **Depende de la memoria del usuario** y de tres eventos que elegimos, cargados a mano entre 4 y 10 días después de publicarse.
+
+Que una alerta sea la primera noticia de algo no confirma que resuelva el problema de perderse eventos. La métrica 2 (50 %) no da una lectura tranquilizadora.
