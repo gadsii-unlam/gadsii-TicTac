@@ -1,0 +1,58 @@
+- generic [active] [ref=f18e1]:
+  - generic [ref=f18e2]:
+    - banner [ref=f18e3]:
+      - navigation "Global" [ref=f18e4]:
+        - link "UNLaM Actividades" [ref=f18e6] [cursor=pointer]:
+          - /url: /
+        - button "Open main menu" [ref=f18e22]
+    - generic [ref=f18e26]:
+      - link "Departamento de Ingeniería e Inv. Tecnológicas" [ref=f18e27] [cursor=pointer]:
+        - /url: /actividades/departamento-de-ingenieria-e-inv.-tecnologicas
+      - heading "Tecnologías Aplicadas a la Comunicación Digital" [level=1] [ref=f18e32]
+      - generic [ref=f18e33]:
+        - list [ref=f18e36]:
+          - listitem [ref=f18e37]
+          - listitem [ref=f18e40]
+          - listitem [ref=f18e43]
+        - list [ref=f18e48]:
+          - listitem [ref=f18e49]
+          - listitem [ref=f18e52]
+          - listitem [ref=f18e55]
+        - list [ref=f18e60]:
+          - listitem [ref=f18e61]
+          - listitem [ref=f18e64]
+          - listitem [ref=f18e67]
+    - contentinfo [ref=f18e70]:
+      - generic [ref=f18e71]:
+        - generic [ref=f18e72]:
+          - link "Instagram" [ref=f18e73] [cursor=pointer]:
+            - /url: https://instagram.com/unlamoficial
+          - link "Facebook" [ref=f18e77] [cursor=pointer]:
+            - /url: https://www.facebook.com/UnlamOficial
+          - link "Twitter X" [ref=f18e81] [cursor=pointer]:
+            - /url: https://twitter.com/intent/follow?source=followbutton&variant=1.0&screen_name=UnlamOficial
+            - generic [ref=f18e82]: Twitter
+            - img "X" [ref=f18e83]
+          - link "Email" [ref=f18e85] [cursor=pointer]:
+            - /url: mailto:deportes@unlam.edu.ar
+          - link "Web" [ref=f18e89] [cursor=pointer]:
+            - /url: https://actividades.unlam.edu.ar
+        - link "UNLaM" [ref=f18e96] [cursor=pointer]:
+          - /url: https://www.unlam.edu.ar
+      - generic [ref=f18e158]:
+        - generic [ref=f18e159]:
+          - paragraph [ref=f18e161]:
+            - text: © 2026 Universidad Nacional de La Matanza -
+            - generic [ref=f18e162]: v1.20.5
+          - generic [ref=f18e163]:
+            - link "Ayuda" [ref=f18e164] [cursor=pointer]:
+              - /url: /ayuda
+            - link "Términos y Condiciones" [ref=f18e165] [cursor=pointer]:
+              - /url: /terminos-condiciones
+            - link "Privacidad" [ref=f18e166] [cursor=pointer]:
+              - /url: /privacidad
+            - link "Administración" [ref=f18e167] [cursor=pointer]:
+              - /url: /ingresar/admin
+        - button "Toggle theme" [ref=f18e169] [cursor=pointer]
+  - region "Notifications alt+T"
+  - alert [ref=f18e171]

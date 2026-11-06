@@ -1,0 +1,15 @@
+- generic [ref=f315e5]:
+  - generic "Entrada de la Universidad Nacional de La Matanza" [ref=f315e7]:
+    - img "Entrada de la Universidad Nacional de La Matanza" [ref=f315e9]
+  - generic [ref=f315e13]:
+    - heading [level=1] [ref=f315e14]:
+      - img "Nodo UNLaM" [ref=f315e15]
+    - generic [ref=f315e26]: Elegí tu departamento y carrera
+    - generic [ref=f315e27]:
+      - generic [ref=f315e28]: Departamento
+      - button "Departamento de Ingeniería e Investigaciones Tecnológicas" [ref=f315e29] [cursor=pointer]
+    - generic [ref=f315e34]:
+      - generic [ref=f315e35]: Carrera
+      - button "Ingeniería en Informática" [ref=f315e36] [cursor=pointer]
+    - button "Continuar" [ref=f315e41] [cursor=pointer]
+    - generic [ref=f315e47]: Se guarda en este dispositivo. No pide cuenta ni contraseña.

@@ -1,0 +1,70 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    environment:
+      PORT: 3000
+      NODO_DATA_DIR: /data
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:contact@example.com}
+    volumes:
+      - server-data:/data
+    # Solo para uso local (cargador de eventos, diagnóstico). La web llega a la API por nginx, no por este puerto.
+    ports:
+      - "${API_BIND_ADDRESS:-127.0.0.1}:${API_PORT:-3000}:3000"
+    restart: unless-stopped
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/config').then(response => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: web
+      args:
+        # Vacío = la web llama a su propio origen (/api, /media) y nginx lo reenvía a la API.
+        EXPO_PUBLIC_API_URL: ${EXPO_PUBLIC_API_URL-}
+    ports:
+      - "${WEB_BIND_ADDRESS:-0.0.0.0}:${WEB_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # HTTPS con dominio propio: docker compose --profile https up -d (DOMAIN en el .env).
+  # Las notificaciones push de la web exigen HTTPS.
+  https:
+    image: caddy:2-alpine
+    profiles: ["https"]
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  server-data:
+  caddy-data:

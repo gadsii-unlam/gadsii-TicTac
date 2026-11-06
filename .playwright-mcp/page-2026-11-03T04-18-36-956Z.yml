@@ -1,0 +1,303 @@
+- generic [ref=e11]:
+  - generic [ref=e13]:
+    - link [ref=e16] [cursor=pointer]:
+      - /url: /
+      - img "Instagram" [ref=e19]
+    - generic [ref=e30]:
+      - link "Iniciar sesión" [ref=e32] [cursor=pointer]:
+        - /url: /accounts/login/?next=%2Fdiitunlam%2F&source=desktop_nav
+      - link "Registrarte" [ref=e34] [cursor=pointer]:
+        - /url: /accounts/emailsignup/
+  - main [ref=e35]:
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - button "Ver historia del perfil" [ref=e41] [cursor=pointer]:
+          - link [ref=e43]:
+            - img "Foto del perfil de diitunlam" [ref=e44]
+        - heading "diitunlam" [level=2] [ref=e51]
+        - list [ref=e54]:
+          - listitem [ref=e55]:
+            - link "8.348 seguidores" [ref=e57] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e58]:
+                - generic "8.348" [ref=e59]
+                - text: seguidores
+          - listitem [ref=e60]:
+            - link "20 seguidos" [ref=e62] [cursor=pointer]:
+              - /url: "#"
+              - generic [ref=e63]:
+                - generic [ref=e64]: "20"
+                - text: seguidos
+        - generic [ref=e66]:
+          - generic [ref=e67]: DIIT UNLaM Oficial
+          - button "Departamento de ingeniería e investigaciones tecnológicas" [ref=e70] [cursor=pointer]
+          - generic [ref=e71]:
+            - img "Ícono de enlace" [ref=e73]
+            - link "linktr.ee/diitunlam" [ref=e77] [cursor=pointer]:
+              - /url: https://l.instagram.com/?u=https%3A%2F%2Flinktr.ee%2Fdiitunlam&e=AUBb1bLpDqyPTcqsml03WncxzaSO5Lz1ud2cl-1NSdkERJ3B-1aluHNByw_2hED_kc3kOqaCHBtT_5P3BspoOdHikMqOTVRtbUw9jZMJuvce9vCwZ_-Fhw0wx18URm__ax82PE1StO2CPvdi1966_c1CumHs60YwYF6EAg
+        - menu [ref=e80]:
+          - list [ref=e84]:
+            - listitem [ref=e85]
+            - listitem [ref=e86]
+            - listitem [ref=e87]:
+              - link "Ver historia destacada \"Charla carreras\"" [ref=e90] [cursor=pointer]:
+                - /url: /stories/highlights/17879127519201591/
+                - button "Foto de la historia destacada de diitunlam Charla carreras" [ref=e91]:
+                  - button [ref=e92]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e95]
+                  - generic [ref=e96]: Charla carreras
+            - listitem [ref=e99]:
+              - link "Ver historia destacada \"Cursos 2025\"" [ref=e102] [cursor=pointer]:
+                - /url: /stories/highlights/17886888480236113/
+                - button "Foto de la historia destacada de diitunlam Cursos 2025" [ref=e103]:
+                  - button [ref=e104]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e107]
+                  - generic [ref=e108]: Cursos 2025
+            - listitem [ref=e111]:
+              - link "Ver historia destacada \"Búsqueda Externa\"" [ref=e114] [cursor=pointer]:
+                - /url: /stories/highlights/17859299369615785/
+                - button "Foto de la historia destacada de diitunlam Búsqueda Externa" [ref=e115]:
+                  - button [ref=e116]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e119]
+                  - generic [ref=e120]: Búsqueda Externa
+            - listitem [ref=e123]:
+              - link "Ver historia destacada \"Becas Tec. CeDIT\"" [ref=e126] [cursor=pointer]:
+                - /url: /stories/highlights/17954006080820982/
+                - button "Foto de la historia destacada de diitunlam Becas Tec. CeDIT" [ref=e127]:
+                  - button [ref=e128]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e131]
+                  - generic [ref=e132]: Becas Tec. CeDIT
+            - listitem [ref=e135]:
+              - link "Ver historia destacada \"CeDIT\"" [ref=e138] [cursor=pointer]:
+                - /url: /stories/highlights/18220575175169013/
+                - button "Foto de la historia destacada de diitunlam CeDIT" [ref=e139]:
+                  - button [ref=e140]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e143]
+                  - generic [ref=e144]: CeDIT
+            - listitem [ref=e147]:
+              - link "Ver historia destacada \"Cursos 2024\"" [ref=e150] [cursor=pointer]:
+                - /url: /stories/highlights/18035449216766327/
+                - button "Foto de la historia destacada de diitunlam Cursos 2024" [ref=e151]:
+                  - button [ref=e152]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e155]
+                  - generic [ref=e156]: Cursos 2024
+            - listitem [ref=e159]:
+              - link "Ver historia destacada \"Becas Belgrano\"" [ref=e162] [cursor=pointer]:
+                - /url: /stories/highlights/18014869027401351/
+                - button "Foto de la historia destacada de diitunlam Becas Belgrano" [ref=e163]:
+                  - button [ref=e164]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e167]
+                  - generic [ref=e168]: Becas Belgrano
+            - listitem [ref=e171]:
+              - link "Ver historia destacada \"Calendario Acad.\"" [ref=e174] [cursor=pointer]:
+                - /url: /stories/highlights/18019246757017142/
+                - button "Foto de la historia destacada de diitunlam Calendario Acad." [ref=e175]:
+                  - button [ref=e176]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e179]
+                  - generic [ref=e180]: Calendario Acad.
+            - listitem [ref=e183]:
+              - link "Ver historia destacada \"Cursos\"" [ref=e186] [cursor=pointer]:
+                - /url: /stories/highlights/17907679124354910/
+                - button "Foto de la historia destacada de diitunlam Cursos" [ref=e187]:
+                  - button [ref=e188]:
+                    - img "Foto de la historia destacada de diitunlam" [ref=e191]
+                  - generic [ref=e192]: Cursos
+      - generic [ref=e195]:
+        - tablist [ref=e196]:
+          - link [ref=e198] [cursor=pointer]:
+            - /url: /diitunlam/
+            - img "Publicaciones" [ref=e200]
+          - link [ref=e211] [cursor=pointer]:
+            - /url: "#"
+            - img "Reels" [ref=e213]
+          - link [ref=e216] [cursor=pointer]:
+            - /url: "#"
+            - img "Etiquetas" [ref=e218]
+        - tabpanel
+      - generic [ref=e222]:
+        - generic [ref=e225]:
+          - generic [ref=e226]:
+            - link [ref=e228] [cursor=pointer]:
+              - /url: /diitunlam/p/DfHlezrFIES/
+              - img "Photo by DIIT UNLaM Oficial on October 30, 2026. Puede ser una imagen de texto." [ref=e231]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=e234] [cursor=pointer]:
+              - /url: /diitunlam/p/DfFAr_EjOxn/
+              - img "Photo by DIIT UNLaM Oficial on October 29, 2026. Puede ser una imagen de texto." [ref=e237]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=e240] [cursor=pointer]:
+              - /url: /diitunlam/p/DfCz6cwHIow/
+              - img "Photo by DIIT UNLaM Oficial on October 28, 2026. Puede ser una imagen de texto." [ref=e243]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+          - generic [ref=e245]:
+            - link [ref=e247] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DfCj3l2ESLi/
+              - img "Photo by Centro de Desarrollo e Investigaciones Tecnológicas on October 28, 2026." [ref=e250]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=e253] [cursor=pointer]:
+              - /url: /diitunlam/p/De95yI-oNXK/
+              - img "Photo by DIIT UNLaM Oficial on October 26, 2026. Puede ser una imagen de texto." [ref=e256]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=e259] [cursor=pointer]:
+              - /url: /diitunlam/p/De9rmonIL6t/
+              - img "Photo by DIIT UNLaM Oficial on October 26, 2026. Puede ser una imagen de póster, calendario y texto." [ref=e262]
+          - generic [ref=e264]:
+            - link "Secuencia" [ref=e266] [cursor=pointer]:
+              - /url: /diitunlam/p/De0At4iFl7k/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=e271] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DezXO6CkZpG/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=e276] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DezCnmfEVbQ/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+          - generic [ref=e280]:
+            - link "Secuencia" [ref=e282] [cursor=pointer]:
+              - /url: /diitunlam/p/DexMUoLFu8e/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=e287] [cursor=pointer]:
+              - /url: /diitunlam/p/DeutoSCliC_/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=e292] [cursor=pointer]:
+              - /url: /diitunlam/p/Deum0nVlslD/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+        - button "Mostrar más publicaciones de diitunlam" [ref=e296] [cursor=pointer]
+  - contentinfo [ref=e299]:
+    - generic [ref=e300]:
+      - generic [ref=e302]:
+        - link "Meta" [ref=e304] [cursor=pointer]:
+          - /url: https://about.meta.com/
+        - link "Información" [ref=e307] [cursor=pointer]:
+          - /url: https://about.instagram.com/
+        - link "Blog" [ref=e310] [cursor=pointer]:
+          - /url: https://about.instagram.com/blog/
+        - link "Empleo" [ref=e313] [cursor=pointer]:
+          - /url: https://about.instagram.com/about-us/careers
+        - link "Ayuda" [ref=e316] [cursor=pointer]:
+          - /url: https://help.instagram.com/
+        - link "API" [ref=e319] [cursor=pointer]:
+          - /url: https://developers.facebook.com/docs/instagram
+        - link "Privacidad" [ref=e322] [cursor=pointer]:
+          - /url: /legal/privacy/
+        - link "Condiciones" [ref=e325] [cursor=pointer]:
+          - /url: /legal/terms/
+        - link "Ubicaciones" [ref=e328] [cursor=pointer]:
+          - /url: /explore/locations/
+        - link "Popular" [ref=e331] [cursor=pointer]:
+          - /url: /popular/
+        - link "Instagram Lite" [ref=e334] [cursor=pointer]:
+          - /url: /web/lite/
+        - link "Meta AI" [ref=e337] [cursor=pointer]:
+          - /url: https://www.meta.ai/?utm_source=foa_web_footer
+        - link "Muse" [ref=e340] [cursor=pointer]:
+          - /url: https://muse.ai/
+        - link "Threads" [ref=e343] [cursor=pointer]:
+          - /url: https://www.threads.com/
+        - link "Importación de contactos y no usuarios" [ref=e346] [cursor=pointer]:
+          - /url: https://www.facebook.com/help/instagram/261704639352628
+        - link "Meta Verified" [ref=e349] [cursor=pointer]:
+          - /url: /accounts/meta_verified/?entrypoint=web_footer
+      - generic [ref=e351]:
+        - generic [ref=e352] [cursor=pointer]:
+          - generic [ref=e353]:
+            - generic [ref=e354]: Español
+            - img "Ícono de comilla angular abajo" [ref=e357]
+          - combobox "Cambiar idioma de visualización" [ref=e359]:
+            - option "Afrikaans"
+            - option "العربية"
+            - option "Čeština"
+            - option "Dansk"
+            - option "Deutsch"
+            - option "Ελληνικά"
+            - option "English"
+            - option "English (UK)"
+            - option "Español (España)"
+            - option "Español" [selected]
+            - option "فارسی"
+            - option "Suomi"
+            - option "Français"
+            - option "עברית"
+            - option "Bahasa Indonesia"
+            - option "Italiano"
+            - option "日本語"
+            - option "한국어"
+            - option "Bahasa Melayu"
+            - option "Norsk"
+            - option "Nederlands"
+            - option "Polski"
+            - option "Português (Brasil)"
+            - option "Português (Portugal)"
+            - option "Русский"
+            - option "Svenska"
+            - option "ภาษาไทย"
+            - option "Filipino"
+            - option "Türkçe"
+            - option "中文(简体)"
+            - option "中文(台灣)"
+            - option "বাংলা"
+            - option "ગુજરાતી"
+            - option "हिन्दी"
+            - option "Hrvatski"
+            - option "Magyar"
+            - option "ಕನ್ನಡ"
+            - option "മലയാളം"
+            - option "मराठी"
+            - option "नेपाली"
+            - option "ਪੰਜਾਬੀ"
+            - option "සිංහල"
+            - option "Slovenčina"
+            - option "தமிழ்"
+            - option "తెలుగు"
+            - option "اردو"
+            - option "Tiếng Việt"
+            - option "中文(香港)"
+            - option "Български"
+            - option "Français (Canada)"
+            - option "Română"
+            - option "Српски"
+            - option "Українська"
+        - generic [ref=e360]: © 2026 Instagram from Meta

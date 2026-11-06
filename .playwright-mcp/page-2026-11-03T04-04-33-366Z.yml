@@ -1,0 +1,271 @@
+- generic [ref=f28e11]:
+  - generic [ref=f28e13]:
+    - link [ref=f28e16] [cursor=pointer]:
+      - /url: /
+      - img "Instagram" [ref=f28e19]
+    - generic [ref=f28e30]:
+      - link "Iniciar sesión" [ref=f28e32] [cursor=pointer]:
+        - /url: /accounts/login/?next=%2Fdiitunlam%2Fp%2FDeAXKFzlkTl%2F&source=desktop_nav
+      - link "Registrarte" [ref=f28e34] [cursor=pointer]:
+        - /url: /accounts/emailsignup/
+  - main [ref=f28e35]:
+    - dialog [ref=f28e40]:
+      - generic [ref=f28e41]:
+        - button [ref=f28e43] [cursor=pointer]:
+          - img "Cerrar" [ref=f28e45]
+        - generic [ref=f28e49]:
+          - generic [ref=f28e50]:
+            - link [ref=f28e52] [cursor=pointer]:
+              - img "Foto del perfil de diitunlam" [ref=f28e53]
+            - generic [ref=f28e55]:
+              - generic [ref=f28e56]: No te pierdas ninguna publicación de diitunlam
+              - generic [ref=f28e57]: Regístrate en Instagram para estar siempre al día.
+              - generic [ref=f28e60]:
+                - text: Al continuar, aceptas las
+                - link "Condiciones de uso" [ref=f28e61] [cursor=pointer]:
+                  - /url: https://help.instagram.com/581066165581870/?locale=es_LA
+                - text: y la
+                - link "Política de privacidad" [ref=f28e62] [cursor=pointer]:
+                  - /url: https://privacycenter.instagram.com/policy/
+                - text: de Instagram.
+          - generic [ref=f28e63]:
+            - link "Registrarte" [ref=f28e66] [cursor=pointer]:
+              - /url: /accounts/emailsignup/
+            - link "Iniciar sesión" [ref=f28e69] [cursor=pointer]:
+              - /url: /accounts/login/?source=desktop_dynamic_landing_dialog
+    - generic [ref=f28e70]:
+      - generic [ref=f28e72]:
+        - generic [ref=f28e82]:
+          - list [ref=f28e84]:
+            - listitem [ref=f28e85]
+            - listitem [ref=f28e86]:
+              - img "Photo by DIIT UNLaM Oficial on October 02, 2026. Puede ser una imagen de termotanque, póster, batería, capacitor y texto." [ref=f28e92]
+            - listitem [ref=f28e94]:
+              - img "Photo by DIIT UNLaM Oficial on October 02, 2026. Puede ser una imagen de texto." [ref=f28e100]
+            - listitem [ref=f28e102]:
+              - img "Photo by DIIT UNLaM Oficial on October 02, 2026. Puede ser un gráfico de pancarta, póster, revista y texto." [ref=f28e108]
+          - button "Siguiente" [ref=f28e110] [cursor=pointer]
+        - generic [ref=f28e113]:
+          - generic [ref=f28e115]:
+            - link [ref=f28e117] [cursor=pointer]:
+              - img "Foto del perfil de diitunlam" [ref=f28e118]
+            - generic [ref=f28e121]:
+              - link "diitunlam" [ref=f28e124] [cursor=pointer]:
+                - /url: /diitunlam/
+              - generic [ref=f28e128]:
+                - generic [ref=f28e129]: •
+                - button "Seguir" [ref=f28e131] [cursor=pointer]
+            - button [ref=f28e134] [cursor=pointer]:
+              - img "Más opciones" [ref=f28e137]
+          - separator [ref=f28e141]
+          - generic [ref=f28e143]:
+            - generic [ref=f28e145]:
+              - link [ref=f28e147] [cursor=pointer]:
+                - /url: /diitunlam/
+                - img "Foto del perfil de diitunlam" [ref=f28e148]
+              - generic [ref=f28e152]:
+                - generic [ref=f28e153]:
+                  - link "diitunlam" [ref=f28e154] [cursor=pointer]:
+                    - /url: /diitunlam/
+                  - time [ref=f28e159]: 4 sem
+                - generic [ref=f28e160]: PROGRAMA SUSTENTABLE UNLaMParticipá de la Conferencia "Recolección de Residuos de Aparatos Eléctricos y Electrónicos", organizada por el Instituto de Medioambiente de la Secretaría de Desarrollo Universitario.📆 6 de octubre⏳ 19hs.📌 Auditorio José Martí o virtual vía Teams📝 Inscribite en https://tinyurl.com/UNLaMSustentable
+            - button [ref=f28e162] [cursor=pointer]:
+              - img "Cargar más comentarios" [ref=f28e164]
+            - generic [ref=f28e168]:
+              - heading "Todavía no hay comentarios." [level=2] [ref=f28e170]
+              - generic [ref=f28e171]: Inicia la conversación.
+          - generic [ref=f28e173]:
+            - generic [ref=f28e174]:
+              - generic [ref=f28e175]:
+                - button [ref=f28e178] [cursor=pointer]:
+                  - img "Me gusta" [ref=f28e181]
+                - button "16" [ref=f28e183] [cursor=pointer]
+                - button [ref=f28e185] [cursor=pointer]:
+                  - img "Comentar" [ref=f28e187]
+                - button [ref=f28e189] [cursor=pointer]:
+                  - img "Compartir" [ref=f28e190]
+              - button [ref=f28e194] [cursor=pointer]:
+                - img "Guardar" [ref=f28e196]
+            - link [ref=f28e200] [cursor=pointer]:
+              - /url: /diitunlam/p/DeAXKFzlkTl/
+              - time [ref=f28e202]: 2 de octubre
+          - generic [ref=f28e207]:
+            - link "Inicia sesión" [ref=f28e208] [cursor=pointer]:
+              - /url: /accounts/login/?next=%2Fdiitunlam%2Fp%2FDeAXKFzlkTl%2F&source=post_comment_input
+            - text: para indicar que te gusta o comentar.
+      - separator [ref=f28e210]
+      - generic [ref=f28e211]:
+        - generic [ref=f28e213]:
+          - text: Más publicaciones de
+          - link "diitunlam" [ref=f28e214] [cursor=pointer]:
+            - /url: /diitunlam/
+        - generic [ref=f28e217]:
+          - generic [ref=f28e218]:
+            - link [ref=f28e220] [cursor=pointer]:
+              - /url: /diitunlam/p/DfHlezrFIES/
+              - img "Photo by DIIT UNLaM Oficial on October 30, 2026. Puede ser una imagen de texto." [ref=f28e223]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=f28e226] [cursor=pointer]:
+              - /url: /diitunlam/p/DfFAr_EjOxn/
+              - img "Photo by DIIT UNLaM Oficial on October 29, 2026. Puede ser una imagen de texto." [ref=f28e229]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=f28e232] [cursor=pointer]:
+              - /url: /diitunlam/p/DfCz6cwHIow/
+              - img "Photo by DIIT UNLaM Oficial on October 28, 2026. Puede ser una imagen de texto." [ref=f28e235]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+          - generic [ref=f28e237]:
+            - link [ref=f28e239] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DfCj3l2ESLi/
+              - img "Photo by Centro de Desarrollo e Investigaciones Tecnológicas on October 28, 2026." [ref=f28e242]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=f28e245] [cursor=pointer]:
+              - /url: /diitunlam/p/De95yI-oNXK/
+              - img "Photo by DIIT UNLaM Oficial on October 26, 2026. Puede ser una imagen de texto." [ref=f28e248]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=f28e251] [cursor=pointer]:
+              - /url: /diitunlam/p/De9rmonIL6t/
+              - img "Photo by DIIT UNLaM Oficial on October 26, 2026. Puede ser una imagen de póster, calendario y texto." [ref=f28e254]
+          - generic [ref=f28e256]:
+            - link [ref=f28e258] [cursor=pointer]:
+              - /url: /diitunlam/p/De0At4iFl7k/
+              - img "Photo by DIIT UNLaM Oficial on October 22, 2026. Puede ser una imagen de texto." [ref=f28e261]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=f28e264] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DezXO6CkZpG/
+              - img "Photo by Centro de Desarrollo e Investigaciones Tecnológicas on October 22, 2026. Puede ser una imagen de texto." [ref=f28e267]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=f28e270] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DezCnmfEVbQ/
+              - img "Photo by Centro de Desarrollo e Investigaciones Tecnológicas on October 22, 2026." [ref=f28e273]
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+        - generic [ref=f28e275]:
+          - link "Ver más publicaciones" [ref=f28e277] [cursor=pointer]:
+            - /url: /diitunlam/
+          - separator [ref=f28e279]
+  - contentinfo [ref=f28e280]:
+    - generic [ref=f28e281]:
+      - generic [ref=f28e283]:
+        - link "Meta" [ref=f28e285] [cursor=pointer]:
+          - /url: https://about.meta.com/
+        - link "Información" [ref=f28e288] [cursor=pointer]:
+          - /url: https://about.instagram.com/
+        - link "Blog" [ref=f28e291] [cursor=pointer]:
+          - /url: https://about.instagram.com/blog/
+        - link "Empleo" [ref=f28e294] [cursor=pointer]:
+          - /url: https://about.instagram.com/about-us/careers
+        - link "Ayuda" [ref=f28e297] [cursor=pointer]:
+          - /url: https://help.instagram.com/
+        - link "API" [ref=f28e300] [cursor=pointer]:
+          - /url: https://developers.facebook.com/docs/instagram
+        - link "Privacidad" [ref=f28e303] [cursor=pointer]:
+          - /url: /legal/privacy/
+        - link "Condiciones" [ref=f28e306] [cursor=pointer]:
+          - /url: /legal/terms/
+        - link "Ubicaciones" [ref=f28e309] [cursor=pointer]:
+          - /url: /explore/locations/
+        - link "Popular" [ref=f28e312] [cursor=pointer]:
+          - /url: /popular/
+        - link "Instagram Lite" [ref=f28e315] [cursor=pointer]:
+          - /url: /web/lite/
+        - link "Meta AI" [ref=f28e318] [cursor=pointer]:
+          - /url: https://www.meta.ai/?utm_source=foa_web_footer
+        - link "Muse" [ref=f28e321] [cursor=pointer]:
+          - /url: https://muse.ai/
+        - link "Threads" [ref=f28e324] [cursor=pointer]:
+          - /url: https://www.threads.com/
+        - link "Importación de contactos y no usuarios" [ref=f28e327] [cursor=pointer]:
+          - /url: https://www.facebook.com/help/instagram/261704639352628
+        - link "Meta Verified" [ref=f28e330] [cursor=pointer]:
+          - /url: /accounts/meta_verified/?entrypoint=web_footer
+      - generic [ref=f28e332]:
+        - generic [ref=f28e333] [cursor=pointer]:
+          - generic [ref=f28e334]:
+            - generic [ref=f28e335]: Español
+            - img "Ícono de comilla angular abajo" [ref=f28e338]
+          - combobox "Cambiar idioma de visualización" [ref=f28e340]:
+            - option "Afrikaans"
+            - option "العربية"
+            - option "Čeština"
+            - option "Dansk"
+            - option "Deutsch"
+            - option "Ελληνικά"
+            - option "English"
+            - option "English (UK)"
+            - option "Español (España)"
+            - option "Español" [selected]
+            - option "فارسی"
+            - option "Suomi"
+            - option "Français"
+            - option "עברית"
+            - option "Bahasa Indonesia"
+            - option "Italiano"
+            - option "日本語"
+            - option "한국어"
+            - option "Bahasa Melayu"
+            - option "Norsk"
+            - option "Nederlands"
+            - option "Polski"
+            - option "Português (Brasil)"
+            - option "Português (Portugal)"
+            - option "Русский"
+            - option "Svenska"
+            - option "ภาษาไทย"
+            - option "Filipino"
+            - option "Türkçe"
+            - option "中文(简体)"
+            - option "中文(台灣)"
+            - option "বাংলা"
+            - option "ગુજરાતી"
+            - option "हिन्दी"
+            - option "Hrvatski"
+            - option "Magyar"
+            - option "ಕನ್ನಡ"
+            - option "മലയാളം"
+            - option "मराठी"
+            - option "नेपाली"
+            - option "ਪੰਜਾਬੀ"
+            - option "සිංහල"
+            - option "Slovenčina"
+            - option "தமிழ்"
+            - option "తెలుగు"
+            - option "اردو"
+            - option "Tiếng Việt"
+            - option "中文(香港)"
+            - option "Български"
+            - option "Français (Canada)"
+            - option "Română"
+            - option "Српски"
+            - option "Українська"
+        - generic [ref=f28e341]: © 2026 Instagram from Meta

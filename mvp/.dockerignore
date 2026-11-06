@@ -1,0 +1,11 @@
+.git
+.expo
+node_modules
+**/node_modules
+dist
+build
+coverage
+nodo-unlam.apk
+.env
+.env.*
+src/server/data

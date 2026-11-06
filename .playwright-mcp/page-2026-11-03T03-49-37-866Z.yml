@@ -1,0 +1,106 @@
+- generic [active] [ref=f20e1]:
+  - generic [ref=f20e2]:
+    - banner [ref=f20e3]:
+      - navigation "Global" [ref=f20e4]:
+        - link "UNLaM Actividades" [ref=f20e6] [cursor=pointer]:
+          - /url: /
+        - button "Open main menu" [ref=f20e22]
+    - generic [ref=f20e26]:
+      - link "Eficiencia Energética" [ref=f20e28] [cursor=pointer]:
+        - /url: /actividades/departamento-de-ingenieria-e-inv.-tecnologicas/eficiencia-energetica
+      - generic [ref=f20e29]:
+        - generic [ref=f20e30]:
+          - heading "Eficiencia Energética" [level=1] [ref=f20e35]
+          - paragraph [ref=f20e37]: El objetivo de este curso es brindar a los participantes los conocimientos fundamentales para comprender su consumo de energía y aplicar prácticas de eficiencia que permitan reducir costos, optimizar recursos y mejorar el desempeño energético, principalmente en el ámbito doméstico, e introductoriamente en el comercial e industrial.
+        - list [ref=f20e38]:
+          - listitem [ref=f20e39]:
+            - generic [ref=f20e42]:
+              - text: "Inicio:"
+              - strong [ref=f20e43]: 2 noviembre 2026
+          - listitem [ref=f20e44]:
+            - generic [ref=f20e47]:
+              - text: "Finalización:"
+              - strong [ref=f20e48]: 30 noviembre 2026
+          - listitem [ref=f20e49]:
+            - generic [ref=f20e52]:
+              - text: "Sede:"
+              - strong [ref=f20e53]: C.A.B.A.
+          - listitem [ref=f20e54]:
+            - generic [ref=f20e57]:
+              - text: "Periodo:"
+              - strong [ref=f20e58]: "2026"
+          - listitem [ref=f20e59]:
+            - generic [ref=f20e62]:
+              - text: "Modalidad:"
+              - strong [ref=f20e63]: Virtual
+        - generic [ref=f20e64]:
+          - heading "Precios" [level=2] [ref=f20e65]
+          - list [ref=f20e66]:
+            - listitem [ref=f20e67]:
+              - text: "Alumno:"
+              - strong [ref=f20e68]: $144.000
+            - listitem [ref=f20e69]:
+              - text: "Ex-Alumno:"
+              - strong [ref=f20e70]: $144.000
+            - listitem [ref=f20e71]:
+              - text: "Empleado:"
+              - strong [ref=f20e72]: $144.000
+            - listitem [ref=f20e73]:
+              - text: "Regular:"
+              - strong [ref=f20e74]: $180.000
+            - listitem [ref=f20e75]:
+              - text: "Graduado:"
+              - strong [ref=f20e76]: $144.000
+          - paragraph [ref=f20e77]:
+            - generic [ref=f20e80]:
+              - text: "Pagos:"
+              - strong [ref=f20e81]: Mensual
+        - generic [ref=f20e82]:
+          - heading "Docentes" [level=2] [ref=f20e83]
+          - generic [ref=f20e84]:
+            - generic [ref=f20e85]:
+              - generic [ref=f20e86]:
+                - generic [ref=f20e87]: LM
+                - generic [ref=f20e89]: Leandro Magri
+              - paragraph [ref=f20e92]: Ingeniero Químico, especializado en energías renovables y eficiencia energética. Maestrando en Energías Renovables (UTN). Posgrado en Dirección de Empresas PYME (UCA). Cuenta con experiencia laboral en tratamiento de aguas y efluentes, servicios industriales y control de procesos. Fundador y Director General de Colectando Sol, empresa de triple impacto con más de una década de experiencia en energía solar y eficiencia energética, a través de instalaciones, capacitaciones y proyectos sociales en todo el país, otros países de Latinoamérica e incluso la Antártida. Asesor, Docente e Investigador del DIIT-UNLaM. Docente UNSAM.
+            - generic [ref=f20e93]:
+              - generic [ref=f20e94]:
+                - generic [ref=f20e95]: AL
+                - generic [ref=f20e97]: Agustín Lohigorry
+              - paragraph [ref=f20e100]: Licenciado en Análisis de Sistemas (UBA). Magíster en Dirección Estratégica y Tecnológica (ITBA-EOI). Diplomado en Gestión Eficiente de la Energía / Energy Manager (ITBA-EUREM) y en Tecnología y Gestión de la Energía (UTN). Diplomado en Hidrógeno Verde (Clase Ejecutiva UC Chile). Cursa la Especialización en Energías Renovables, Eficiencia Energética y Cambio Climático (UBA–CEARE). Responsable de Proyectos y Comercial de RAYO. Co coordinador del área de Energía e integrante de la comisión directiva de Ingeniería Sin Fronteras Argentina. Asesor, Docente e Investigador del DIIT-UNLaM. Especialista en Transición Energética.
+        - link "Inscribirse" [ref=f20e102] [cursor=pointer]:
+          - /url: /actividades/departamento-de-ingenieria-e-inv.-tecnologicas/eficiencia-energetica/eficiencia-energetica-2026/inscribirse
+    - contentinfo [ref=f20e103]:
+      - generic [ref=f20e104]:
+        - generic [ref=f20e105]:
+          - link "Instagram" [ref=f20e106] [cursor=pointer]:
+            - /url: https://instagram.com/unlamoficial
+          - link "Facebook" [ref=f20e110] [cursor=pointer]:
+            - /url: https://www.facebook.com/UnlamOficial
+          - link "Twitter X" [ref=f20e114] [cursor=pointer]:
+            - /url: https://twitter.com/intent/follow?source=followbutton&variant=1.0&screen_name=UnlamOficial
+            - generic [ref=f20e115]: Twitter
+            - img "X" [ref=f20e116]
+          - link "Email" [ref=f20e118] [cursor=pointer]:
+            - /url: mailto:deportes@unlam.edu.ar
+          - link "Web" [ref=f20e122] [cursor=pointer]:
+            - /url: https://actividades.unlam.edu.ar
+        - link "UNLaM" [ref=f20e129] [cursor=pointer]:
+          - /url: https://www.unlam.edu.ar
+      - generic [ref=f20e191]:
+        - generic [ref=f20e192]:
+          - paragraph [ref=f20e194]:
+            - text: © 2026 Universidad Nacional de La Matanza -
+            - generic [ref=f20e195]: v1.20.5
+          - generic [ref=f20e196]:
+            - link "Ayuda" [ref=f20e197] [cursor=pointer]:
+              - /url: /ayuda
+            - link "Términos y Condiciones" [ref=f20e198] [cursor=pointer]:
+              - /url: /terminos-condiciones
+            - link "Privacidad" [ref=f20e199] [cursor=pointer]:
+              - /url: /privacidad
+            - link "Administración" [ref=f20e200] [cursor=pointer]:
+              - /url: /ingresar/admin
+        - button "Toggle theme" [ref=f20e202] [cursor=pointer]
+  - region "Notifications alt+T"
+  - alert [ref=f20e204]

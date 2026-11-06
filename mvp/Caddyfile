@@ -1,0 +1,5 @@
+# HTTPS automático (Let's Encrypt) para DOMAIN. Con DOMAIN=localhost usa un certificado local de prueba.
+{$DOMAIN:localhost} {
+	encode gzip
+	reverse_proxy web:80
+}
