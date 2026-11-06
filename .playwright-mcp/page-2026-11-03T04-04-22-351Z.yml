@@ -1,0 +1,258 @@
+- generic [ref=f26e11]:
+  - generic [ref=f26e13]:
+    - link [ref=f26e16] [cursor=pointer]:
+      - /url: /
+      - img "Instagram" [ref=f26e19]
+    - generic [ref=f26e30]:
+      - link "Iniciar sesión" [ref=f26e32] [cursor=pointer]:
+        - /url: /accounts/login/?next=%2Fdiitunlam%2Fp%2FDd9fQHGG0TX%2F&source=desktop_nav
+      - link "Registrarte" [ref=f26e34] [cursor=pointer]:
+        - /url: /accounts/emailsignup/
+  - main [ref=f26e35]:
+    - dialog [ref=f26e40]:
+      - generic [ref=f26e41]:
+        - button [ref=f26e43] [cursor=pointer]:
+          - img "Cerrar" [ref=f26e45]
+        - generic [ref=f26e49]:
+          - generic [ref=f26e50]:
+            - link [ref=f26e52] [cursor=pointer]:
+              - img "Foto del perfil de diitunlam" [ref=f26e53]
+            - generic [ref=f26e55]:
+              - generic [ref=f26e56]: No te pierdas ninguna publicación de diitunlam
+              - generic [ref=f26e57]: Regístrate en Instagram para estar siempre al día.
+              - generic [ref=f26e60]:
+                - text: Al continuar, aceptas las
+                - link "Condiciones de uso" [ref=f26e61] [cursor=pointer]:
+                  - /url: https://help.instagram.com/581066165581870/?locale=es_LA
+                - text: y la
+                - link "Política de privacidad" [ref=f26e62] [cursor=pointer]:
+                  - /url: https://privacycenter.instagram.com/policy/
+                - text: de Instagram.
+          - generic [ref=f26e63]:
+            - link "Registrarte" [ref=f26e66] [cursor=pointer]:
+              - /url: /accounts/emailsignup/
+            - link "Iniciar sesión" [ref=f26e69] [cursor=pointer]:
+              - /url: /accounts/login/?source=desktop_dynamic_landing_dialog
+    - generic [ref=f26e70]:
+      - generic [ref=f26e72]:
+        - img "Photo by DIIT UNLaM Oficial on October 01, 2026. Puede ser una imagen de póster y texto." [ref=f26e78]
+        - generic [ref=f26e81]:
+          - generic [ref=f26e83]:
+            - generic [ref=f26e85]:
+              - link [ref=f26e86]:
+                - img "Foto del perfil de cedit_unlam" [ref=f26e87]
+              - link [ref=f26e90]:
+                - img "Foto del perfil de diitunlam" [ref=f26e91]
+            - generic [ref=f26e95]:
+              - link "diitunlam" [ref=f26e96] [cursor=pointer]:
+                - /url: /diitunlam/
+              - text: "y"
+              - link "cedit_unlam" [ref=f26e100] [cursor=pointer]:
+                - /url: /cedit_unlam/
+            - button [ref=f26e106] [cursor=pointer]:
+              - img "Más opciones" [ref=f26e109]
+          - separator [ref=f26e113]
+          - generic [ref=f26e115]:
+            - generic [ref=f26e117]:
+              - link [ref=f26e119] [cursor=pointer]:
+                - /url: /diitunlam/
+                - img "Foto del perfil de diitunlam" [ref=f26e120]
+              - generic [ref=f26e124]:
+                - generic [ref=f26e125]:
+                  - link "diitunlam" [ref=f26e126] [cursor=pointer]:
+                    - /url: /diitunlam/
+                  - generic [ref=f26e130]: Editado
+                  - generic [ref=f26e131]: •
+                  - time [ref=f26e133]: 4 sem
+                - generic [ref=f26e134]: "RALLY LATINOAMERICANO DE INNOVACIÓN 2026 🚀👉 Es una competencia internacional por equipos que fomenta la innovación abierta en facultades de ingeniería latinoamericanas. Trabajan equipos multidisciplinarios: ingeniería, ciencias, diseño, negocios y sociales.👉 Son 28 horas continuas y en simultáneo en todas las sedes de Latinoamérica, en las que cada equipo deberá resolver un desafío con una solución creativa.👉 Destinado a estudiantes de educación superior.📆 16 y 17 de octubre de 2026📌 Sede UNLaM – Modalidad híbrida🌐 Más información e inscripción en www.rallydeinnovacion.org"
+            - button [ref=f26e136] [cursor=pointer]:
+              - img "Cargar más comentarios" [ref=f26e138]
+            - generic [ref=f26e142]:
+              - heading "Todavía no hay comentarios." [level=2] [ref=f26e144]
+              - generic [ref=f26e145]: Inicia la conversación.
+          - generic [ref=f26e147]:
+            - generic [ref=f26e148]:
+              - generic [ref=f26e149]:
+                - button [ref=f26e152] [cursor=pointer]:
+                  - img "Me gusta" [ref=f26e155]
+                - button "28" [ref=f26e157] [cursor=pointer]
+                - button [ref=f26e159] [cursor=pointer]:
+                  - img "Comentar" [ref=f26e161]
+                - button [ref=f26e163] [cursor=pointer]:
+                  - img "Compartir" [ref=f26e164]
+              - button [ref=f26e168] [cursor=pointer]:
+                - img "Guardar" [ref=f26e170]
+            - link [ref=f26e174] [cursor=pointer]:
+              - /url: /diitunlam/p/Dd9fQHGG0TX/
+              - time [ref=f26e176]: 1 de octubre
+          - generic [ref=f26e181]:
+            - link "Inicia sesión" [ref=f26e182] [cursor=pointer]:
+              - /url: /accounts/login/?next=%2Fdiitunlam%2Fp%2FDd9fQHGG0TX%2F&source=post_comment_input
+            - text: para indicar que te gusta o comentar.
+      - separator [ref=f26e184]
+      - generic [ref=f26e185]:
+        - generic [ref=f26e187]:
+          - text: Más publicaciones de
+          - link "diitunlam" [ref=f26e188] [cursor=pointer]:
+            - /url: /diitunlam/
+        - generic [ref=f26e191]:
+          - generic [ref=f26e192]:
+            - link "Secuencia" [ref=f26e194] [cursor=pointer]:
+              - /url: /diitunlam/p/DfHlezrFIES/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=f26e199] [cursor=pointer]:
+              - /url: /diitunlam/p/DfFAr_EjOxn/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=f26e204] [cursor=pointer]:
+              - /url: /diitunlam/p/DfCz6cwHIow/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+          - generic [ref=f26e208]:
+            - link "Secuencia" [ref=f26e210] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DfCj3l2ESLi/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=f26e215] [cursor=pointer]:
+              - /url: /diitunlam/p/De95yI-oNXK/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link [ref=f26e220] [cursor=pointer]:
+              - /url: /diitunlam/p/De9rmonIL6t/
+          - generic [ref=f26e224]:
+            - link "Secuencia" [ref=f26e226] [cursor=pointer]:
+              - /url: /diitunlam/p/De0At4iFl7k/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=f26e231] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DezXO6CkZpG/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+            - link "Secuencia" [ref=f26e236] [cursor=pointer]:
+              - /url: /cedit_unlam/p/DezCnmfEVbQ/
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - img "Secuencia"
+        - generic [ref=f26e240]:
+          - link "Ver más publicaciones" [ref=f26e242] [cursor=pointer]:
+            - /url: /diitunlam/
+          - separator [ref=f26e244]
+  - contentinfo [ref=f26e245]:
+    - generic [ref=f26e246]:
+      - generic [ref=f26e248]:
+        - link "Meta" [ref=f26e250] [cursor=pointer]:
+          - /url: https://about.meta.com/
+        - link "Información" [ref=f26e253] [cursor=pointer]:
+          - /url: https://about.instagram.com/
+        - link "Blog" [ref=f26e256] [cursor=pointer]:
+          - /url: https://about.instagram.com/blog/
+        - link "Empleo" [ref=f26e259] [cursor=pointer]:
+          - /url: https://about.instagram.com/about-us/careers
+        - link "Ayuda" [ref=f26e262] [cursor=pointer]:
+          - /url: https://help.instagram.com/
+        - link "API" [ref=f26e265] [cursor=pointer]:
+          - /url: https://developers.facebook.com/docs/instagram
+        - link "Privacidad" [ref=f26e268] [cursor=pointer]:
+          - /url: /legal/privacy/
+        - link "Condiciones" [ref=f26e271] [cursor=pointer]:
+          - /url: /legal/terms/
+        - link "Ubicaciones" [ref=f26e274] [cursor=pointer]:
+          - /url: /explore/locations/
+        - link "Popular" [ref=f26e277] [cursor=pointer]:
+          - /url: /popular/
+        - link "Instagram Lite" [ref=f26e280] [cursor=pointer]:
+          - /url: /web/lite/
+        - link "Meta AI" [ref=f26e283] [cursor=pointer]:
+          - /url: https://www.meta.ai/?utm_source=foa_web_footer
+        - link "Muse" [ref=f26e286] [cursor=pointer]:
+          - /url: https://muse.ai/
+        - link "Threads" [ref=f26e289] [cursor=pointer]:
+          - /url: https://www.threads.com/
+        - link "Importación de contactos y no usuarios" [ref=f26e292] [cursor=pointer]:
+          - /url: https://www.facebook.com/help/instagram/261704639352628
+        - link "Meta Verified" [ref=f26e295] [cursor=pointer]:
+          - /url: /accounts/meta_verified/?entrypoint=web_footer
+      - generic [ref=f26e297]:
+        - generic [ref=f26e298] [cursor=pointer]:
+          - generic [ref=f26e299]:
+            - generic [ref=f26e300]: Español
+            - img "Ícono de comilla angular abajo" [ref=f26e303]
+          - combobox "Cambiar idioma de visualización" [ref=f26e305]:
+            - option "Afrikaans"
+            - option "العربية"
+            - option "Čeština"
+            - option "Dansk"
+            - option "Deutsch"
+            - option "Ελληνικά"
+            - option "English"
+            - option "English (UK)"
+            - option "Español (España)"
+            - option "Español" [selected]
+            - option "فارسی"
+            - option "Suomi"
+            - option "Français"
+            - option "עברית"
+            - option "Bahasa Indonesia"
+            - option "Italiano"
+            - option "日本語"
+            - option "한국어"
+            - option "Bahasa Melayu"
+            - option "Norsk"
+            - option "Nederlands"
+            - option "Polski"
+            - option "Português (Brasil)"
+            - option "Português (Portugal)"
+            - option "Русский"
+            - option "Svenska"
+            - option "ภาษาไทย"
+            - option "Filipino"
+            - option "Türkçe"
+            - option "中文(简体)"
+            - option "中文(台灣)"
+            - option "বাংলা"
+            - option "ગુજરાતી"
+            - option "हिन्दी"
+            - option "Hrvatski"
+            - option "Magyar"
+            - option "ಕನ್ನಡ"
+            - option "മലയാളം"
+            - option "मराठी"
+            - option "नेपाली"
+            - option "ਪੰਜਾਬੀ"
+            - option "සිංහල"
+            - option "Slovenčina"
+            - option "தமிழ்"
+            - option "తెలుగు"
+            - option "اردو"
+            - option "Tiếng Việt"
+            - option "中文(香港)"
+            - option "Български"
+            - option "Français (Canada)"
+            - option "Română"
+            - option "Српски"
+            - option "Українська"
+        - generic [ref=f26e306]: © 2026 Instagram from Meta

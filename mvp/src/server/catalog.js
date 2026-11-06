@@ -1,8 +1,35 @@
+// label: nombre corto (títulos como "Eventos de …"); name: nombre oficial completo (selectores y barra lateral).
 export const DEPARTMENTS = {
-  diit: { label: 'Ingeniería e Investigaciones Tecnológicas', careers: ['Ingeniería en Informática', 'Ingeniería Electrónica', 'Ingeniería Industrial'] },
-  humanidades: { label: 'Humanidades y Ciencias Sociales', careers: ['Comunicación Social', 'Trabajo Social'] },
-  economicas: { label: 'Ciencias Económicas', careers: ['Contador Público', 'Administración'] },
-  derecho: { label: 'Derecho y Ciencia Política', careers: ['Abogacía'] }
+  diit: {
+    label: 'Ingeniería e Investigaciones Tecnológicas', name: 'Departamento de Ingeniería e Investigaciones Tecnológicas',
+    careers: ['Ingeniería en Informática', 'Ingeniería Mecánica', 'Ingeniería Civil', 'Ingeniería Electrónica', 'Ingeniería Industrial', 'Ingeniería en Energías Renovables']
+  },
+  salud: {
+    label: 'Ciencias de la Salud', name: 'Departamento de Ciencias de la Salud',
+    careers: ['Licenciatura en Nutrición', 'Odontología', 'Licenciatura en Kinesiología y Fisiatría', 'Medicina', 'Licenciatura en Enfermería']
+  },
+  humanidades: {
+    label: 'Humanidades y Ciencias Sociales', name: 'Departamento de Humanidades y Ciencias Sociales',
+    careers: ['Licenciatura en Relaciones Laborales', 'Licenciatura en Comunicación Social', 'Licenciatura en Relaciones Públicas', 'Licenciatura en Trabajo Social', 'Profesorado de Educación Física', 'Licenciatura en Educación Física']
+  },
+  economicas: {
+    label: 'Ciencias Económicas', name: 'Departamento de Ciencias Económicas',
+    careers: ['Licenciatura en Administración', 'Contador Público', 'Licenciatura en Comercio Internacional', 'Licenciatura en Economía']
+  },
+  derecho: {
+    label: 'Derecho y Ciencia Política', name: 'Departamento de Derecho y Ciencia Política',
+    careers: ['Abogacía', 'Licenciatura en Ciencia Política']
+  },
+  arquitectura: {
+    label: 'Arquitectura, Urbanismo y Diseño', name: 'Escuela de Arquitectura, Urbanismo y Diseño',
+    careers: ['Arquitectura']
+  }
+};
+// Carreras que cambiaron de nombre: los perfiles y eventos guardados con el nombre anterior se actualizan al abrir la base.
+export const CAREER_RENAMES = {
+  'Comunicación Social': 'Licenciatura en Comunicación Social',
+  'Trabajo Social': 'Licenciatura en Trabajo Social',
+  'Administración': 'Licenciatura en Administración'
 };
 export const FREQUENCIES = ['instantanea', 'diaria', 'semanal'];
 export function matches(event, profile) {

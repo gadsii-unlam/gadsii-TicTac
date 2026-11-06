@@ -1,0 +1,215 @@
+- generic [ref=f24e1]:
+  - generic [ref=f24e8]:
+    - generic [ref=f24e10]:
+      - link [ref=f24e13] [cursor=pointer]:
+        - /url: /
+      - generic [ref=f24e27]:
+        - link [ref=f24e29] [cursor=pointer]:
+          - /url: /accounts/login/?next=%2Fdiitunlam%2F&source=desktop_nav
+          - text: Iniciar sesión
+        - link [ref=f24e31] [cursor=pointer]:
+          - /url: /accounts/emailsignup/
+          - text: Registrarte
+    - main [ref=f24e32]:
+      - generic [ref=f24e34]:
+        - generic [ref=f24e35]:
+          - button [ref=f24e38] [cursor=pointer]:
+            - link [ref=f24e40]
+          - heading [level=2] [ref=f24e48]:
+            - generic [ref=f24e49]: diitunlam
+          - list [ref=f24e51]:
+            - listitem [ref=f24e52]:
+              - link [ref=f24e54] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=f24e55]:
+                  - generic [ref=f24e56]: "8348"
+                  - text: seguidores
+            - listitem [ref=f24e57]:
+              - link [ref=f24e59] [cursor=pointer]:
+                - /url: "#"
+                - generic [ref=f24e60]:
+                  - generic [ref=f24e61]: "20"
+                  - text: seguidos
+          - generic [ref=f24e63]:
+            - generic [ref=f24e64]: DIIT UNLaM Oficial
+            - button [ref=f24e67] [cursor=pointer]: Departamento de ingeniería e investigaciones tecnológicas
+            - link [ref=f24e74] [cursor=pointer]:
+              - /url: https://l.instagram.com/?u=https%3A%2F%2Flinktr.ee%2Fdiitunlam&e=AUCqXmyQYDDY1hrH4SnDCQntE2UVUQXCYCcpXUg70pJ2cqLXLhjNqd40dEcegdaxScEKMVdJe5HYEO4m6FAcK10XLAY1xW1azvZqUFJ8Mt4j157wIVNS8UtjsCeOh6GgY8T0DlNzjwWmZs4Qy3yWG8Q7Hsm6QOYIIXeGFA
+              - generic [ref=f24e75]: linktr.ee/diitunlam
+          - menu [ref=f24e77]:
+            - generic [ref=f24e79]:
+              - list [ref=f24e81]:
+                - listitem [ref=f24e82]
+                - listitem [ref=f24e83]
+                - listitem [ref=f24e84]:
+                  - link [ref=f24e87] [cursor=pointer]:
+                    - /url: /stories/highlights/17879127519201591/
+                    - button [ref=f24e88]:
+                      - button [ref=f24e89]
+                      - generic [ref=f24e93]: Charla carreras
+                - listitem [ref=f24e96]:
+                  - link [ref=f24e99] [cursor=pointer]:
+                    - /url: /stories/highlights/17886888480236113/
+                    - button [ref=f24e100]:
+                      - button [ref=f24e101]
+                      - generic [ref=f24e105]: Cursos 2025
+                - listitem [ref=f24e108]:
+                  - link [ref=f24e111] [cursor=pointer]:
+                    - /url: /stories/highlights/17859299369615785/
+                    - button [ref=f24e112]:
+                      - button [ref=f24e113]
+                      - generic [ref=f24e117]: Búsqueda Externa
+                - listitem [ref=f24e120]:
+                  - link [ref=f24e123] [cursor=pointer]:
+                    - /url: /stories/highlights/17954006080820982/
+                    - button [ref=f24e124]:
+                      - button [ref=f24e125]
+                      - generic [ref=f24e129]: Becas Tec. CeDIT
+                - listitem [ref=f24e132]:
+                  - link [ref=f24e135] [cursor=pointer]:
+                    - /url: /stories/highlights/18220575175169013/
+                    - button [ref=f24e136]:
+                      - button [ref=f24e137]
+                      - generic [ref=f24e141]: CeDIT
+                - listitem [ref=f24e144]:
+                  - link [ref=f24e147] [cursor=pointer]:
+                    - /url: /stories/highlights/18035449216766327/
+                    - button [ref=f24e148]:
+                      - button [ref=f24e149]
+                      - generic [ref=f24e153]: Cursos 2024
+                - listitem [ref=f24e156]:
+                  - link [ref=f24e159] [cursor=pointer]:
+                    - /url: /stories/highlights/18014869027401351/
+                    - button [ref=f24e160]:
+                      - button [ref=f24e161]
+                      - generic [ref=f24e165]: Becas Belgrano
+                - listitem [ref=f24e168]:
+                  - link [ref=f24e171] [cursor=pointer]:
+                    - /url: /stories/highlights/18019246757017142/
+                    - button [ref=f24e172]:
+                      - button [ref=f24e173]
+                      - generic [ref=f24e177]: Calendario Acad.
+                - listitem [ref=f24e180]:
+                  - link [ref=f24e183] [cursor=pointer]:
+                    - /url: /stories/highlights/17907679124354910/
+                    - button [ref=f24e184]:
+                      - button [ref=f24e185]
+                      - generic [ref=f24e189]: Cursos
+              - button [ref=f24e192] [cursor=pointer]
+        - tablist [ref=f24e195]:
+          - link [ref=f24e197] [cursor=pointer]:
+            - /url: /diitunlam/
+          - link [ref=f24e210] [cursor=pointer]:
+            - /url: "#"
+          - link [ref=f24e215] [cursor=pointer]:
+            - /url: "#"
+        - generic [ref=f24e221]:
+          - generic [ref=f24e224]:
+            - generic [ref=f24e225]:
+              - link [ref=f24e227] [cursor=pointer]:
+                - /url: /diitunlam/p/DfHlezrFIES/
+              - link [ref=f24e233] [cursor=pointer]:
+                - /url: /diitunlam/p/DfFAr_EjOxn/
+              - link [ref=f24e239] [cursor=pointer]:
+                - /url: /diitunlam/p/DfCz6cwHIow/
+            - generic [ref=f24e244]:
+              - link [ref=f24e246] [cursor=pointer]:
+                - /url: /cedit_unlam/p/DfCj3l2ESLi/
+              - link [ref=f24e252] [cursor=pointer]:
+                - /url: /diitunlam/p/De95yI-oNXK/
+              - link [ref=f24e258] [cursor=pointer]:
+                - /url: /diitunlam/p/De9rmonIL6t/
+            - generic [ref=f24e263]:
+              - link [ref=f24e265] [cursor=pointer]:
+                - /url: /diitunlam/p/De0At4iFl7k/
+              - link [ref=f24e271] [cursor=pointer]:
+                - /url: /cedit_unlam/p/DezXO6CkZpG/
+              - link [ref=f24e277] [cursor=pointer]:
+                - /url: /cedit_unlam/p/DezCnmfEVbQ/
+            - generic [ref=f24e282]:
+              - link [ref=f24e284] [cursor=pointer]:
+                - /url: /diitunlam/p/DexMUoLFu8e/
+              - link [ref=f24e290] [cursor=pointer]:
+                - /url: /diitunlam/p/DeutoSCliC_/
+              - link [ref=f24e296] [cursor=pointer]:
+                - /url: /diitunlam/p/Deum0nVlslD/
+          - button [ref=f24e301] [cursor=pointer]:
+            - generic [ref=f24e302]: Mostrar más publicaciones de diitunlam
+    - contentinfo [ref=f24e304]:
+      - generic [ref=f24e305]:
+        - generic [ref=f24e307]:
+          - link [ref=f24e309] [cursor=pointer]:
+            - /url: https://about.meta.com/
+            - generic [ref=f24e310]: Meta
+          - link [ref=f24e312] [cursor=pointer]:
+            - /url: https://about.instagram.com/
+            - generic [ref=f24e313]: Información
+          - link [ref=f24e315] [cursor=pointer]:
+            - /url: https://about.instagram.com/blog/
+            - generic [ref=f24e316]: Blog
+          - link [ref=f24e318] [cursor=pointer]:
+            - /url: https://about.instagram.com/about-us/careers
+            - generic [ref=f24e319]: Empleo
+          - link [ref=f24e321] [cursor=pointer]:
+            - /url: https://help.instagram.com/
+            - generic [ref=f24e322]: Ayuda
+          - link [ref=f24e324] [cursor=pointer]:
+            - /url: https://developers.facebook.com/docs/instagram
+            - generic [ref=f24e325]: API
+          - link [ref=f24e327] [cursor=pointer]:
+            - /url: /legal/privacy/
+            - generic [ref=f24e328]: Privacidad
+          - link [ref=f24e330] [cursor=pointer]:
+            - /url: /legal/terms/
+            - generic [ref=f24e331]: Condiciones
+          - link [ref=f24e333] [cursor=pointer]:
+            - /url: /explore/locations/
+            - generic [ref=f24e334]: Ubicaciones
+          - link [ref=f24e336] [cursor=pointer]:
+            - /url: /popular/
+            - generic [ref=f24e337]: Popular
+          - link [ref=f24e339] [cursor=pointer]:
+            - /url: /web/lite/
+            - generic [ref=f24e340]: Instagram Lite
+          - link [ref=f24e342] [cursor=pointer]:
+            - /url: https://www.meta.ai/?utm_source=foa_web_footer
+            - generic [ref=f24e343]: Meta AI
+          - link [ref=f24e345] [cursor=pointer]:
+            - /url: https://muse.ai/
+            - generic [ref=f24e346]: Muse
+          - link [ref=f24e348] [cursor=pointer]:
+            - /url: https://www.threads.com/
+            - generic [ref=f24e349]: Threads
+          - link [ref=f24e351] [cursor=pointer]:
+            - /url: https://www.facebook.com/help/instagram/261704639352628
+            - generic [ref=f24e352]: Importación de contactos y no usuarios
+          - link [ref=f24e354] [cursor=pointer]:
+            - /url: /accounts/meta_verified/?entrypoint=web_footer
+            - generic [ref=f24e355]: Meta Verified
+        - generic [ref=f24e356]:
+          - generic [ref=f24e357] [cursor=pointer]:
+            - generic [ref=f24e358]: Español
+            - combobox [ref=f24e364]
+          - generic [ref=f24e365]: © 2026 Instagram from Meta
+  - dialog [ref=f24e378]:
+    - generic [ref=f24e379]:
+      - button [active] [ref=f24e381] [cursor=pointer]:
+        - img "Cerrar" [ref=f24e383]
+      - generic [ref=f24e387]:
+        - generic [ref=f24e388]:
+          - link [ref=f24e390] [cursor=pointer]:
+            - img "Foto del perfil de diitunlam" [ref=f24e391]
+          - generic [ref=f24e393]:
+            - generic [ref=f24e394]: Mira fotos, videos y más contenido de diitunlam
+            - generic [ref=f24e395]: Regístrate y no te pierdas ninguna publicación de diitunlam.
+            - generic [ref=f24e398]:
+              - text: Al continuar, aceptas las
+              - link "Condiciones de uso" [ref=f24e399] [cursor=pointer]:
+                - /url: https://help.instagram.com/581066165581870/?locale=es_LA
+              - text: y la
+              - link "Política de privacidad" [ref=f24e400] [cursor=pointer]:
+                - /url: https://privacycenter.instagram.com/policy/
+              - text: de Instagram.
+        - generic [ref=f24e401]:
+          - button "Registrarte" [ref=f24e404] [cursor=pointer]
+          - button "Iniciar sesión" [ref=f24e407] [cursor=pointer]

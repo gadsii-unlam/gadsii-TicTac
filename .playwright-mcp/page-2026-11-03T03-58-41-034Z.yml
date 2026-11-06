@@ -1,0 +1,122 @@
+- generic [ref=f22e1]:
+  - generic [ref=f22e4]:
+    - generic [ref=f22e49]:
+      - button "Abrir menú de departamentos" [ref=f22e50] [cursor=pointer]
+      - button "Nodo UNLaM, ir al inicio" [ref=f22e54] [cursor=pointer]:
+        - img "Nodo UNLaM" [ref=f22e55]
+    - generic [ref=f22e71]:
+      - heading "Eventos de Ingeniería e Investigaciones Tecnológicas" [level=1] [ref=f22e72]
+      - button "Solo eventos de Ingeniería en Informática y del departamento en general. Cambiar" [ref=f22e73] [cursor=pointer]:
+        - generic [ref=f22e77]: Solo eventos de Ingeniería en Informática y del departamento en general.
+        - generic [ref=f22e78]: Cambiar
+      - generic [ref=f22e79]:
+        - generic [ref=f22e80]:
+          - button [ref=f22e81] [cursor=pointer]:
+            - generic [ref=f22e82]:
+              - generic [ref=f22e83]: DI
+              - generic [ref=f22e85]:
+                - generic [ref=f22e86]: Ingeniería e Investigaciones Tecnológicas
+                - generic [ref=f22e87]: Publicado hace menos de una hora
+            - generic [ref=f22e88]:
+              - generic [ref=f22e89]: "Capacitación: Tecnologías Aplicadas a la Comunicación Digital"
+              - generic [ref=f22e90]: Mar 3/11 · 18:30 · Virtual (sede San Justo)
+              - generic [ref=f22e91]: "Capacitación abierta a la comunidad, arancelada y en modalidad virtual. Objetivo: formar personas capaces de utilizar, configurar e integrar herramientas digitales, plataformas colaborativas, Inteligencia Artificial y soluciones de automatización para optimizar la comunicación operativa y la gestión de información dentro de organizaciones. 8 clases, martes y jueves de 18:30 a 21:30 h. Inicio: 3 de noviembre de 2026. Finalización: 26 de noviembre de 2026. Requiere matrícula. Docente: Franco Aufiero (Licenciado en Marketing, UADE). Valores informados en UNLaM Actividades al 3/11/2026, con pago mensual: Alumno, Ex-alumno, Empleado y Graduado $160.000; Regular $200.000. Consultas: capacitacionesdiit@unlam.edu.ar."
+            - 'generic "Flyer: Capacitación: Tecnologías Aplicadas a la Comunicación Digital" [ref=f22e93]':
+              - 'img "Flyer: Capacitación: Tecnologías Aplicadas a la Comunicación Digital" [ref=f22e95]'
+            - generic [ref=f22e96]: Ver ficha completa
+          - 'button "DI Ingeniería e Investigaciones Tecnológicas Publicado hace 15 h Charla sobre inteligencia artificial responsable Mié 18/11 · 21:06 · Aula de conferencias Charlas, preguntas y casos prácticos sobre el impacto de la IA en distintas áreas. Consultar siempre la fuente oficial antes de asistir. Flyer: Charla sobre inteligencia artificial responsable Ver ficha completa" [ref=f22e101] [cursor=pointer]':
+            - generic [ref=f22e102]:
+              - generic [ref=f22e103]: DI
+              - generic [ref=f22e105]:
+                - generic [ref=f22e106]: Ingeniería e Investigaciones Tecnológicas
+                - generic [ref=f22e107]: Publicado hace 15 h
+            - generic [ref=f22e108]:
+              - generic [ref=f22e109]: Charla sobre inteligencia artificial responsable
+              - generic [ref=f22e110]: Mié 18/11 · 21:06 · Aula de conferencias
+              - generic [ref=f22e111]: Charlas, preguntas y casos prácticos sobre el impacto de la IA en distintas áreas. Consultar siempre la fuente oficial antes de asistir.
+            - 'generic "Flyer: Charla sobre inteligencia artificial responsable" [ref=f22e113]':
+              - 'img "Flyer: Charla sobre inteligencia artificial responsable" [ref=f22e115]'
+            - generic [ref=f22e116]: Ver ficha completa
+          - button "DI Ingeniería e Investigaciones Tecnológicas Publicado hace 15 h Encuentro de proyectos tecnológicos Vie 20/11 · 21:06 · Hall del DIIT Presentación de proyectos de diferentes carreras del departamento, con intercambio entre estudiantes. Ver ficha completa" [ref=f22e121] [cursor=pointer]:
+            - generic [ref=f22e122]:
+              - generic [ref=f22e123]: DI
+              - generic [ref=f22e125]:
+                - generic [ref=f22e126]: Ingeniería e Investigaciones Tecnológicas
+                - generic [ref=f22e127]: Publicado hace 15 h
+            - generic [ref=f22e128]:
+              - generic [ref=f22e129]: Encuentro de proyectos tecnológicos
+              - generic [ref=f22e130]: Vie 20/11 · 21:06 · Hall del DIIT
+              - generic [ref=f22e131]: Presentación de proyectos de diferentes carreras del departamento, con intercambio entre estudiantes.
+            - generic [ref=f22e138]: Ver ficha completa
+        - generic [ref=f22e143]:
+          - heading "Eventos pasados" [level=1] [ref=f22e145]
+          - generic [ref=f22e146]:
+            - button [ref=f22e147] [cursor=pointer]:
+              - generic [ref=f22e148]:
+                - generic [ref=f22e149]: DI
+                - generic [ref=f22e151]:
+                  - generic [ref=f22e152]: Ingeniería e Investigaciones Tecnológicas
+                  - generic [ref=f22e153]: Publicado hace menos de una hora
+              - generic [ref=f22e154]:
+                - generic [ref=f22e155]: "Capacitación: Eficiencia Energética"
+                - generic [ref=f22e156]: Lun 2/11 · 19:00 · Virtual (sede C.A.B.A.)
+                - generic [ref=f22e157]: "Capacitación abierta a la comunidad, arancelada y en modalidad virtual. Objetivo: brindar a los participantes los conocimientos fundamentales para comprender su consumo de energía y aplicar prácticas de eficiencia que permitan reducir costos, optimizar recursos y mejorar el desempeño energético, principalmente en el ámbito doméstico e introductoriamente en el comercial e industrial. 6 clases, lunes y martes de 19 a 21 h. Inicio: 2 de noviembre de 2026. Finalización: 30 de noviembre de 2026. Docentes: Leandro Magri (Ingeniero Químico, asesor, docente e investigador del DIIT-UNLaM) y Agustín Lohigorry (Licenciado en Análisis de Sistemas, asesor, docente e investigador del DIIT-UNLaM). Valores informados en UNLaM Actividades al 3/11/2026, con pago mensual: Alumno, Ex-alumno, Empleado y Graduado $144.000; Regular $180.000. Consultas: capacitacionesdiit@unlam.edu.ar."
+              - 'generic "Flyer: Capacitación: Eficiencia Energética" [ref=f22e159]':
+                - 'img "Flyer: Capacitación: Eficiencia Energética" [ref=f22e161]'
+              - generic [ref=f22e162]: Ver ficha completa
+            - button "DI Ingeniería e Investigaciones Tecnológicas Publicado hace 15 h Taller introductorio de ciberseguridad Sáb 31/10 · 00:25 · Laboratorio de informática Resolución de ejercicios básicos de seguridad en redes, intercambio de ideas y espacio para consultas. Ver ficha completa" [ref=f22e167] [cursor=pointer]:
+              - generic [ref=f22e168]:
+                - generic [ref=f22e169]: DI
+                - generic [ref=f22e171]:
+                  - generic [ref=f22e172]: Ingeniería e Investigaciones Tecnológicas
+                  - generic [ref=f22e173]: Publicado hace 15 h
+              - generic [ref=f22e174]:
+                - generic [ref=f22e175]: Taller introductorio de ciberseguridad
+                - generic [ref=f22e176]: Sáb 31/10 · 00:25 · Laboratorio de informática
+                - generic [ref=f22e177]: Resolución de ejercicios básicos de seguridad en redes, intercambio de ideas y espacio para consultas.
+              - generic [ref=f22e184]: Ver ficha completa
+            - button [ref=f22e189] [cursor=pointer]:
+              - generic [ref=f22e190]:
+                - generic [ref=f22e191]: DI
+                - generic [ref=f22e193]:
+                  - generic [ref=f22e194]: Ingeniería e Investigaciones Tecnológicas
+                  - generic [ref=f22e195]: Publicado hace menos de una hora
+              - generic [ref=f22e196]:
+                - generic [ref=f22e197]: ExpoProyecto 2026 (22.ª edición)
+                - generic [ref=f22e198]: Mié 28/10 · 18:00 · Salón de las Américas, UNLaM
+                - generic [ref=f22e199]: "Se presentan los proyectos de fin de carrera de alumnos de ingenierías, tecnicaturas y escuelas secundarias de la zona, con competencia de programación y charlas sobre IA, robótica, diseño de satélites, becarios tecnológicos, computación cuántica y más. Miércoles 28, jueves 29 y viernes 30 de octubre de 2026, de 18 a 21 h. Cronograma de charlas Miércoles 28 - 18:00 Cómo se diseña un satélite desde cero. BEAM-TTM y los desafíos de la ingeniería (Aula 303). - 18:30 ¿Puede la IA crear un robot? BEAM y el futuro de la robótica (Aula 303). - 19:00 Computación cuántica, con la Ing. Giselle González, docente del DIIT (Auditorio CeDIT). Jueves 29 - 18:00 Becas Tecnológicas: beneficios para tu presente y tu futuro, con becarios tecnológicos de empresas del CeDIT (Auditorio CeDIT). - 18:30 Ingeniería para la inclusión: diseño integral y sustentable de espacios productivos en San Francisco de Asís, con Vivian Jeandet (Aula 301). - 19:30 Motorsport UNLaM: situación actual y desafíos futuros en el desarrollo de un vehículo eléctrico de competición, con los Ings. George Faks y Leonardo Medina (Aula 303). Viernes 30 - 14 a 18 h Teclatón en los Laboratorios 3 y 4 (Centro de Estudiantes). - 18:00 Octubre360. Hablemos. Midamos. Actuemos, con la Ing. Liliana Mira (Auditorio CeDIT). - 19:00 Regionalización de precipitaciones máximas diarias en la zona oeste del Gran Buenos Aires, con el Ing. Pablo Espiñeira (Aula 245). - 20:00 Cierre de ExpoProyecto 2026 y premiación de proyectos ganadores de ingenierías, tecnicaturas y escuelas (Salón de las Américas)."
+              - 'generic "Flyer: ExpoProyecto 2026 (22.ª edición)" [ref=f22e201]':
+                - 'img "Flyer: ExpoProyecto 2026 (22.ª edición)" [ref=f22e203]'
+              - generic [ref=f22e204]: Ver ficha completa
+            - 'button "DI Ingeniería e Investigaciones Tecnológicas Publicado hace menos de una hora Charla abierta: ¿Cuánto vale tu idea? Mié 21/10 · 19:00 · Auditorio José Martí - UNLaM Muchas personas tienen una idea, pero no saben si alguien pagaría por ella. La charla muestra un método simple para averiguarlo, con herramientas de IA gratuitas y ejemplos concretos. Miércoles 21 de octubre de 2026, 19 h. Con inscripción previa. Flyer: Charla abierta: ¿Cuánto vale tu idea? Ver ficha completa" [ref=f22e209] [cursor=pointer]':
+              - generic [ref=f22e210]:
+                - generic [ref=f22e211]: DI
+                - generic [ref=f22e213]:
+                  - generic [ref=f22e214]: Ingeniería e Investigaciones Tecnológicas
+                  - generic [ref=f22e215]: Publicado hace menos de una hora
+              - generic [ref=f22e216]:
+                - generic [ref=f22e217]: "Charla abierta: ¿Cuánto vale tu idea?"
+                - generic [ref=f22e218]: Mié 21/10 · 19:00 · Auditorio José Martí - UNLaM
+                - generic [ref=f22e219]: Muchas personas tienen una idea, pero no saben si alguien pagaría por ella. La charla muestra un método simple para averiguarlo, con herramientas de IA gratuitas y ejemplos concretos. Miércoles 21 de octubre de 2026, 19 h. Con inscripción previa.
+              - 'generic "Flyer: Charla abierta: ¿Cuánto vale tu idea?" [ref=f22e221]':
+                - 'img "Flyer: Charla abierta: ¿Cuánto vale tu idea?" [ref=f22e223]'
+              - generic [ref=f22e224]: Ver ficha completa
+      - generic [ref=f22e229]:
+        - generic [ref=f22e230]: No te pierdas las novedades
+        - generic [ref=f22e231]: Activá las notificaciones para recibir los avisos.
+        - button "Activar notificaciones" [ref=f22e232] [cursor=pointer]
+  - dialog [ref=f22e236]:
+    - generic [ref=f22e241]:
+      - heading "¡Último paso!" [level=1] [ref=f22e246]
+      - generic [ref=f22e247]:
+        - text: Te avisamos de los eventos nuevos de
+        - generic [ref=f22e248]: Ingeniería e Investigaciones Tecnológicas · Ingeniería en Informática
+        - text: .
+      - generic [ref=f22e249]: ¿Cada cuánto querés recibir avisos?
+      - radiogroup [ref=f22e257]:
+        - radio "Cada evento nuevo" [active] [ref=f22e258] [cursor=pointer]
+        - radio "Resumen diario" [ref=f22e260] [cursor=pointer]
+        - radio "Resumen semanal" [ref=f22e262] [cursor=pointer]
+      - button "Activar notificaciones" [ref=f22e264] [cursor=pointer]
+      - button "Ahora no" [ref=f22e271] [cursor=pointer]
+      - generic [ref=f22e274]: Podés cambiarlo cuando quieras en Configuración.

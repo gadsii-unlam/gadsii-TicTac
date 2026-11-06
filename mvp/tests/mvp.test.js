@@ -5,9 +5,10 @@ import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { createStore } from '../src/server/store.js';
-import { matches, dueBucket, hoursBefore } from '../src/server/catalog.js';
+import { matches, dueBucket, hoursBefore, DEPARTMENTS, validProfile } from '../src/server/catalog.js';
 import { encryptPayload, loadVapid, sendPush } from '../src/server/push.js';
 import { makeScheduler } from '../src/server/scheduler.js';
+import { seedEvents } from '../src/server/seed-events.js';
 
 function tempStore() {
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-test-'));
@@ -24,7 +25,7 @@ test('perfil, filtro por carrera y cambios de preferencia',()=>{
   const original=store.eventsFor(device);
   assert.equal(original.length,3);
   assert.ok(original.every(e=>e.department==='diit'));
-  store.updateProfile(device,{...profile,department:'humanidades',career:'Comunicación Social'});
+  store.updateProfile(device,{...profile,department:'humanidades',career:'Licenciatura en Comunicación Social'});
   assert.equal(store.eventsFor(device).length,1);
   assert.ok(store.eventsFor(device).every(e=>e.department==='humanidades'));
   assert.throws(()=>store.updateProfile(device,{...profile,career:'Carrera inventada'}),/inválida/);
@@ -36,7 +37,7 @@ test('ingesta manual validada publica, segmenta y guarda ficha completa',()=>{
   store.updateProfile(device,profile);
   store.attachSubscription(device,subscription);
   const other='dispositivo_test_0002';
-  store.updateProfile(other,{...profile,department:'economicas',career:'Administración'});
+  store.updateProfile(other,{...profile,department:'economicas',career:'Licenciatura en Administración'});
   store.attachSubscription(other,subscription);
   const data={title:'Nueva charla de redes',department:'diit',career:'Ingeniería en Informática',
     startsAt:new Date(Date.now()+10*86400000).toISOString(),place:'Aula 12',description:'Aprendé a configurar redes y proyectos',
@@ -191,4 +192,170 @@ test('la base crea la carpeta data ausente y la recrea si desaparece',()=>{
     assert.equal(fs.existsSync(file),true);
     assert.equal(JSON.parse(fs.readFileSync(file,'utf8')).version,1);
   } finally { fs.rmSync(tmp,{recursive:true,force:true}); }
+});
+
+const futureEvent=(extra={})=>({title:'Charla abierta',department:'humanidades',career:'',
+  startsAt:new Date(Date.now()+8*86400000).toISOString(),place:'Aula 3',description:'Detalles de la charla',
+  sourceUrl:'https://www.unlam.edu.ar/',sourcePublishedAt:new Date().toISOString(),reviewed:true,...extra});
+
+test('explorar otros departamentos: lista por departamento y recordatorio sobre cualquier evento próximo',()=>{
+  const {store}=tempStore();store.updateProfile(device,profile);
+  const foreign=store.eventsByDepartment('humanidades');
+  assert.equal(foreign.length,1);
+  assert.ok(!store.eventsFor(device).some(e=>e.id===foreign[0].id));
+  // Del propio departamento trae todas las carreras, no solo la del perfil.
+  assert.equal(store.eventsByDepartment('diit').length,3);
+  assert.deepEqual(store.eventsByDepartment('inexistente'),[]);
+  assert.equal(store.findEvent(foreign[0].id).id,foreign[0].id);
+  assert.equal(store.findEvent('no-existe'),null);
+  store.markReminder(device,foreign[0].id,true);
+  assert.deepEqual(store.reminderEventsFor(device).map(e=>e.id),[foreign[0].id]);
+  assert.equal(store.trackOpen(device,foreign[0].id,'feed'),true);
+  assert.throws(()=>store.markReminder(device,'no-existe',true),/no disponible/);
+  store.markReminder(device,foreign[0].id,false);
+  assert.deepEqual(store.reminderEventsFor(device),[]);
+});
+
+test('el scheduler envía el recordatorio de un evento de otro departamento',async()=>{
+  const {store}=tempStore();store.updateProfile(device,profile);store.attachSubscription(device,subscription);
+  const foreign=store.addEvent(futureEvent({startsAt:new Date(Date.now()+10*3600000).toISOString()}));
+  store.markReminder(device,foreign.id,true);
+  const sent=[];const scheduler=makeScheduler(store,{},async(sub,payload)=>{sent.push(payload);return {ok:true,status:201};});
+  await scheduler.tick();
+  assert.equal(sent.length,1);
+  assert.equal(sent[0].title,'Tu evento se acerca');
+  assert.equal(sent[0].eventId,foreign.id);
+});
+
+test('imágenes del evento: URL HTTPS o archivo de /media, con tope y valor por defecto',()=>{
+  const {store,dir}=tempStore();
+  assert.deepEqual(store.addEvent(futureEvent()).images,[]);
+  const ok=store.addEvent(futureEvent({images:['/media/flyer.jpg','https://cdn.example.com/a.png']}));
+  assert.deepEqual(ok.images,['/media/flyer.jpg','https://cdn.example.com/a.png']);
+  for (const images of [['http://inseguro.example.com/a.jpg'],['/media/../secreto.jpg'],['/media/a.gif'],'flyer.jpg',
+    Array(6).fill('/media/a.jpg'),[42]]) {
+    assert.throws(()=>store.addEvent(futureEvent({images})),/Imágenes inválidas/);
+  }
+  const ia=store.data.events.find(e=>e.title==='Charla sobre inteligencia artificial responsable');
+  assert.deepEqual(ia.images,['/media/flyer-ia-principal.jpg','/media/flyer-ia-charla.jpg']);
+  assert.ok(fs.existsSync(path.join(path.resolve('src/server/media'),'flyer-ia-principal.jpg')));
+  // Una base creada antes de las imágenes se completa al abrirla.
+  const old=JSON.parse(fs.readFileSync(path.join(dir,'db.json'),'utf8'));
+  for (const e of old.events) delete e.images;
+  fs.writeFileSync(path.join(dir,'db.json'),JSON.stringify(old));
+  const reopened=createStore({file:path.join(dir,'db.json')});
+  assert.ok(reopened.data.events.every(e=>Array.isArray(e.images)));
+  assert.equal(reopened.data.events.find(e=>e.title===ia.title).images.length,2);
+});
+
+test('el catálogo tiene los 6 departamentos y 24 carreras oficiales, sin repetidos',()=>{
+  assert.deepEqual(Object.keys(DEPARTMENTS),['diit','salud','humanidades','economicas','derecho','arquitectura']);
+  assert.deepEqual(Object.values(DEPARTMENTS).map(d=>d.careers.length),[6,5,6,4,2,1]);
+  const careers=Object.values(DEPARTMENTS).flatMap(d=>d.careers);
+  assert.equal(careers.length,24);
+  assert.equal(new Set(careers).size,24);
+  assert.ok(Object.values(DEPARTMENTS).every(d=>d.label&&d.name));
+  assert.equal(DEPARTMENTS.arquitectura.name,'Escuela de Arquitectura, Urbanismo y Diseño');
+  assert.equal(DEPARTMENTS.salud.name,'Departamento de Ciencias de la Salud');
+  for (const [department,{careers:list}] of Object.entries(DEPARTMENTS)) {
+    for (const career of list) assert.equal(validProfile({...profile,department,career}),true,career);
+  }
+  // Una carrera de otro departamento no es válida.
+  assert.equal(validProfile({...profile,department:'salud',career:'Arquitectura'}),false);
+});
+
+test('perfiles y eventos con el nombre anterior de una carrera se actualizan al abrir la base',()=>{
+  const {store,dir}=tempStore();
+  store.updateProfile(device,{...profile,department:'humanidades',career:'Licenciatura en Comunicación Social'});
+  const old=JSON.parse(fs.readFileSync(path.join(dir,'db.json'),'utf8'));
+  old.profiles[device].career='Comunicación Social';
+  for (const e of old.events) if (e.career==='Licenciatura en Comunicación Social') e.career='Comunicación Social';
+  fs.writeFileSync(path.join(dir,'db.json'),JSON.stringify(old));
+  const reopened=createStore({file:path.join(dir,'db.json')});
+  assert.equal(reopened.profileFor(device).career,'Licenciatura en Comunicación Social');
+  assert.equal(reopened.eventsFor(device).length,1);
+  assert.ok(!reopened.data.events.some(e=>e.career==='Comunicación Social'));
+});
+
+test('un evento con fecha pasada se publica como pasado y no encola avisos',()=>{
+  const {store}=tempStore();store.updateProfile(device,profile);store.attachSubscription(device,subscription);
+  const past=store.addEvent(futureEvent({department:'diit',startsAt:new Date(Date.now()-3*86400000).toISOString()}));
+  assert.equal(store.findEvent(past.id).id,past.id);
+  assert.equal(store.eventsByDepartment('diit').at(-1).id,past.id);
+  assert.equal(store.data.queued.filter(q=>q.eventId===past.id).length,0);
+  const upcoming=store.addEvent(futureEvent({department:'diit'}));
+  assert.equal(store.data.queued.filter(q=>q.eventId===upcoming.id).length,1);
+});
+
+test('las listas traen primero los próximos (más cercano primero) y después los pasados (más reciente primero)',()=>{
+  const {store}=tempStore();store.updateProfile(device,profile);
+  const day=86400000;
+  const [a,b,c]=store.eventsFor(device);
+  assert.ok(Date.parse(a.startsAt)<Date.parse(b.startsAt)&&Date.parse(b.startsAt)<Date.parse(c.startsAt));
+  // a empezó hace 10 días y b hace 2: pasan a "pasados"; c sigue siendo próximo.
+  store.data.events.find(e=>e.id===a.id).startsAt=new Date(Date.now()-10*day).toISOString();
+  store.data.events.find(e=>e.id===b.id).startsAt=new Date(Date.now()-2*day).toISOString();
+  assert.deepEqual(store.eventsFor(device).map(e=>e.id),[c.id,b.id,a.id]);
+  assert.deepEqual(store.eventsByDepartment('diit').map(e=>e.id),[c.id,b.id,a.id]);
+  // Un próximo más cercano que c se ubica antes que c.
+  const sooner=store.addEvent(futureEvent({department:'diit',startsAt:new Date(Date.now()+day).toISOString()}));
+  assert.deepEqual(store.eventsFor(device).map(e=>e.id),[sooner.id,c.id,b.id,a.id]);
+  // Un evento pasado se puede abrir, pero ya no admite recordatorios nuevos.
+  assert.equal(store.findEvent(a.id).id,a.id);
+  assert.equal(store.trackOpen(device,a.id,'feed'),true);
+  assert.throws(()=>store.markReminder(device,a.id,true),/no disponible/);
+  assert.equal(store.markReminder(device,a.id,false),false);
+  assert.deepEqual(store.reminderEventsFor(device),[]);
+});
+
+test('los eventos de muestra no dicen "demo", "ficticio" ni "ejemplo", y las bases viejas se reescriben',()=>{
+  const marcas=/ficticio|ejemplo|demostraci|simulad|\bdemo\b/i;
+  const {store,dir}=tempStore();
+  for (const e of store.data.events) {
+    assert.ok(!marcas.test(`${e.title} ${e.place} ${e.description}`),e.title);
+  }
+  // Una base con la redacción anterior se actualiza al abrirla.
+  const old=JSON.parse(fs.readFileSync(path.join(dir,'db.json'),'utf8'));
+  const taller=old.events.find(e=>e.title==='Taller introductorio de ciberseguridad');
+  taller.place='Laboratorio de informática (ejemplo)';
+  taller.description='Actividad de demostración: ... No corresponde a un evento oficial confirmado.';
+  fs.writeFileSync(path.join(dir,'db.json'),JSON.stringify(old));
+  const reopened=createStore({file:path.join(dir,'db.json')});
+  const limpio=reopened.data.events.find(e=>e.title===taller.title);
+  assert.equal(limpio.place,'Laboratorio de informática');
+  assert.ok(!marcas.test(limpio.description));
+  assert.equal(JSON.parse(fs.readFileSync(path.join(dir,'db.json'),'utf8')).events.find(e=>e.title===taller.title).place,'Laboratorio de informática');
+});
+
+test('un evento puede declarar que no requiere inscripción, sin enlace',()=>{
+  const {store}=tempStore();
+  assert.equal(store.addEvent(futureEvent()).noRegistration,false);
+  const libre=store.addEvent(futureEvent({noRegistration:true,registrationUrl:null}));
+  assert.equal(libre.noRegistration,true);
+  assert.equal(libre.registrationUrl,null);
+  assert.equal(store.findEvent(libre.id).noRegistration,true);
+  assert.throws(()=>store.addEvent(futureEvent({noRegistration:true,registrationUrl:'https://inscripcion.example.com'})),/no puede tener enlace/);
+  assert.throws(()=>store.addEvent(futureEvent({noRegistration:'si'})),/true o false/);
+  const conEnlace=store.addEvent(futureEvent({registrationUrl:'https://inscripcion.example.com'}));
+  assert.equal(conEnlace.noRegistration,false);
+});
+
+test('eventos de src/server/events: se publican una sola vez y sus imágenes existen',()=>{
+  const {store}=tempStore();
+  const dir=path.resolve('src/server/events');
+  const files=fs.readdirSync(dir).filter(n=>n.endsWith('.json'));
+  assert.ok(files.length>0);
+  assert.equal(seedEvents(store),files.length);
+  assert.equal(seedEvents(store),0);
+  const real=store.data.events.filter(e=>!e.demo);
+  assert.equal(real.length,files.length);
+  for (const e of real) for (const image of e.images.filter(i=>i.startsWith('/media/'))) {
+    assert.ok(fs.existsSync(path.resolve('src/server',image.slice(1))),`falta ${image}`);
+  }
+  const errors=[];
+  assert.equal(seedEvents(store,{dir:fs.mkdtempSync(path.join(os.tmpdir(),'nodo-seed-')),log:{error:m=>errors.push(m)}}),0);
+  const broken=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-seed-'));
+  fs.writeFileSync(path.join(broken,'roto.json'),'{"title":"x"}');
+  assert.equal(seedEvents(store,{dir:broken,log:{error:m=>errors.push(m)}}),0);
+  assert.match(errors[0],/roto\.json omitido/);
 });

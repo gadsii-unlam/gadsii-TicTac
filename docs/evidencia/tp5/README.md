@@ -1,6 +1,6 @@
-# TP5 — Registro de sesiones reales (PENDIENTE)
+# TP5 — Registro de sesiones reales
 
-Esta carpeta no contiene pruebas con personas. No deben generarse resultados ficticios.
+No deben generarse resultados ficticios.
 
 Para cada usuario real U1, U2 y U3 (sin nombre ni correo), documentar:
 

@@ -99,16 +99,20 @@ npm run add:event -- ruta/al/evento.json
 
 La carga manual debe realizarse antes de 48 h de la publicación oficial y **ser revisada por otra persona antes de la ejecución del comando**, ya que publicar crea la cola de avisos. El comando obtiene la clave privada de administración desde `src/server/data/admin.key`, sin exponerla en el navegador. Alternativamente se puede utilizar el endpoint interno autenticado `POST /api/admin/events`, con `Authorization: Bearer <clave>`. No publicar jamás la clave ni el directorio `server/data/`.
 
+**Imágenes de los eventos.** El JSON del evento acepta `images`: hasta 5 flyers, cada uno una URL HTTPS o un archivo servido por el propio backend como `/media/<nombre>.jpg|png|webp`. Los archivos se copian a `src/server/media/` (incluidos en la imagen Docker) o a `<carpeta de datos>/media/` (volumen persistente). La primera imagen ilustra la tarjeta de Inicio y todas forman el carrusel de la ficha; sin imágenes se muestra un bloque de color. Las bases creadas antes de este campo se completan solas al iniciar el servidor.
+
+**Otros departamentos.** `GET /api/events?deviceId=…&department=<clave>` devuelve los eventos de cualquier carrera de ese departamento, y `GET /api/events/<id>` la ficha de cualquier evento. Las listas vienen ordenadas: primero los próximos (del más cercano al más lejano) y después los pasados (del más reciente al más antiguo). Los recordatorios solo se pueden activar en eventos que todavía no empezaron. Se puede marcar un recordatorio en esos eventos y el aviso se envía igual; los avisos de eventos nuevos siguen limitados al departamento y la carrera del perfil.
+
 En esta distribución, los archivos locales del servidor están en `mvp/src/server/data/`; no compartir ni subir esa carpeta.
 
 **No usar ejemplos ficticios como evidencia** de eficacia real, anticipación de siete días o asistencia a eventos oficiales. Los ejemplos no representan actividades organizadas por la UNLaM.
 
 ## Documentación, alcance y pruebas
 
-- [TP5 - Parte 1: métricas y umbrales PREVIOS a la construcción](docs/TP5-parte1.md) (borrador sujeto a aprobación del equipo, consigna §11).
-- [TP5 - Parte 2: arquitectura, alcance y correcciones del TP4](docs/TP5-parte2.md).
+- [TP5 - Parte 1: métricas y umbrales PREVIOS a la construcción](docs/tp5/TP5-parte1.md)
+- [TP5 - Parte 2: arquitectura, alcance y correcciones del TP4](docs/tp5/TP5-parte2.md).
 - [Registro del trabajo con IA](docs/prompts.md).
-- [Brief v3 (TP3)](docs/brief.md) y [decisiones de scope y flujo](docs/TP3.md).
+- [Brief v4 (TP5)](docs/brief.md) y [decisiones de scope y flujo](docs/TP3.md).
 - [Procedimiento de prueba manual y soporte de evidencia](docs/evidencia/tp5/README.md).
 
 **Arquitectura actual:** un solo proyecto en `mvp/`, con frontend React Native/Expo (`App.js`, `app/`, `assets/`) y backend Node.js (`src/server/`), compartiendo `package.json` y `package-lock.json`. La PWA anterior fue retirada; la vista web local se renderiza desde la misma app React Native mediante React Native Web, sin mantener un frontend aparte. Para probar notificaciones nativas hay que compilar e instalar la app en un dispositivo y configurar Expo Push. No se ha publicado en una tienda ni se ha desplegado un backend público.
