@@ -13,7 +13,7 @@ Construimos el scope definido en el TP3, sin agregar funcionalidades fuera de é
 | Filtro por departamento y carrera | Configuración inicial sin registro, con el filtro aplicado en el backend. | El año no se pide: hoy el filtro es solo por departamento y carrera. |
 | Detección y carga del evento | Un cargador manual (`add-event`) que valida los campos y exige fuente HTTPS y segunda revisión (`"reviewed": true`). | Se simula. El equipo monitorea los canales oficiales y carga el JSON a mano, con el compromiso de hacerlo dentro de las 48 horas. |
 | Ficha completa | Fecha, lugar, descripción, carrusel de imágenes y botón "Inscribirme". | La información la tipea el equipo a partir de la publicación original. |
-| Inscripción | Un enlace a la página externa (UNLaM Actividades u otra). | El módulo propio no se construye. |
+| Inscripción | El botón "Inscribirme" con un enlace a la página externa (UNLaM Actividades u otra), donde se hace la inscripción. | Nada: el módulo propio de inscripción queda fuera del alcance del MVP. |
 
 #### Correcciones del TP4B
 
