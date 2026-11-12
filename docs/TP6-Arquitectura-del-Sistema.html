@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP6 — Arquitectura del Sistema · Nodo UNLaM</title>
+<style>
+  /* Estilo tipo Word: A4, márgenes de 2 cm, Calibri/Carlito 11 pt, títulos azules */
+  :root {
+    --head: #2f5496;        /* azul de títulos de Word */
+    --head2: #1f3864;
+    --ink: #000;
+    --muted: #595959;
+    --line: #8a8a8a;
+    --th: #d9e2f3;
+    --note-bg: #deeaf6;
+    --note-bar: #2f5496;
+    --warn-bg: #fff2cc;
+    --warn-bar: #bf8f00;
+    --code-bg: #f2f2f2;
+    --navy: #1f3864;
+    --green: #128268;
+  }
+  * { box-sizing: border-box; }
+  html { background: #e6e6e6; }
+  body {
+    width: 210mm; min-height: 297mm; margin: 12mm auto; padding: 20mm 20mm 22mm;
+    background: #fff; box-shadow: 0 1px 6px rgba(0,0,0,.35);
+    font-family: Calibri, Carlito, "Segoe UI", Arial, sans-serif;
+    font-size: 11pt; line-height: 1.35; color: var(--ink);
+    text-align: justify; hyphens: auto;
+  }
+  @media screen and (max-width: 230mm) {
+    body { width: auto; margin: 0; padding: 16px; box-shadow: none; }
+  }
+
+  /* ---------- Encabezado (igual al del TP5) ---------- */
+  .eyebrow { font-size: 10pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #404040; margin: 0 0 8pt; text-align: left; }
+  h1 { font-size: 24pt; line-height: 1.15; font-weight: 400; color: var(--head2); margin: 0 0 14pt; text-align: left; }
+  .meta { display: grid; grid-template-columns: 34mm 1fr; row-gap: 4pt; margin: 0 0 4pt; font-size: 10.5pt; text-align: left; }
+  .meta dt { font-weight: 700; margin: 0; }
+  .meta dd { margin: 0; }
+  a { color: #0563c1; }
+
+  /* ---------- Texto ---------- */
+  hr { border: 0; border-top: 1px solid var(--line); margin: 12pt 0; }
+  h2 { font-size: 15pt; line-height: 1.2; font-weight: 400; color: var(--head); margin: 18pt 0 6pt; text-align: left; }
+  h3 { font-size: 12.5pt; line-height: 1.2; font-weight: 400; color: var(--head); margin: 12pt 0 4pt; text-align: left; }
+  section > h2:first-child { margin-top: 6pt; }
+  p { margin: 0 0 7pt; }
+  ul, ol { margin: 0 0 7pt; padding-left: 18pt; }
+  li { margin-bottom: 2pt; }
+  code { font-family: Consolas, "Cascadia Mono", "Courier New", monospace; font-size: .9em; background: var(--code-bg); padding: 0 2px; }
+  .small { font-size: 9.5pt; color: var(--muted); }
+
+  .note, .falta {
+    margin: 8pt 0; padding: 6pt 10pt; border: 1px solid #b4c7e7; border-left: 3pt solid var(--note-bar);
+    background: var(--note-bg); font-size: 10.5pt;
+  }
+  .note > :last-child, .falta > :last-child { margin-bottom: 0; }
+  .falta { border-color: #e6cf85; border-left-color: var(--warn-bar); background: var(--warn-bg); }
+  .falta .tag {
+    display: inline-block; font-size: 9pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: #7f6000; margin-bottom: 2pt;
+  }
+
+  /* ---------- Tablas (cuadrícula de Word) ---------- */
+  table { width: 100%; border-collapse: collapse; margin: 6pt 0 10pt; font-size: 9.5pt; line-height: 1.3; text-align: left; }
+  th, td { border: 1px solid #7f7f7f; padding: 3pt 5pt; text-align: left; vertical-align: top; }
+  th { background: var(--th); font-weight: 700; }
+  td p { margin: 0 0 4pt; }
+  td p:last-child { margin: 0; }
+  tr { break-inside: avoid; }
+  thead { display: table-header-group; }
+
+  /* ---------- Diagramas ---------- */
+  figure { margin: 8pt 0 4pt; }
+  figure svg { width: 100%; height: auto; display: block; border: 1px solid #bfbfbf; background: #fff; }
+  figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 4pt; font-style: italic; text-align: left; }
+  .steps { list-style: none; padding: 0; margin: 6pt 0 8pt; font-size: 10pt; text-align: left; }
+  .steps li { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 3pt; }
+  .badge {
+    flex: none; width: 15pt; height: 15pt; border-radius: 50%; background: var(--navy); color: #fff;
+    font-size: 8.5pt; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 1pt;
+  }
+
+  /* SVG */
+  svg text { font-family: Calibri, Carlito, "Segoe UI", Arial, sans-serif; }
+  .tt { font-size: 14px; font-weight: 700; fill: #14213d; }
+  .ts { font-size: 12.5px; fill: #262626; }
+  .tsi { font-size: 12px; fill: #404040; font-style: italic; }
+  .gl { font-size: 12px; font-weight: 700; letter-spacing: .07em; fill: var(--navy); }
+  .bx { stroke-width: 1.6; }
+  .ok { fill: #dff2e8; stroke: #128268; }
+  .part { fill: #f4fbf7; stroke: #128268; stroke-dasharray: 5 4; }
+  .sim { fill: #fff3d1; stroke: #b7791f; stroke-dasharray: 5 4; }
+  .ext { fill: #eef1f5; stroke: #7b8798; }
+  .none { fill: #fff; stroke: #8a96a8; stroke-dasharray: 5 4; }
+  .grp { fill: none; stroke-width: 1.6; }
+  .grp-a { stroke: #128268; fill: #fafdfb; }
+  .grp-r { stroke: #7b8798; stroke-dasharray: 2 4; }
+  .grp-x { stroke: #7b8798; stroke-dasharray: 6 4; fill: #fafbfc; }
+  .grp-s { stroke: #0d3b6e; fill: #fbfcfe; }
+  .ln { fill: none; stroke-width: 2; }
+  .ln-g { stroke: #128268; marker-end: url(#aG); }
+  .ln-gn { stroke: #128268; }
+  .ln-gd { stroke: #128268; stroke-dasharray: 6 4; marker-end: url(#aG); }
+  .ln-a { stroke: #b7791f; stroke-dasharray: 6 4; marker-end: url(#aA); }
+  .ln-k { stroke: #4b5563; marker-end: url(#aK); }
+  .ln-kk { stroke: #4b5563; marker-end: url(#aK); marker-start: url(#aKs); }
+  .bd { fill: #0d3b6e; }
+  .chip { fill: #1f3864; stroke: #fff; stroke-width: 1.5; }
+  .chip-t { font-size: 11.5px; font-weight: 700; fill: #fff; text-anchor: middle; }
+  .ic { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .ic-ok { color: #128268; } .ic-part { color: #128268; } .ic-sim { color: #b7791f; } .ic-ext { color: #4b5563; } .ic-none { color: #6b7280; }
+  .bt { font-size: 11px; font-weight: 700; fill: #fff; text-anchor: middle; }
+
+  .noprint { font-size: 9.5pt; color: var(--muted); }
+
+  /* ---------- Impresión / PDF ---------- */
+  @page { size: A4; margin: 20mm 20mm 22mm;
+    @bottom-center { content: "TP6 — Arquitectura del Sistema · Nodo UNLaM · Página " counter(page); font: 9pt Calibri, Carlito, Arial, sans-serif; color: #595959; }
+  }
+  @page diagrama { size: A4 landscape; margin: 14mm 14mm 16mm; }
+  @media print {
+    html { background: #fff; }
+    body { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; }
+    .noprint { display: none; }
+    .fig-page { page: diagrama; break-before: page; break-after: page; }
+    .fig-page h2 { margin-top: 0; }
+    figure svg { border: 0; }
+    .fig-page figure svg { max-height: 134mm; }
+    h2, h3 { break-after: avoid; }
+    .note, .falta { break-inside: avoid; }
+    a { color: #0563c1; text-decoration: none; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/></symbol>
+    <symbol id="i-desktop" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></symbol>
+    <symbol id="i-app" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 7h1.5v1.5H10zM12.7 7h1.5v1.5h-1.5zM10 10.5h1.5V12H10zM12.7 10.5h1.5V12h-1.5z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.5 3-5 6-5s5.4 1.5 6 5"/><circle cx="17" cy="9" r="2.6"/><path d="M16.5 14.2c2.8-.2 4.7 1.3 5.5 4.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.8-4 3.7-6 7.5-6s6.7 2 7.5 6"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-4.5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3M12 15h5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+    <symbol id="i-funnel" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0112 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v13c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-13M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 01-.5-9A6 6 0 0118 10a4 4 0 01-.5 8z"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></symbol>
+    <symbol id="i-mega" viewBox="0 0 24 24"><path d="M3 10v4h3l8 4V6L6 10z"/><path d="M17.5 9a4 4 0 010 6"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"/></symbol>
+    <symbol id="i-dash" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11"/></symbol>
+    <symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.5-2 2-3 3-3s2.5 1 3 3M14 10h4M14 14h4"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 13l2 2 4-4"/></symbol>
+    <symbol id="i-queue" viewBox="0 0 24 24"><path d="M4 6h12M4 12h8M4 18h8"/><circle cx="18" cy="16" r="4"/><path d="M18 14.2v2l1.2.8"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16"/><path d="M8 16v-4M12 16V8M16 16v-6"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6a1 1 0 011-1h5l2 2h9a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+</defs></svg>
+
+<!-- ================= ENCABEZADO ================= -->
+<header>
+  <p class="eyebrow">Gestión Aplicada al Desarrollo de Software II</p>
+  <h1>TP6 — Arquitectura del Sistema</h1>
+  <dl class="meta">
+    <dt>Integrantes</dt><dd>Agustín Zabalgoitia, Florencia Berenice Licarzi, Lucas Nicolás Romero, Lucila Quiroga Piegari, Neri Martin Palacios.</dd>
+    <dt>Producto</dt><dd>Nodo UNLaM — La plataforma centralizada de eventos, comunicaciones y alertas académicas</dd>
+    <dt>Fecha de entrega</dt><dd>10 de noviembre de 2026</dd>
+    <dt>Repositorio</dt><dd><a href="https://github.com/gadsii-unlam/gadsii-TicTac">github.com/gadsii-unlam/gadsii-TicTac</a></dd>
+    <dt>MVP en línea</dt><dd><a href="https://nodounlam.zabalgoitia.ar/">https://nodounlam.zabalgoitia.ar/</a></dd>
+  </dl>
+</header>
+
+<hr>
+
+<!-- ================= 1 ================= -->
+<section class="fig-page">
+<h2>1. Diagrama de la arquitectura real del MVP</h2>
+<p>La arquitectura <strong>tal como está hoy</strong>: un solo servidor con tres piezas (proxy, API y archivo de datos), una app que corre en el dispositivo del alumno y servicios de terceros para entregar los avisos.</p>
+
+<figure>
+<svg viewBox="0 0 1000 610" role="img" aria-labelledby="d1t d1d">
+  <title id="d1t">Arquitectura real del MVP de Nodo UNLaM</title>
+  <desc id="d1d">El alumno se conecta desde un celular, una PC o una app nativa a un servidor con Caddy, nginx, una API Node, un motor de avisos y un archivo db.json. El equipo carga los eventos por consola. Los avisos salen por servicios de push de terceros hasta una notificación en el dispositivo. La inscripción es un botón con un link a una página externa.</desc>
+  <defs>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#128268"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#b7791f"/></marker>
+    <marker id="aK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4b5563"/></marker>
+    <marker id="aKs" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10 0L0 5L10 10z" fill="#4b5563"/></marker>
+  </defs>
+
+  <!-- ALUMNO -->
+  <rect class="grp grp-a" x="20" y="40" width="230" height="310" rx="12"/>
+  <use href="#i-users" class="ic ic-ok" x="32" y="44" width="22" height="22"/>
+  <text class="gl" x="60" y="61">ALUMNO</text>
+  <rect class="bx ok" x="30" y="75" width="210" height="50" rx="8"/>
+  <use href="#i-phone" class="ic ic-ok" x="40" y="87" width="26" height="26"/>
+  <text class="tt" x="76" y="97">Celular</text>
+  <text class="ts" x="76" y="114">web · usado en el TP5</text>
+  <rect class="bx ok" x="30" y="135" width="210" height="50" rx="8"/>
+  <use href="#i-desktop" class="ic ic-ok" x="40" y="147" width="26" height="26"/>
+  <text class="tt" x="76" y="157">PC</text>
+  <text class="ts" x="76" y="174">web · la misma app</text>
+  <rect class="bx part" x="30" y="195" width="210" height="50" rx="8"/>
+  <use href="#i-app" class="ic ic-ok" x="40" y="207" width="26" height="26"/>
+  <text class="tt" x="76" y="217">App Android / iOS</text>
+  <text class="ts" x="76" y="234">compilada, sin usar</text>
+  <rect class="bx ok" x="30" y="255" width="210" height="50" rx="8"/>
+  <use href="#i-bell" class="ic ic-ok" x="40" y="267" width="26" height="26"/>
+  <text class="tt" x="76" y="277">Notificación</text>
+  <text class="ts" x="76" y="294">al tocarla abre la ficha</text>
+  <text class="tsi" x="34" y="335">Sin cuenta: ID al azar en el equipo</text>
+
+  <!-- EQUIPO TIC TAC -->
+  <rect class="grp grp-r" x="20" y="376" width="230" height="104" rx="12"/>
+  <use href="#i-users" class="ic ic-sim" x="32" y="380" width="22" height="22"/>
+  <text class="gl" x="60" y="397">EQUIPO TIC TAC</text>
+  <rect class="bx sim" x="30" y="410" width="210" height="50" rx="8"/>
+  <use href="#i-terminal" class="ic ic-sim" x="40" y="422" width="26" height="26"/>
+  <text class="tt" x="76" y="432">Carga de eventos</text>
+  <text class="ts" x="76" y="449">por consola · simulado</text>
+  <rect class="bx ext" x="20" y="516" width="230" height="50" rx="8"/>
+  <use href="#i-mega" class="ic ic-ext" x="30" y="528" width="26" height="26"/>
+  <text class="tt" x="66" y="538">Fuentes oficiales</text>
+  <text class="ts" x="66" y="555">Instagram DIIT, web UNLaM</text>
+
+  <!-- SERVIDOR -->
+  <rect class="grp grp-s" x="300" y="40" width="420" height="446" rx="12"/>
+  <text class="gl" x="314" y="60">SERVIDOR · DOCKER COMPOSE · UNA INSTANCIA</text>
+  <rect class="bx ok" x="312" y="73" width="104" height="54" rx="8"/>
+  <use href="#i-lock" class="ic ic-ok" x="322" y="87" width="26" height="26"/>
+  <text class="tt" x="358" y="97">Caddy</text>
+  <text class="ts" x="358" y="114">HTTPS</text>
+  <rect class="bx ok" x="436" y="73" width="272" height="54" rx="8"/>
+  <use href="#i-globe" class="ic ic-ok" x="446" y="87" width="26" height="26"/>
+  <text class="tt" x="482" y="97">nginx</text>
+  <text class="ts" x="482" y="114">web + proxy · /api/admin cerrado</text>
+  <rect class="bx ok" x="312" y="160" width="396" height="70" rx="8"/>
+  <use href="#i-code" class="ic ic-ok" x="322" y="182" width="26" height="26"/>
+  <text class="tt" x="358" y="182">API REST · Node.js</text>
+  <text class="ts" x="358" y="200">perfiles, eventos, recordatorios, avisos</text>
+  <text class="ts" x="358" y="217">valida eventos · filtra por depto y carrera</text>
+  <rect class="bx ok" x="440" y="270" width="268" height="54" rx="8"/>
+  <use href="#i-bell" class="ic ic-ok" x="450" y="284" width="26" height="26"/>
+  <text class="tt" x="486" y="294">Motor de avisos</text>
+  <text class="ts" x="486" y="311">revisa la cola cada 30 s</text>
+  <rect class="bx ok" x="312" y="370" width="396" height="84" rx="8"/>
+  <use href="#i-db" class="ic ic-ok" x="322" y="399" width="26" height="26"/>
+  <text class="tt" x="358" y="392">Datos · db.json</text>
+  <text class="ts" x="358" y="410">perfiles, eventos, cola de avisos</text>
+  <text class="ts" x="358" y="427">claves de push y del cargador</text>
+
+  <!-- EXTERNOS -->
+  <rect class="grp grp-x" x="760" y="40" width="230" height="204" rx="12"/>
+  <text class="gl" x="774" y="60">SERVICIOS DE TERCEROS</text>
+  <rect class="bx ext" x="770" y="70" width="210" height="60" rx="8"/>
+  <use href="#i-cloud" class="ic ic-ext" x="780" y="87" width="26" height="26"/>
+  <text class="tt" x="816" y="97">Servicios de push</text>
+  <text class="ts" x="816" y="114">web y app nativa</text>
+  <rect class="bx ext" x="770" y="170" width="210" height="54" rx="8"/>
+  <use href="#i-ext" class="ic ic-ext" x="780" y="184" width="26" height="26"/>
+  <text class="tt" x="816" y="194">Inscripción externa</text>
+  <text class="ts" x="816" y="211">botón con link a la página</text>
+
+  <!-- flechas -->
+  <path class="ln ln-g" d="M240 100 H310"/>
+  <path class="ln ln-gn" d="M240 160 H270 V100"/>
+  <path class="ln ln-gn" d="M240 220 H270 V100"/>
+  <path class="ln ln-k" d="M416 100 H434"/>
+  <path class="ln ln-k" d="M572 127 V158"/>
+  <path class="ln ln-a" d="M240 435 H288 V195 H310"/>
+  <path class="ln ln-kk" d="M620 270 V232"/>
+  <path class="ln ln-kk" d="M370 230 V368"/>
+  <path class="ln ln-k" d="M708 297 H745 V100 H768"/>
+  <path class="ln ln-gd" d="M950 70 V16 H8 V280 H28"/>
+  <path class="ln ln-a" d="M135 516 V482"/>
+
+  <!-- insignias numeradas -->
+  <circle class="bd" cx="292" cy="100" r="10"/><text class="bt" x="292" y="104">1</text>
+  <circle class="bd" cx="288" cy="300" r="10"/><text class="bt" x="288" y="304">2</text>
+  <circle class="bd" cx="745" cy="240" r="10"/><text class="bt" x="745" y="244">3</text>
+  <rect x="380" y="5" width="300" height="22" fill="#fff"/>
+  <circle class="bd" cx="396" cy="16" r="10"/><text class="bt" x="396" y="20">4</text>
+  <text class="ts" x="412" y="20">el aviso llega al celular del alumno</text>
+  <circle class="bd" cx="772" cy="170" r="10"/><text class="bt" x="772" y="174">5</text>
+  <circle class="bd" cx="155" cy="499" r="10"/><text class="bt" x="155" y="503">6</text>
+
+  <!-- leyenda -->
+  <g transform="translate(20 586)">
+    <rect class="bx ok" x="0" y="0" width="18" height="14" rx="3"/><text class="ts" x="26" y="12">Construido y en uso</text>
+    <rect class="bx part" x="190" y="0" width="18" height="14" rx="3"/><text class="ts" x="216" y="12">Construido, sin usar</text>
+    <rect class="bx sim" x="390" y="0" width="18" height="14" rx="3"/><text class="ts" x="416" y="12">Simulado: lo hace una persona</text>
+    <rect class="bx ext" x="680" y="0" width="18" height="14" rx="3"/><text class="ts" x="706" y="12">Externo, de terceros</text>
+  </g>
+</svg>
+<figcaption><strong>Diagrama 1.</strong> Arquitectura real del MVP. Las flechas muestran hacia dónde viajan los datos.</figcaption>
+</figure>
+</section>
+
+<hr>
+
+<!-- ================= 2 ================= -->
+<section>
+<h2>2. Las decisiones heredadas</h2>
+<p>Elegimos dos decisiones estructurales del MVP, una por cada caso «interesante» de la consigna: una que tomó la herramienta y una que no tomó nadie.</p>
+
+<table>
+  <tr><th style="width:21%">Decisión</th><th style="width:19%">¿Quién la tomó?</th><th style="width:20%">¿La sostendrían hoy?</th><th>¿Qué dato del TP2 o de la prueba del TP5 la sostiene o la contradice?</th></tr>
+  <tr>
+    <td><strong>Los datos se guardan en un archivo JSON</strong> (<code>db.json</code>) y la API corre en una sola instancia.</td>
+    <td><strong>La herramienta.</strong> ChatGPT GPT-6, 24/10 (<a href="docs/prompts.md">prompts.md</a>). El TP3 (punto 2.2) pedía «base de datos y API»; la herramienta lo resolvió con un archivo.</td>
+    <td>Para el MVP, sí. Para la visión, no: no soporta inscripción con cupo ni más de una instancia.</td>
+    <td>
+      <p><strong>TP2:</strong> No se relevó cuántos usuarios se esperan ni qué disponibilidad necesitan. Se eligió por comodidad, no por lo que pide el usuario.</p>
+      <p><strong>TP5: no lo puso a prueba.</strong> Fueron 3 usuarios y 8 eventos. Lo único a favor es que el <a href="docs/evidencia/tp5/registro-servidor.md">registro del servidor</a> se pudo armar leyendo el archivo.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Todas las funcionalidades de la app están en un mismo archivo</strong> (<code>App.js</code>): pantallas, conexión con el servidor, notificaciones y reglas del producto. El servidor sí está dividido en módulos.</td>
+    <td><strong>Nadie, salió así.</strong> <code>App.js</code> arrancó chico y fue sumando cosas con cada ajuste de interfaz. El equipo eligió <em>usar</em> React Native y Expo (TP3), pero nunca decidió cómo organizar el código.</td>
+    <td>No, si hay que sumar roles y pantallas (administración, inscripción). Ya produjo reglas duplicadas.</td>
+    <td>
+      <p><strong>Ningún dato del TP2 tiene que ver.</strong> El relevamiento no preguntó por nada de esto.</p>
+      <p><strong>La prueba del TP5 la contradice, de costado:</strong> N1 (un evento de varios días figura como pasado) se calcula en el cliente y en el servidor con solo <code>startsAt</code>; cambiarlo obliga a tocar los dos. N7 (Inicio no se actualiza solo) pasa porque el estado vive en el componente y se carga una sola vez.</p>
+    </td>
+  </tr>
+</table>
+</section>
+
+<hr>
+
+<!-- ================= 3 ================= -->
+<section class="fig-page">
+<h2>3. La arquitectura de la gran visión</h2>
+<p>El producto completo del TP1 (brief v1, agosto) ajustado con lo que el relevamiento y la prueba dejaron en pie (brief v4). En <strong>verde sólido</strong> está lo que el MVP ya cubre; en <strong>verde punteado</strong>, lo que cubre en parte o de forma simulada.</p>
+
+<figure>
+<svg viewBox="0 0 1000 530" role="img" aria-labelledby="d2t d2d">
+  <title id="d2t">Arquitectura de la gran visión de Nodo UNLaM y parte cubierta por el MVP</title>
+  <desc id="d2d">Alumnos, docentes y administradores usan aplicaciones sobre un backend con identidad, eventos, segmentación, inscripción, avisos y cola de trabajos, con base relacional y conexión a Intraconsulta, calendario académico y canales de aviso.</desc>
+  <defs>
+    <marker id="b2K" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#4b5563"/></marker>
+  </defs>
+
+  <!-- etiquetas de capa -->
+  <text class="gl" x="20" y="63">USUARIOS</text>
+  <text class="gl" x="20" y="145">APLICACIONES</text>
+  <text class="gl" x="20" y="300">SERVICIOS</text>
+  <text class="gl" x="20" y="444">DATOS</text>
+  <text class="gl" x="890" y="212" text-anchor="middle">EXTERNOS</text>
+
+  <rect class="bx ok" x="130" y="30" width="200" height="56" rx="8"/>
+  <use href="#i-user" class="ic ic-ok" x="140" y="45" width="26" height="26"/>
+  <text class="tt" x="176" y="55">Alumno</text>
+  <text class="ts" x="176" y="72">celular y PC</text>
+  <rect class="bx none" x="350" y="30" width="200" height="56" rx="8"/>
+  <use href="#i-cap" class="ic ic-none" x="360" y="45" width="26" height="26"/>
+  <text class="tt" x="396" y="55">Docente</text>
+  <text class="ts" x="396" y="72">sin evidencia (TP2)</text>
+  <rect class="bx part" x="570" y="30" width="200" height="56" rx="8"/>
+  <use href="#i-shield" class="ic ic-part" x="580" y="45" width="26" height="26"/>
+  <text class="tt" x="616" y="55">Admin. de depto.</text>
+  <text class="ts" x="616" y="72">hoy: el equipo, a mano</text>
+  <rect class="bx ok" x="130" y="112" width="200" height="56" rx="8"/>
+  <use href="#i-phone" class="ic ic-ok" x="140" y="127" width="26" height="26"/>
+  <text class="tt" x="176" y="137">App / web del alumno</text>
+  <text class="ts" x="176" y="154">sin inscripción propia</text>
+  <rect class="bx none" x="350" y="112" width="200" height="56" rx="8"/>
+  <use href="#i-share" class="ic ic-none" x="360" y="127" width="26" height="26"/>
+  <text class="tt" x="396" y="137">Compartir a cátedra</text>
+  <text class="ts" x="396" y="154">fuera del MVP</text>
+  <rect class="bx part" x="570" y="112" width="200" height="56" rx="8"/>
+  <use href="#i-dash" class="ic ic-part" x="580" y="127" width="26" height="26"/>
+  <text class="tt" x="616" y="137">Panel de admin.</text>
+  <text class="ts" x="616" y="154">hoy: por consola</text>
+
+  <rect class="grp grp-s" x="120" y="196" width="660" height="188" rx="12"/>
+  <text class="gl" x="134" y="214">SERVICIOS DEL SISTEMA</text>
+  <rect class="bx none" x="134" y="224" width="200" height="56" rx="8"/>
+  <use href="#i-id" class="ic ic-none" x="144" y="239" width="26" height="26"/>
+  <text class="tt" x="180" y="249">Identidad y roles</text>
+  <text class="ts" x="180" y="266">login institucional</text>
+  <rect class="bx ok" x="354" y="224" width="200" height="56" rx="8"/>
+  <use href="#i-doc" class="ic ic-ok" x="364" y="239" width="26" height="26"/>
+  <text class="tt" x="400" y="249">Eventos y fichas</text>
+  <text class="ts" x="400" y="266">publicar y editar</text>
+  <rect class="bx part" x="574" y="224" width="200" height="56" rx="8"/>
+  <use href="#i-funnel" class="ic ic-part" x="584" y="239" width="26" height="26"/>
+  <text class="tt" x="620" y="249">Segmentación</text>
+  <text class="ts" x="620" y="266">hoy: depto y carrera</text>
+  <rect class="bx none" x="134" y="308" width="200" height="56" rx="8"/>
+  <use href="#i-clip" class="ic ic-none" x="144" y="323" width="26" height="26"/>
+  <text class="tt" x="180" y="333">Inscripción y cupos</text>
+  <text class="ts" x="180" y="350">hoy: enlace externo</text>
+  <rect class="bx ok" x="354" y="308" width="200" height="56" rx="8"/>
+  <use href="#i-bell" class="ic ic-ok" x="364" y="323" width="26" height="26"/>
+  <text class="tt" x="400" y="333">Motor de avisos</text>
+  <text class="ts" x="400" y="350">push hoy; más canales</text>
+  <rect class="bx part" x="574" y="308" width="200" height="56" rx="8"/>
+  <use href="#i-queue" class="ic ic-part" x="584" y="323" width="26" height="26"/>
+  <text class="tt" x="620" y="333">Cola de trabajos</text>
+  <text class="ts" x="620" y="350">hoy: temporizador</text>
+  <rect class="bx part" x="134" y="412" width="330" height="56" rx="8"/>
+  <use href="#i-db" class="ic ic-part" x="144" y="427" width="26" height="26"/>
+  <text class="tt" x="180" y="437">Base de datos relacional</text>
+  <text class="ts" x="180" y="454">hoy: archivo db.json</text>
+  <rect class="bx part" x="484" y="412" width="140" height="56" rx="8"/>
+  <use href="#i-folder" class="ic ic-part" x="494" y="427" width="26" height="26"/>
+  <text class="tt" x="530" y="437">Archivos</text>
+  <text class="ts" x="530" y="454">hoy: carpeta</text>
+  <rect class="bx part" x="644" y="412" width="136" height="56" rx="8"/>
+  <use href="#i-chart" class="ic ic-part" x="654" y="427" width="26" height="26"/>
+  <text class="tt" x="690" y="437">Métricas</text>
+  <text class="ts" x="690" y="454">hoy: db.json</text>
+  <rect class="bx none" x="800" y="224" width="180" height="50" rx="8"/>
+  <use href="#i-cap" class="ic ic-none" x="810" y="236" width="26" height="26"/>
+  <text class="tt" x="846" y="246">Intraconsulta</text>
+  <text class="ts" x="846" y="263">materias, comisiones</text>
+  <rect class="bx none" x="800" y="285" width="180" height="50" rx="8"/>
+  <use href="#i-cal" class="ic ic-none" x="810" y="297" width="26" height="26"/>
+  <text class="tt" x="846" y="307">Calendario</text>
+  <text class="ts" x="846" y="324">fechas académicas</text>
+  <rect class="bx part" x="800" y="346" width="180" height="50" rx="8"/>
+  <use href="#i-chat" class="ic ic-part" x="810" y="358" width="26" height="26"/>
+  <text class="tt" x="846" y="368">Canal de aviso</text>
+  <text class="ts" x="846" y="385">hoy: push · Teams: ?</text>
+
+  <!-- tecnologías elegidas (punto 4) -->
+  <rect class="chip" x="244" y="271" width="80" height="18" rx="9"/><text class="chip-t" x="284" y="284">OIDC Azure</text>
+  <rect class="chip" x="702" y="355" width="62" height="18" rx="9"/><text class="chip-t" x="733" y="368">pg-boss</text>
+  <rect class="chip" x="374" y="459" width="80" height="18" rx="9"/><text class="chip-t" x="414" y="472">PostgreSQL</text>
+  <rect class="chip" x="894" y="265" width="76" height="18" rx="9"/><text class="chip-t" x="932" y="278">adaptador</text>
+
+  <!-- flechas -->
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M230 86 V110"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M450 86 V110"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M670 86 V110"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M230 168 V194"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M450 168 V194"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M670 168 V194"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M300 384 V410"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M554 384 V410"/>
+  <path class="ln" stroke="#4b5563" marker-end="url(#b2K)" d="M712 384 V410"/>
+  <path class="ln" stroke="#4b5563" marker-start="url(#b2K)" marker-end="url(#b2K)" d="M780 249 H798"/>
+  <path class="ln" stroke="#4b5563" marker-start="url(#b2K)" marker-end="url(#b2K)" d="M780 310 H798"/>
+  <path class="ln" stroke="#4b5563" marker-start="url(#b2K)" marker-end="url(#b2K)" d="M780 371 H798"/>
+
+  <!-- leyenda -->
+  <g transform="translate(20 500)">
+    <rect class="bx ok" x="0" y="0" width="18" height="14" rx="3"/><text class="ts" x="26" y="12">Cubierto por el MVP</text>
+    <rect class="bx part" x="200" y="0" width="18" height="14" rx="3"/><text class="ts" x="226" y="12">Parcial o simulado en el MVP</text>
+    <rect class="bx none" x="450" y="0" width="18" height="14" rx="3"/><text class="ts" x="476" y="12">Todavía no existe</text>
+    <rect class="chip" x="640" y="-1" width="30" height="16" rx="8"/><text class="ts" x="680" y="12">Tecnología elegida (punto 4)</text>
+  </g>
+</svg>
+<figcaption><strong>Diagrama 2.</strong> Arquitectura de la gran visión, con la parte que cubre el MVP marcada por color. Las flechas van de quien usa hacia quien es usado.</figcaption>
+</figure>
+</section>
+
+<section>
+  <p><strong>El salto más grande: de un dispositivo anónimo a una persona identificada con datos académicos.</strong> Hoy el MVP no sabe quién es el alumno: su «usuario» es un ID al azar en el celular y la carrera la declara él mismo. La visión necesita saber carrera, año y comisión (Intraconsulta), controlar el cupo de una inscripción (dos personas no pueden ocupar el último lugar) y distinguir roles (alumno, docente, administrador de departamento).</p>
+  <p>Ese cambio arrastra todo lo demás: un login institucional, una base transaccional en lugar de <code>db.json</code> y una integración con un sistema que no controlamos. Los otros saltos, de 3 usuarios a miles o de push web a otros canales, son de capacidad o de elección. Este cambia el modelo del sistema.</p>
+</section>
+
+<hr>
+
+<!-- ================= 4 ================= -->
+<section>
+<h2>4. Las tecnologías que agregaría la visión</h2>
+<p>Las tecnologías del MVP ya están elegidas. Estas son las tres que agregaría la visión.</p>
+
+<table>
+  <tr><th style="width:20%">Tecnología</th><th>Qué agrega y por qué</th><th style="width:30%">Contra qué se justifica</th></tr>
+  <tr>
+    <td><strong>Login institucional</strong> (OIDC Azure) y un <strong>adaptador a Intraconsulta</strong></td>
+    <td>
+      <p>Reemplaza al ID al azar por una persona con carrera, año y comisión verificados, y habilita roles. El adaptador esconde a Intraconsulta detrás de una interfaz propia, para que el resto del sistema no dependa de cómo se acceda a ella.</p>
+      <p>Hoy el año lo declararía el alumno (brief v4, punto 10.3); con Intraconsulta pasa a ser un dato verificado.</p>
+    </td>
+    <td>
+      <p><strong>Restricción real de la UNLaM.</strong> Intraconsulta es un sistema institucional con el que hay que convivir, y la carrera y la comisión son datos académicos cuyo acceso decide la universidad. La UNLaM usa Microsoft 365, así que el login se puede delegar en la cuenta institucional.</p>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>PostgreSQL</strong> (motor de datos)</td>
+    <td>Reemplaza a <code>db.json</code>. La inscripción con cupo necesita transacciones; la segmentación, consultas por carrera, año y comisión; y varias instancias de la API, un almacenamiento que no sea un archivo reescrito entero en cada cambio. Las entidades ya existen (perfiles, eventos, cola, recordatorios, envíos, aperturas): se mapean a tablas.</td>
+    <td>Es la mejor forma de guardar los datos y de escalar la app si queremos que sea una aplicación completa para los alumnos.</td>
+  </tr>
+  <tr>
+    <td><strong>Cola de trabajos</strong> (pg-boss sobre PostgreSQL)</td>
+    <td>Reemplaza al temporizador de 30 s dentro del proceso. Programa un trabajo por aviso, con reintentos acotados, y permite avisar «en el acto» si el evento empieza antes del próximo resumen. Con pg-boss no se suma otra pieza de infraestructura.</td>
+    <td>Prueba del TP5: el problema N2 (resúmenes con horario fijo) y la antelación.</td>
+  </tr>
+</table>
+</section>
+
+<hr>
+
+<!-- ================= 5 ================= -->
+<section>
+<h2>5. El componente más riesgoso</h2>
+<p><strong>El motor de avisos: el temporizador dentro del proceso y la cola guardada en <code>db.json</code></strong> (<code>scheduler.js</code> y <code>store.js</code>).</p>
+
+<h3>Por qué es el primer candidato</h3>
+<ul>
+  <li><strong>Lo único que falló en la prueba del TP5 salió de ahí.</strong> El resumen semanal dejó a U2 sin ninguna alerta durante la jornada, y el lunes a las 16:00 le entregó un evento a 3 horas de empezar y otro que había cerrado 64 horas antes (N2).</li>
+  <li><strong>Es el núcleo del producto.</strong> La hipótesis dice que la alerta llega al alumno; si el motor falla, nada de lo demás sirve (brief v4, punto 3).</li>
+</ul>
+
+<h3>Por qué falla al crecer (leyendo el código; no lo medimos)</h3>
+<ul>
+  <li><strong>Envía de a uno.</strong> El bucle espera cada envío, con un tope de 12 s. Un servicio de push lento frena a todos, y si un ciclo no termina en 30 s, los siguientes se saltean.</li>
+  <li><strong>Cada envío reescribe <code>db.json</code> entero</strong>, de forma sincrónica. Los registros de envíos y aperturas crecen sin límite.</li>
+  <li><strong>Reintenta sin tope.</strong> Si el servicio de push rechaza un aviso con un error distinto de 404 o 410, el aviso queda en la cola y se vuelve a intentar cada 30 s, dejando un registro nuevo cada vez.</li>
+  <li><strong>Puede duplicar avisos.</strong> Si el proceso se cae entre el envío y la baja de la cola, el alumno recibe el aviso dos veces. Con dos instancias, siempre.</li>
+  <li><strong>No sabemos qué se entregó.</strong> <code>push_accepted</code> solo dice que el servicio aceptó el paquete, no que el alumno lo vio.</li>
+</ul>
+</section>
+
+</body>
+</html>

@@ -1,20 +1,16 @@
 # Brief de Producto — Nodo UNLaM
 
-## Versión 4 — Noviembre 2026
+## Versión 5 — Noviembre 2026
 
-> **Registro de cambios.** Esta versión incorpora lo aprendido en la prueba del MVP del TP5. La hicimos el viernes 30/10/2026 con tres alumnos de Ingeniería en Informática (U1 a U3). Según el criterio de la Parte 1, dos quedaron a favor y el tercero, sin datos: **la hipótesis se sostiene y perseveramos**. El detalle está en los [resultados de la prueba](evidencia/tp5/resultados.md).
+> **Registro de cambios.** Esta versión incorpora la arquitectura del TP6: la del MVP tal como quedó construido y la de la gran visión del producto, con las restricciones técnicas del contexto. El detalle y los diagramas están en el [TP6](TP6-Arquitectura-del-Sistema.html).
 >
 > **Qué cambió y por qué.**
 >
-> - Al punto 7 se le suma el **estado de la hipótesis**: se sostiene con 2 de 3 usuarios a favor. La alerta fue la primera noticia en 5 de 6 eventos notificados y terminó en una decisión en 2 de 4 alertas abiertas.
-> - En el punto 8 se actualiza el **estado de los supuestos** 5, 7, 8, 9 y 10, y se agregan dos supuestos nuevos:
->   - el 11: lo que el DIIT publica "para todo el departamento" no siempre es para alumnos de grado;
->   - el 12: el alumno reenvía la ficha a sus grupos.
-> - La segmentación pasa a ser también **por público destinatario y por año**. Las 4 alertas que no terminaron en nada fueron eventos que no estaban dirigidos a los usuarios.
-> - La frecuencia configurable tiene que **respetar la antelación**. El resumen semanal dejó a un usuario sin ninguna alerta durante la prueba y después le entregó un evento a 3 horas de empezar.
-> - Se agregan notas en los puntos 3, 4 y 9, y un **punto 10 nuevo** con lo aprendido, la decisión de perseverar y su fundamento, lo próximo a construir, la próxima prueba, qué nos haría pivotar, el resultado que no esperábamos y la métrica que podría estar mintiendo.
+> - Se agrega un **punto 11 nuevo**, sobre la arquitectura: cómo está hecho el MVP, las decisiones que heredó, cómo es el producto completo, el salto más grande entre los dos, las tecnologías que agregaría la visión, las restricciones técnicas del contexto y el componente más riesgoso.
+> - En el punto 4 se suma el **login institucional** como integración prevista, y la integración con Intraconsulta pasa a hacerse **a través de un adaptador propio**. Las dos salen de que el salto más grande hacia la visión es pasar de un dispositivo anónimo a una persona identificada con datos académicos.
+> - En el punto 9 se agrega una nota: el TP3 pedía "base de datos y API", y el MVP guarda los datos en un archivo (`db.json`). Lo resolvió la herramienta, no el equipo.
 >
-> **Qué no cambió y por qué.** El problema, el segmento y el texto de la hipótesis siguen igual que en la v3, porque la prueba no dio motivos para cambiarlos. El canal de la alerta sigue siendo una decisión abierta: el push en el celular funcionó, pero no se comparó con otra vía. Las metas de "un cuatrimestre de uso" del punto 7 siguen pendientes, porque una prueba de un día no las mide.
+> **Qué no cambió y por qué.** El problema, el segmento, la hipótesis y la decisión de perseverar siguen igual que en la v4: el TP6 mira cómo está construido el producto. Lo que construimos ahora (punto 10.3) tampoco cambia: la arquitectura de la visión es hacia dónde va el producto, no el próximo paso. 
 
 ---
 
@@ -66,6 +62,8 @@ Reordenadas por prioridad según la evidencia. El cambio principal respecto de v
 ## 4. Integraciones previstas
 
 - **Intraconsulta UNLaM:** para obtener materias, comisiones y alumnos inscriptos, y así habilitar la segmentación por carrera y año. **Sube de prioridad en v2**: si la segmentación es el núcleo, esta integración es la que la hace posible.
+  - *Nota v5.* Se accede a través de un **adaptador propio**, para que el resto del sistema no dependa de cómo se acceda a Intraconsulta. Es un sistema que no controlamos, y el acceso a la carrera y la comisión de cada alumno lo decide la universidad (punto 11.5).
+- **Login institucional (nuevo en v5):** para identificar al alumno con su cuenta de la UNLaM, que usa Microsoft 365, en lugar de crear cuentas propias. El MVP no tiene cuenta: el usuario es un ID al azar en el dispositivo (punto 9.1). La visión lo necesita para verificar carrera, año y comisión y para distinguir roles: alumno, docente y administrador de departamento (punto 11.3).
 - **Calendario académico institucional:** para contextualizar los eventos con fechas generales del cuatrimestre, como las mesas de examen y verificación de materias.
 - **Canal de la alerta — decisión abierta.** La v1 daba por sentado Teams. El relevamiento no lo confirma ni lo descarta, pero lo acota:
   - **16 de 20 aceptarían** ser notificados por Teams, pero solo **3 de 20** lo mencionan como canal actual: hay aceptación declarada, no hábito.
@@ -235,6 +233,8 @@ Tres usuarios y un día de uso: lo que sigue son indicios, no confirmaciones. Lo
 | **Detección y carga del evento** (< 2 días desde que el DIIT o la universidad suben la publicación) | Nada de detección automática — no hay scraper ni integración con la página de la universidad, Intraconsulta o redes sociales. | Se simula: el equipo monitorea manualmente los canales oficiales y carga el evento directamente en la base de datos dentro del compromiso de 2 días. | Es una integración con fuentes externas, no el componente propio; automatizarla llevaría semanas de desarrollo. Lo que testea la hipótesis es si el alumno reacciona a una alerta oportuna, no cómo se detecta el evento en origen. |
 | **Carga de la ficha canónica con información completa del evento** | La pantalla de ficha de evento dentro de la app (fecha, hora, lugar, descripción y link de inscripción). | El equipo tipea manualmente la información completa al cargar el evento (mismo proceso manual que la detección y carga), en vez de extraerla automáticamente de una fuente externa. | Extraer y estructurar esa información automáticamente desde fuentes heterogéneas es una integración compleja que no aporta a validar la hipótesis; lo que se mide es si una ficha completa —aunque cargada a mano— mejora la decisión de asistencia. |
 
+> *Nota v5.* La fila del repositorio decía "base de datos y API". El MVP se construyó con una API en Node.js y un archivo `db.json` en lugar de una base de datos, y por eso corre en una sola instancia. Lo resolvió la herramienta al construir, no el equipo (punto 11.2 y [registro de trabajo con IA](prompts.md)).
+
 ### 9.3 Flujo principal del MVP
 
 **Flujo: recibir y consultar un evento relevante a tiempo, sin tener que buscarlo.**
@@ -356,3 +356,94 @@ Lo dejamos escrito antes de la próxima prueba:
 - **Depende de la memoria del usuario** y de tres eventos que elegimos, cargados a mano entre 4 y 10 días después de publicarse.
 
 Que una alerta sea la primera noticia de algo no confirma que resuelva el problema de perderse eventos. La métrica 2 (50 %) no da una lectura tranquilizadora.
+
+---
+
+## 11. Arquitectura (nuevo en v5)
+
+> El detalle, con el diagrama de la arquitectura real del MVP y el de la gran visión, está en el [TP6](TP6-Arquitectura-del-Sistema.html).
+
+### 11.1 La arquitectura actual del MVP
+
+El MVP corre en **un solo servidor**, con Docker Compose y una única instancia:
+
+- **Caddy** para HTTPS y **nginx** para servir la web y hacer de proxy. La ruta de administración (`/api/admin`) está cerrada al público.
+- Una **API REST en Node.js**: perfiles, eventos, recordatorios y avisos. Valida los eventos y los filtra por departamento y carrera.
+- Un **motor de avisos** dentro del mismo proceso, que revisa la cola cada 30 segundos.
+- Los **datos en un archivo**, `db.json`: perfiles, eventos, cola de avisos y claves de push y del cargador.
+
+Del lado del alumno, la misma app corre como web en el celular y en la PC. La app nativa para Android e iOS está compilada, pero no se usó en la prueba. No hay cuenta: el usuario es un ID al azar guardado en el dispositivo. Los avisos salen por **servicios de push de terceros**, y la inscripción es un enlace a una página externa.
+
+Lo único simulado es la **carga de eventos**: el equipo los toma de las fuentes oficiales (Instagram del DIIT, web de la UNLaM) y los carga por consola.
+
+### 11.2 Las decisiones heredadas
+
+El MVP se construyó rápido y con asistencia de IA, y varias decisiones estructurales no las discutió el equipo. Las dos que más pesan:
+
+| Decisión | ¿Quién la tomó? | ¿La sostendríamos hoy? | Qué dato la sostiene o la contradice |
+|---|---|---|---|
+| Los datos se guardan en un archivo JSON (`db.json`) y la API corre en una sola instancia. | **La herramienta.** El TP3 pedía "base de datos y API". | Para el MVP, sí. Para la visión, no: no soporta inscripción con cupo ni más de una instancia. | Ningún dato del TP2: no se relevó cuántos usuarios se esperan ni qué disponibilidad necesitan. Se eligió por comodidad. La prueba del TP5 (3 usuarios, 8 eventos) no la puso a prueba. |
+| Todas las funcionalidades de la app están en un mismo archivo (`App.js`): pantallas, conexión con el servidor, notificaciones y reglas del producto. | **Nadie, salió así.** El equipo eligió React Native y Expo, pero nunca decidió cómo organizar el código. | No, si hay que sumar roles y pantallas. | Ningún dato del TP2. La prueba del TP5 la contradice de costado: N1 se calcula en el cliente y en el servidor, y corregirlo obliga a tocar los dos; N7 pasa porque el estado se carga una sola vez. |
+
+### 11.3 La arquitectura de la gran visión
+
+El producto completo del TP1, ajustado con lo que el relevamiento y la prueba dejaron en pie. La última columna dice cuánto cubre hoy el MVP.
+
+| Capa | Componente | En el MVP |
+|---|---|---|
+| Usuarios | Alumno, desde el celular y la PC | Cubierto |
+| | Docente | No existe. Sin evidencia (punto 5). |
+| | Administrador de departamento | Parcial: hoy es el equipo, a mano. |
+| Aplicaciones | App y web del alumno | Cubierto, sin inscripción propia. |
+| | Compartir a una cátedra | No existe. Fuera del alcance inicial (punto 3). |
+| | Panel de administración | Parcial: hoy se carga por consola. |
+| Servicios | Identidad y roles, con login institucional | No existe. |
+| | Eventos y fichas | Cubierto |
+| | Segmentación | Parcial: hoy por departamento y carrera. |
+| | Inscripción y cupos | No existe: hoy es un enlace externo. |
+| | Motor de avisos | Cubierto: hoy, push. |
+| | Cola de trabajos | Parcial: hoy es un temporizador. |
+| Datos | Base de datos relacional | Parcial: hoy es `db.json`. |
+| | Archivos | Parcial: hoy es una carpeta. |
+| | Métricas | Parcial: hoy se guardan en `db.json`. |
+| Externos | Intraconsulta: materias y comisiones | No existe. |
+| | Calendario académico | No existe. |
+| | Canal de aviso | Parcial: hoy, push. Teams, sin decidir (punto 4). |
+
+**El salto más grande: de un dispositivo anónimo a una persona identificada con datos académicos.** Hoy el MVP no sabe quién es el alumno: su usuario es un ID al azar en el celular y la carrera la declara él mismo. La visión necesita saber carrera, año y comisión (Intraconsulta), controlar el cupo de una inscripción (dos personas no pueden ocupar el último lugar) y distinguir roles.
+
+Ese cambio arrastra todo lo demás: un login institucional, una base transaccional en lugar de `db.json` y una integración con un sistema que no controlamos. Los otros saltos, de 3 usuarios a miles o de push web a otros canales, son de capacidad o de elección. Este cambia el modelo del sistema.
+
+### 11.4 Las tecnologías que agregaría la visión
+
+| Tecnología | Qué agrega | Contra qué se justifica |
+|---|---|---|
+| **Login institucional** (OIDC con Azure) y un **adaptador a Intraconsulta** | Reemplaza al ID al azar por una persona con carrera, año y comisión verificados, y habilita roles. El adaptador esconde a Intraconsulta detrás de una interfaz propia. Hoy el año lo declararía el alumno (punto 10.3); con Intraconsulta pasa a ser un dato verificado. | **Restricción real de la UNLaM:** Intraconsulta es un sistema institucional con el que hay que convivir, y el acceso a la carrera y la comisión lo decide la universidad. La UNLaM usa Microsoft 365, así que el login se puede delegar en la cuenta institucional. |
+| **PostgreSQL** (motor de datos) | Reemplaza a `db.json`. Las entidades que ya existen (perfiles, eventos, cola, recordatorios, envíos, aperturas) se mapean a tablas. | Lo que pide la visión: la inscripción con cupo necesita transacciones, la segmentación necesita consultas por carrera, año y comisión, y varias instancias de la API necesitan un almacenamiento que no sea un archivo reescrito entero en cada cambio. |
+| **Cola de trabajos** (pg-boss sobre PostgreSQL) | Reemplaza al temporizador de 30 segundos. Programa un trabajo por aviso, con reintentos acotados, y permite avisar en el acto si el evento empieza antes del próximo resumen. No suma otra pieza de infraestructura. | La prueba del TP5: el problema N2 (resúmenes con horario fijo) y la antelación. |
+
+### 11.5 Restricciones técnicas del contexto
+
+- **Intraconsulta no la controlamos.** Es un sistema institucional con el que hay que convivir, y el acceso a los datos académicos de cada alumno lo decide la universidad. Por eso va detrás de un adaptador, y la segmentación por año y comisión depende de ese acceso. Mientras no lo haya, el año lo declara el alumno (punto 10.3).
+- **La identidad la da la UNLaM.** La universidad usa Microsoft 365, así que el login se delega en la cuenta institucional en lugar de crear cuentas propias.
+- **El dispositivo es el celular.** 19 de 20 alumnos se informan por el celular y 8 no usan ningún otro (punto 6). La alerta depende de servicios de push de terceros, y el push web necesita HTTPS.
+- **La antelación no depende solo del sistema.** Depende también de cuándo publica el DIIT. Mientras la carga sea manual, el compromiso es cargar cada evento dentro de los 2 días de publicado (punto 9.2).
+
+### 11.6 El componente más riesgoso
+
+**El motor de avisos: el temporizador dentro del proceso y la cola guardada en `db.json`.**
+
+Es el primer candidato por dos motivos:
+
+- **Lo único que falló en la prueba del TP5 salió de ahí:** el resumen semanal dejó a U2 sin alertas durante la jornada y el lunes le entregó un evento a 3 horas de empezar y otro ya cerrado (N2).
+- **Es el núcleo del producto.** Si la alerta no llega, nada de lo demás sirve (punto 3).
+
+Por qué falla al crecer, según el código (no lo medimos):
+
+- envía los avisos de a uno, así que un servicio de push lento frena a todos;
+- cada envío reescribe `db.json` entero, y los registros de envíos y aperturas crecen sin límite;
+- reintenta sin tope los avisos que el servicio de push rechaza;
+- puede duplicar avisos si el proceso se cae entre el envío y la baja de la cola, y con dos instancias los duplica siempre;
+- no sabe qué se entregó: solo sabe que el servicio de push aceptó el aviso, no que el alumno lo vio.
+
+Lo reemplaza la cola de trabajos del punto 11.4. El primer ítem de lo que construimos ahora (punto 10.3), los resúmenes que respetan la antelación, se hace sobre este componente.
